@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Easing as RNEasing, StyleSheet, Text, View } from 'react-native';
 import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
@@ -5,26 +6,28 @@ import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-rea
 import { colors, fonts, radius } from '@/constants/theme';
 
 type Props = {
-  icon: string;
+  icon: ReactNode;
   label: string;
   score: number;
   delta?: number | null;
   /** true = green "potential" styling, false = red "current" styling. */
   isHigh: boolean;
-  /** Card spans the full row instead of half (used for the Overall card). */
-  fullWidth?: boolean;
+  /** Stagger offset so cards count up in sequence rather than all at once. */
+  delayMs?: number;
 };
 
-const COUNT_UP_DURATION = 800;
+const COUNT_UP_DURATION = 1000;
+const CARD_HEIGHT = 110;
 
-/** Counts from `from` to `to` over the given duration using an ease-out curve. */
-function useCountUp(to: number, from: number, duration: number) {
+/** Counts from `from` to `to` over the given duration using an ease-out curve, after an optional delay. */
+function useCountUp(to: number, from: number, duration: number, delayMs: number) {
   const [value, setValue] = useState(from);
   const startRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
     startRef.current = null;
+    setValue(from);
 
     const tick = (now: number) => {
       if (startRef.current === null) startRef.current = now;
@@ -37,41 +40,49 @@ function useCountUp(to: number, from: number, duration: number) {
       }
     };
 
-    frameRef.current = requestAnimationFrame(tick);
+    const timer = setTimeout(() => {
+      frameRef.current = requestAnimationFrame(tick);
+    }, delayMs);
+
     return () => {
+      clearTimeout(timer);
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
-  }, [to, from, duration]);
+  }, [to, from, duration, delayMs]);
 
   return value;
 }
 
-export function ScoreCard({ icon, label, score, delta = null, isHigh, fullWidth = false }: Props) {
+export function ScoreCard({ icon, label, score, delta = null, isHigh, delayMs = 0 }: Props) {
   const startValue = delta != null ? score - delta : 0;
-  const displayScore = useCountUp(score, startValue, COUNT_UP_DURATION);
+  const displayScore = useCountUp(score, startValue, COUNT_UP_DURATION, delayMs);
 
   const barColor = isHigh ? colors.brandGreen : '#ff4b4b';
   const pct = Math.min(Math.max(displayScore, 0), 100);
 
   const barStyle = useAnimatedStyle(() => ({
-    width: withTiming(`${pct}%`, { duration: COUNT_UP_DURATION, easing: Easing.out(Easing.cubic) }),
+    width: withTiming(`${pct}%`, {
+      duration: COUNT_UP_DURATION,
+      easing: Easing.out(Easing.cubic),
+    }),
   }));
 
   return (
-    <View style={[styles.card, fullWidth && styles.fullWidth]}>
+    <View style={styles.card}>
+      {delta != null && (
+        <View style={styles.deltaBadge}>
+          <Text style={styles.deltaText}>+{delta}</Text>
+        </View>
+      )}
+
       <View style={styles.headerRow}>
-        <Text style={styles.icon}>{icon}</Text>
-        <Text style={styles.label}>{label}</Text>
+        {icon}
+        <Text style={styles.label} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>
+          {label}
+        </Text>
       </View>
 
-      <View style={styles.scoreRow}>
-        <Text style={styles.score}>{displayScore}</Text>
-        {delta != null && (
-          <View style={styles.deltaBadge}>
-            <Text style={styles.deltaText}>+{delta}</Text>
-          </View>
-        )}
-      </View>
+      <Text style={styles.score}>{displayScore}</Text>
 
       <View style={styles.barTrack}>
         <Animated.View style={[styles.barFill, barStyle, { backgroundColor: barColor }]} />
@@ -83,30 +94,29 @@ export function ScoreCard({ icon, label, score, delta = null, isHigh, fullWidth 
 const styles = StyleSheet.create({
   card: {
     flex: 1,
+    height: CARD_HEIGHT,
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.graphite,
     borderRadius: radius.card,
-    padding: 16,
-    gap: 8,
+    padding: 12,
+    justifyContent: 'space-between',
   },
-  fullWidth: {
-    flexBasis: '100%',
-  },
-  headerRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  icon: { fontSize: 16 },
-  label: { fontFamily: fonts.bold, fontSize: 13, color: colors.ash },
-  scoreRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  score: { fontFamily: fonts.black, fontSize: 40, color: colors.textPrimary },
   deltaBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
     backgroundColor: '#0a2200',
     borderRadius: radius.pill,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
   },
-  deltaText: { fontFamily: fonts.bold, fontSize: 12, color: colors.brandGreen },
+  deltaText: { fontFamily: fonts.bold, fontSize: 11, color: colors.brandGreen },
+  headerRow: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingRight: 36 },
+  label: { fontFamily: fonts.bold, fontSize: 11, color: colors.ash, flexShrink: 1 },
+  score: { fontFamily: fonts.black, fontSize: 36, color: colors.textPrimary },
   barTrack: {
-    height: 6,
+    height: 5,
     width: '100%',
     borderRadius: radius.pill,
     backgroundColor: colors.background,

@@ -12,7 +12,7 @@ import Animated, {
 import type { Slide } from '@/components/onboarding/slides';
 import { HighlightedText } from '@/components/ui/HighlightedText';
 import { PulsingBlob } from '@/components/ui/PulsingBlob';
-import { colors, spacing, typography } from '@/constants/theme';
+import { colors, fonts, spacing } from '@/constants/theme';
 
 type Props = {
   slide: Slide;
@@ -47,11 +47,11 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
   const bodyStyle = useEntrance(active, 120);
   const hintStyle = useEntrance(active, 240);
 
-  // Subtle opacity pulse on the tap hint.
-  const pulse = useSharedValue(0.45);
+  // Subtle opacity pulse on the tap hint: 0.4 -> 0.9 -> 0.4 over a 2s loop.
+  const pulse = useSharedValue(0.4);
   useEffect(() => {
     pulse.value = withRepeat(
-      withTiming(1, { duration: 1100, easing: Easing.inOut(Easing.ease) }),
+      withTiming(0.9, { duration: 1000, easing: Easing.inOut(Easing.ease) }),
       -1,
       true,
     );
@@ -91,11 +91,13 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
 
 const styles = StyleSheet.create({
   page: { flex: 1, paddingHorizontal: spacing.xl },
-  blobArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  textArea: { flex: 1, justifyContent: 'flex-start' },
-  headline: { ...typography.heading, color: colors.textPrimary },
-  body: { marginTop: 20, gap: 16 },
-  paragraph: { ...typography.bodyLg, color: colors.textSecondary },
-  hint: { position: 'absolute', bottom: 40, left: 0, right: 0, alignItems: 'center' },
-  hintText: { ...typography.caption, color: colors.textMuted },
+  // Smaller blob area + textArea given extra weight pulls the text block up to
+  // roughly the 52%-from-top mark instead of sitting low against the bottom.
+  blobArea: { flex: 0.85, alignItems: 'center', justifyContent: 'center' },
+  textArea: { flex: 1.15, justifyContent: 'flex-start', paddingBottom: 80 },
+  headline: { fontFamily: fonts.extraBold, fontSize: 26, lineHeight: 32, color: colors.textPrimary },
+  body: { marginTop: 16, gap: 12 },
+  paragraph: { fontFamily: fonts.medium, fontSize: 15, lineHeight: 23, color: colors.textSecondary },
+  hint: { position: 'absolute', bottom: 52, left: 0, right: 0, alignItems: 'center' },
+  hintText: { fontFamily: fonts.bold, fontSize: 13, color: colors.textMuted },
 });

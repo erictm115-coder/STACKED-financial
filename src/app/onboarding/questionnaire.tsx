@@ -1,6 +1,12 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AnswerButton } from '@/components/ui/AnswerButton';
@@ -19,6 +25,8 @@ type StepConfig = {
   layout: 'list' | 'grid';
   type: 'single' | 'multi';
   skip: boolean;
+  /** Override for titles that would otherwise wrap onto 3 lines (default 28). */
+  titleFontSize?: number;
 };
 
 const MAX_HABITS = 2;
@@ -93,12 +101,13 @@ const STEPS: StepConfig[] = [
   },
   {
     key: 'moneyHabits',
-    title: 'Pick your two biggest money habits right now',
+    title: 'Pick your two biggest\nmoney habits right now',
     subtitle:
       "Try being honest — the gap between where you are and where you want to be is exactly what we're here to close.",
     layout: 'list',
     type: 'multi',
     skip: false,
+    titleFontSize: 22,
     options: [
       'Impulse buying',
       'Forgetting subscriptions',
@@ -128,13 +137,34 @@ const STEPS: StepConfig[] = [
   },
 ];
 
+/** Top-anchored toast — fades in, holds, fades out. Used for the max-selection notice. */
+function MaxSelectionToast({ visible }: { visible: boolean }) {
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    if (visible) {
+      opacity.value = withTiming(1, { duration: 150, easing: Easing.out(Easing.cubic) });
+    } else {
+      opacity.value = withTiming(0, { duration: 200 });
+    }
+  }, [visible, opacity]);
+
+  const style = useAnimatedStyle(() => ({ opacity: opacity.value }));
+
+  return (
+    <Animated.View style={[styles.toast, style]} pointerEvents="none">
+      <Text style={styles.toastText}>You can only pick 2</Text>
+    </Animated.View>
+  );
+}
+
 export default function Questionnaire() {
   const router = useRouter();
   const answers = useOnboardingStore((s) => s.answers);
   const setAnswer = useOnboardingStore((s) => s.setAnswer);
 
   const [stepIndex, setStepIndex] = useState(0);
-  const [shakeIndex, setShakeIndex] = useState<number | null>(null);
+  const [showMaxToast, setShowMaxToast] = useState(false);
 
   const step = STEPS[stepIndex];
   const isLastStep = stepIndex === STEPS.length - 1;
@@ -164,15 +194,15 @@ export default function Questionnaire() {
 
   const selectedHabits = (answers.moneyHabits ?? []) as string[];
 
-  const handleToggleHabit = (option: string, idx: number) => {
+  const handleToggleHabit = (option: string) => {
     const isSelected = selectedHabits.includes(option);
     if (isSelected) {
       setAnswer('moneyHabits', selectedHabits.filter((o) => o !== option));
       return;
     }
     if (selectedHabits.length >= MAX_HABITS) {
-      setShakeIndex(idx);
-      setTimeout(() => setShakeIndex(null), 300);
+      setShowMaxToast(true);
+      setTimeout(() => setShowMaxToast(false), 2000);
       return;
     }
     setAnswer('moneyHabits', [...selectedHabits, option]);
@@ -186,56 +216,70 @@ export default function Questionnaire() {
         <Text style={styles.backArrow}>←</Text>
       </Pressable>
 
-      <ScreenEntrance key={stepIndex} style={styles.content}>
-        <Text style={styles.title}>{step.title}</Text>
-        <Text style={styles.subtitle}>{step.subtitle}</Text>
+      <MaxSelectionToast visible={showMaxToast} />
 
-        {step.layout === 'grid' ? (
-          <View style={styles.grid}>
-            {step.options.map((option) => (
-              <View key={option} style={styles.gridItem}>
-                <AnswerButton
-                  label={option}
-                  variant="grid"
-                  selected={answers[step.key] === option}
-                  onPress={() => handleSingleSelect(option)}
-                />
-              </View>
-            ))}
-          </View>
-        ) : (
-          <View style={styles.list}>
-            {step.options.map((option, idx) =>
-              step.type === 'multi' ? (
-                <CheckButton
-                  key={option}
-                  label={option}
-                  checked={selectedHabits.includes(option)}
-                  shake={shakeIndex === idx}
-                  onPress={() => handleToggleHabit(option, idx)}
-                />
-              ) : (
-                <AnswerButton
-                  key={option}
-                  label={option}
-                  selected={answers[step.key] === option}
-                  onPress={() => handleSingleSelect(option)}
-                />
-              ),
-            )}
-          </View>
-        )}
+      <ScreenEntrance key={stepIndex} style={styles.flex}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text
+            style={[
+              styles.title,
+              step.titleFontSize ? { fontSize: step.titleFontSize } : null,
+            ]}
+          >
+            {step.title}
+          </Text>
+          <Text style={styles.subtitle}>{step.subtitle}</Text>
+
+          {step.layout === 'grid' ? (
+            <View style={styles.grid}>
+              {step.options.map((option) => (
+                <View key={option} style={styles.gridItem}>
+                  <AnswerButton
+                    label={option}
+                    variant="grid"
+                    selected={answers[step.key] === option}
+                    onPress={() => handleSingleSelect(option)}
+                  />
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.list}>
+              {step.options.map((option) =>
+                step.type === 'multi' ? (
+                  <CheckButton
+                    key={option}
+                    label={option}
+                    checked={selectedHabits.includes(option)}
+                    onPress={() => handleToggleHabit(option)}
+                  />
+                ) : (
+                  <AnswerButton
+                    key={option}
+                    label={option}
+                    selected={answers[step.key] === option}
+                    onPress={() => handleSingleSelect(option)}
+                  />
+                ),
+              )}
+            </View>
+          )}
+
+          {step.skip && (
+            <Pressable onPress={handleSkip} style={styles.skip} accessibilityRole="button">
+              <Text style={styles.skipText}>Skip</Text>
+            </Pressable>
+          )}
+        </ScrollView>
 
         {step.type === 'multi' && selectedHabits.length > 0 && (
-          <View style={styles.continueWrap}>
+          <View style={styles.stickyContinue}>
             <PrimaryButton label="Continue →" onPress={advance} />
           </View>
-        )}
-
-        {step.skip && (
-          <Pressable onPress={handleSkip} style={styles.skip} accessibilityRole="button">
-            <Text style={styles.skipText}>Skip</Text>
-          </Pressable>
         )}
       </ScreenEntrance>
     </SafeAreaView>
@@ -244,6 +288,7 @@ export default function Questionnaire() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
+  flex: { flex: 1 },
   backButton: {
     width: 44,
     height: 44,
@@ -252,7 +297,7 @@ const styles = StyleSheet.create({
     marginLeft: spacing.sm,
   },
   backArrow: { color: colors.ash, fontSize: 22, fontFamily: fonts.bold },
-  content: { paddingHorizontal: spacing.xl, paddingTop: spacing.md },
+  scrollContent: { paddingHorizontal: spacing.xl, paddingTop: spacing.md, paddingBottom: 100 },
   title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary },
   subtitle: {
     fontFamily: fonts.medium,
@@ -264,7 +309,22 @@ const styles = StyleSheet.create({
   list: { gap: spacing.md },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, justifyContent: 'space-between' },
   gridItem: { width: '47%' },
-  continueWrap: { marginTop: spacing.xl },
+  stickyContinue: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 34 },
   skip: { alignSelf: 'center', marginTop: spacing.xxl, padding: spacing.sm },
   skipText: { fontFamily: fonts.medium, fontSize: 14, color: colors.ash },
+  toast: {
+    position: 'absolute',
+    top: 56,
+    left: spacing.xl,
+    right: spacing.xl,
+    zIndex: 20,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: '#ff4b4b',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
+  toastText: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.textPrimary },
 });

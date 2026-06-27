@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { TargetIcon } from '@/components/icons/TargetIcon';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, spacing } from '@/constants/theme';
@@ -12,7 +13,7 @@ export default function ThankYou() {
   return (
     <SafeAreaView style={styles.safe}>
       <ScreenEntrance style={styles.content}>
-        <Text style={styles.emoji}>🎯</Text>
+        <TargetIcon size={72} />
         <Text style={styles.title}>Thank you for your honesty, friend.</Text>
         <Text style={styles.body}>Now we have something powerful for you :)</Text>
 
@@ -35,7 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: spacing.lg,
   },
-  emoji: { fontSize: 72 },
   title: {
     fontFamily: fonts.extraBold,
     fontSize: 32,

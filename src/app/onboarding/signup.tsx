@@ -1,12 +1,14 @@
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { PulsingBlob } from '@/components/ui/PulsingBlob';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
+import { supabase } from '@/lib/supabase';
 import { useOnboardingStore } from '@/store/onboardingStore';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -16,51 +18,105 @@ export default function Signup() {
   const setAnswer = useOnboardingStore((s) => s.setAnswer);
   const [email, setEmail] = useState('');
   const [focused, setFocused] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const isValid = EMAIL_RE.test(email.trim());
 
-  const handleSubmit = () => {
-    if (!isValid) return;
-    setAnswer('email', email.trim());
-    router.push('/onboarding/results');
+  const handleSubmit = async () => {
+    if (!isValid || submitting) return;
+    setError(null);
+    setSubmitting(true);
+
+    const trimmedEmail = email.trim();
+    const { error: otpError } = await supabase.auth.signInWithOtp({ email: trimmedEmail });
+
+    if (otpError) {
+      setError('Something went wrong. Please try again.');
+      setSubmitting(false);
+      return;
+    }
+
+    setAnswer('email', trimmedEmail);
+
+    // Best-effort: send the branded Resend email wrapper. The Supabase OTP
+    // itself already went out above, so a failure here shouldn't block signup.
+    supabase.functions.invoke('send-otp-email', { body: { email: trimmedEmail } }).catch(() => {});
+
+    setSubmitting(false);
+    router.push('/onboarding/verify');
   };
+
+  // Collapse the blob out of the way when the keyboard is up, giving the
+  // email input maximum breathing room.
+  const blobProgress = useSharedValue(1);
+  useEffect(() => {
+    blobProgress.value = withTiming(focused ? 0 : 1, { duration: 200 });
+  }, [focused, blobProgress]);
+
+  const blobAreaStyle = useAnimatedStyle(() => ({
+    height: 80 + blobProgress.value * 140,
+    opacity: blobProgress.value,
+  }));
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.blobArea}>
-        <PulsingBlob />
-      </View>
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <Animated.View style={[styles.blobArea, blobAreaStyle]}>
+            <PulsingBlob />
+          </Animated.View>
 
-      <ScreenEntrance style={styles.content}>
-        <Text style={styles.title}>Let&apos;s get started</Text>
-        <Text style={styles.subtitle}>Enter your email to unlock your personalised wealth plan.</Text>
+          <ScreenEntrance style={styles.content}>
+            <Text style={styles.title}>Let&apos;s get started</Text>
+            <Text style={styles.subtitle}>
+              Enter your email to unlock your personalised wealth plan.
+            </Text>
 
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder="your@email.com"
-          placeholderTextColor={colors.textMuted}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          style={[styles.input, focused && styles.inputFocused]}
-        />
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              placeholder="your@email.com"
+              placeholderTextColor={colors.textMuted}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              style={[styles.input, focused && styles.inputFocused]}
+            />
 
-        <View style={styles.cta}>
-          <PrimaryButton label="Get My Free Plan →" onPress={handleSubmit} disabled={!isValid} />
-        </View>
+            {error && <Text style={styles.error}>{error}</Text>}
 
-        <Text style={styles.privacy}>We respect your privacy. No spam, ever.</Text>
-      </ScreenEntrance>
+            <View style={styles.cta}>
+              <PrimaryButton
+                label={submitting ? 'Sending…' : 'Get My Free Plan →'}
+                onPress={handleSubmit}
+                disabled={!isValid || submitting}
+              />
+            </View>
+
+            <Text style={styles.privacy}>We respect your privacy. No spam, ever.</Text>
+          </ScreenEntrance>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
-  blobArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  flex: { flex: 1 },
+  scrollContent: { flexGrow: 1 },
+  blobArea: { alignItems: 'center', justifyContent: 'center' },
   content: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl, gap: spacing.md },
   title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary },
   subtitle: { fontFamily: fonts.medium, fontSize: 15, color: colors.textSecondary, marginBottom: spacing.sm },
@@ -76,6 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   inputFocused: { borderColor: colors.brandGreen },
+  error: { fontFamily: fonts.medium, fontSize: 13, color: '#ff4b4b' },
   cta: { marginTop: spacing.md },
   privacy: {
     fontFamily: fonts.medium,

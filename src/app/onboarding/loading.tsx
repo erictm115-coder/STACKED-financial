@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { StarRow } from '@/components/icons/StarIcon';
 import { colors, fonts, spacing } from '@/constants/theme';
 
 const FILL_DURATION = 3000;
@@ -52,7 +53,10 @@ export default function Loading() {
         <Text style={styles.subtitle}>Building your financial plan…</Text>
       </View>
 
-      <Text style={styles.socialProof}>⭐⭐⭐⭐⭐ 40,000+ people already on their path</Text>
+      <View style={styles.socialProof}>
+        <StarRow size={13} />
+        <Text style={styles.socialProofText}>40,000+ people already on their path</Text>
+      </View>
     </SafeAreaView>
   );
 }
@@ -71,10 +75,16 @@ const styles = StyleSheet.create({
   barFill: { height: '100%', borderRadius: 100, backgroundColor: colors.brandGreen },
   subtitle: { fontFamily: fonts.medium, fontSize: 15, color: colors.ash, textAlign: 'center' },
   socialProof: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+    marginBottom: spacing.xl,
+  },
+  socialProofText: {
     fontFamily: fonts.semiBold,
     fontSize: 13,
     color: colors.textMuted,
     textAlign: 'center',
-    marginBottom: spacing.xl,
   },
 });

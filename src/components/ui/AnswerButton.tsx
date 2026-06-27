@@ -1,9 +1,10 @@
 import * as Haptics from 'expo-haptics';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { useEffect } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
-  withSequence,
   withTiming,
 } from 'react-native-reanimated';
 
@@ -19,48 +20,72 @@ type Props = {
 
 export function AnswerButton({ label, selected = false, onPress, variant = 'list' }: Props) {
   const scale = useSharedValue(1);
+  const pressY = useSharedValue(0);
+  const selectedProgress = useSharedValue(selected ? 1 : 0);
+
+  useEffect(() => {
+    selectedProgress.value = withTiming(selected ? 1 : 0, { duration: 150 });
+  }, [selected, selectedProgress]);
 
   const handlePressIn = () => {
-    scale.value = withTiming(0.97, { duration: 80 });
+    scale.value = withTiming(0.97, { duration: 120 });
+    pressY.value = withTiming(2, { duration: 120 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withTiming(1, { duration: 120 });
+    pressY.value = withTiming(0, { duration: 120 });
   };
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    scale.value = withSequence(
-      withTiming(0.97, { duration: 0 }),
-      withTiming(1.02, { duration: 90 }),
-      withTiming(1, { duration: 90 }),
-    );
     onPress();
   };
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
+  const containerStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }, { translateY: pressY.value }],
+    backgroundColor: interpolateColor(
+      selectedProgress.value,
+      [0, 1],
+      [colors.surface, colors.brandGreen],
+    ),
+    borderColor: interpolateColor(
+      selectedProgress.value,
+      [0, 1],
+      [colors.brandGreen, colors.brandGreenBorder],
+    ),
+  }));
+
+  const textStyle = useAnimatedStyle(() => ({
+    color: interpolateColor(selectedProgress.value, [0, 1], [colors.textPrimary, colors.background]),
   }));
 
   const isGrid = variant === 'grid';
 
   return (
-    <Animated.View style={animatedStyle}>
-      <Pressable
-        onPressIn={handlePressIn}
-        onPress={handlePress}
+    <Pressable
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={handlePress}
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+    >
+      <Animated.View
         style={[
           styles.button,
           isGrid && styles.buttonGrid,
-          selected && styles.selected,
+          selected && styles.selectedBorder,
+          containerStyle,
         ]}
-        accessibilityRole="button"
-        accessibilityState={{ selected }}
       >
-        <Text
-          style={[styles.label, isGrid && styles.labelGrid]}
+        <Animated.Text
+          style={[styles.label, isGrid && styles.labelGrid, selected && styles.labelSelected, textStyle]}
           numberOfLines={isGrid ? 1 : 2}
         >
           {label}
-        </Text>
-      </Pressable>
-    </Animated.View>
+        </Animated.Text>
+      </Animated.View>
+    </Pressable>
   );
 }
 
@@ -69,9 +94,7 @@ const styles = StyleSheet.create({
     width: '100%',
     minHeight: 54,
     borderRadius: radius.input,
-    backgroundColor: colors.surface,
     borderWidth: 2,
-    borderColor: colors.graphite,
     paddingHorizontal: 20,
     justifyContent: 'center',
   },
@@ -79,14 +102,16 @@ const styles = StyleSheet.create({
     height: 64,
     alignItems: 'center',
   },
-  selected: {
-    borderColor: colors.brandGreen,
-    backgroundColor: '#0a2200',
+  // 3D "pressed-in" lip on the selected state, matching the button system's depth language.
+  selectedBorder: {
+    borderBottomWidth: 4,
   },
   label: {
     fontFamily: fonts.semiBold,
     fontSize: 15,
-    color: colors.textPrimary,
+  },
+  labelSelected: {
+    fontFamily: fonts.bold,
   },
   labelGrid: {
     fontSize: 18,

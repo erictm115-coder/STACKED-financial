@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { TickIcon } from '@/components/icons/TickIcon';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
@@ -57,7 +58,7 @@ export default function Paywall() {
         <View style={styles.features}>
           {FEATURES.map((feature) => (
             <View key={feature} style={styles.featureRow}>
-              <Text style={styles.checkmark}>✓</Text>
+              <TickIcon size={20} />
               <Text style={styles.featureText}>{feature}</Text>
             </View>
           ))}
@@ -139,7 +140,6 @@ const styles = StyleSheet.create({
   },
   features: { gap: spacing.sm, marginBottom: spacing.xl },
   featureRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
-  checkmark: { color: colors.brandGreen, fontSize: 16, fontFamily: fonts.bold },
   featureText: { flex: 1, fontFamily: fonts.semiBold, fontSize: 15, color: colors.textPrimary },
   plans: { gap: spacing.md },
   planCard: {

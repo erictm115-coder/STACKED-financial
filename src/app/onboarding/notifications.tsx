@@ -3,6 +3,7 @@ import * as Notifications from 'expo-notifications';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { BellIcon } from '@/components/icons/BellIcon';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, spacing } from '@/constants/theme';
@@ -14,7 +15,7 @@ export default function NotificationsScreen() {
     try {
       await Notifications.requestPermissionsAsync();
     } finally {
-      router.push('/onboarding/verify');
+      router.push('/onboarding/paywall');
     }
   };
 
@@ -26,7 +27,7 @@ export default function NotificationsScreen() {
         <View style={styles.bellWrap}>
           <View style={styles.glowOuter} />
           <View style={styles.glowInner} />
-          <Text style={styles.bell}>🔔</Text>
+          <BellIcon size={64} />
         </View>
 
         <Text style={styles.title}>Want to actually hit your financial goals?</Text>
@@ -78,7 +79,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accentBlue,
     opacity: 0.22,
   },
-  bell: { fontSize: 64 },
   title: {
     fontFamily: fonts.extraBold,
     fontSize: 26,

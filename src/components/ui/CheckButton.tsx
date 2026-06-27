@@ -8,6 +8,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import { CheckboxTick } from '@/components/icons/CheckboxTick';
 import { colors, fonts, radius } from '@/constants/theme';
 
 type Props = {
@@ -20,19 +21,21 @@ type Props = {
 
 export function CheckButton({ label, checked, onPress, shake = false }: Props) {
   const scale = useSharedValue(1);
+  const pressY = useSharedValue(0);
   const shakeX = useSharedValue(0);
 
   const handlePressIn = () => {
-    scale.value = withTiming(0.97, { duration: 80 });
+    scale.value = withTiming(0.97, { duration: 120 });
+    pressY.value = withTiming(2, { duration: 120 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withTiming(1, { duration: 120 });
+    pressY.value = withTiming(0, { duration: 120 });
   };
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    scale.value = withSequence(
-      withTiming(0.97, { duration: 0 }),
-      withTiming(1.02, { duration: 90 }),
-      withTiming(1, { duration: 90 }),
-    );
     onPress();
   };
 
@@ -50,21 +53,20 @@ export function CheckButton({ label, checked, onPress, shake = false }: Props) {
   }, [shake, shakeX]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateX: shakeX.value }],
+    transform: [{ scale: scale.value }, { translateY: pressY.value }, { translateX: shakeX.value }],
   }));
 
   return (
     <Animated.View style={animatedStyle}>
       <Pressable
         onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
         onPress={handlePress}
         style={[styles.button, checked && styles.selected]}
         accessibilityRole="checkbox"
         accessibilityState={{ checked }}
       >
-        <View style={[styles.checkbox, checked && styles.checkboxChecked]}>
-          {checked && <Text style={styles.tick}>✓</Text>}
-        </View>
+        {checked ? <CheckboxTick size={20} /> : <View style={styles.checkbox} />}
         <Text style={styles.label} numberOfLines={2}>
           {label}
         </Text>
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.input,
     backgroundColor: colors.surface,
     borderWidth: 2,
-    borderColor: colors.graphite,
+    borderColor: colors.brandGreen,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -91,22 +93,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#0a2200',
   },
   checkbox: {
-    width: 22,
-    height: 22,
-    borderRadius: 6,
+    width: 20,
+    height: 20,
+    borderRadius: 4,
     borderWidth: 2,
-    borderColor: colors.graphite,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  checkboxChecked: {
     borderColor: colors.brandGreen,
-    backgroundColor: colors.brandGreen,
-  },
-  tick: {
-    color: colors.textPrimary,
-    fontSize: 13,
-    fontFamily: fonts.bold,
+    backgroundColor: 'transparent',
   },
   label: {
     flex: 1,
