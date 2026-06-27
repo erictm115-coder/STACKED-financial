@@ -21,6 +21,7 @@ type Props = {
 export function AnswerButton({ label, selected = false, onPress, variant = 'list' }: Props) {
   const scale = useSharedValue(1);
   const pressY = useSharedValue(0);
+  const pressProgress = useSharedValue(0);
   const selectedProgress = useSharedValue(selected ? 1 : 0);
 
   useEffect(() => {
@@ -30,11 +31,13 @@ export function AnswerButton({ label, selected = false, onPress, variant = 'list
   const handlePressIn = () => {
     scale.value = withTiming(0.97, { duration: 120 });
     pressY.value = withTiming(2, { duration: 120 });
+    pressProgress.value = withTiming(1, { duration: 120 });
   };
 
   const handlePressOut = () => {
     scale.value = withTiming(1, { duration: 120 });
     pressY.value = withTiming(0, { duration: 120 });
+    pressProgress.value = withTiming(0, { duration: 120 });
   };
 
   const handlePress = () => {
@@ -42,19 +45,29 @@ export function AnswerButton({ label, selected = false, onPress, variant = 'list
     onPress();
   };
 
-  const containerStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateY: pressY.value }],
-    backgroundColor: interpolateColor(
-      selectedProgress.value,
+  const containerStyle = useAnimatedStyle(() => {
+    // Default is grey. While the finger is down (and not yet selected) the
+    // border flashes green. Once selected, fill + border go green for good.
+    const restingBorder = interpolateColor(
+      pressProgress.value,
       [0, 1],
-      [colors.surface, colors.brandGreen],
-    ),
-    borderColor: interpolateColor(
-      selectedProgress.value,
-      [0, 1],
-      [colors.brandGreen, colors.brandGreenBorder],
-    ),
-  }));
+      [colors.graphite, colors.brandGreen],
+    );
+
+    return {
+      transform: [{ scale: scale.value }, { translateY: pressY.value }],
+      backgroundColor: interpolateColor(
+        selectedProgress.value,
+        [0, 1],
+        [colors.surface, colors.brandGreen],
+      ),
+      borderColor: interpolateColor(
+        selectedProgress.value,
+        [0, 1],
+        [restingBorder, colors.brandGreenBorder],
+      ),
+    };
+  });
 
   const textStyle = useAnimatedStyle(() => ({
     color: interpolateColor(selectedProgress.value, [0, 1], [colors.textPrimary, colors.background]),
@@ -92,10 +105,11 @@ export function AnswerButton({ label, selected = false, onPress, variant = 'list
 const styles = StyleSheet.create({
   button: {
     width: '100%',
-    minHeight: 54,
+    minHeight: 48,
     borderRadius: radius.input,
     borderWidth: 2,
     paddingHorizontal: 20,
+    paddingVertical: 8,
     justifyContent: 'center',
   },
   buttonGrid: {

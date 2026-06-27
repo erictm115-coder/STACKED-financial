@@ -1,7 +1,8 @@
 import * as Haptics from 'expo-haptics';
 import { useEffect } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
@@ -23,15 +24,23 @@ export function CheckButton({ label, checked, onPress, shake = false }: Props) {
   const scale = useSharedValue(1);
   const pressY = useSharedValue(0);
   const shakeX = useSharedValue(0);
+  const pressProgress = useSharedValue(0);
+  const checkedProgress = useSharedValue(checked ? 1 : 0);
+
+  useEffect(() => {
+    checkedProgress.value = withTiming(checked ? 1 : 0, { duration: 150 });
+  }, [checked, checkedProgress]);
 
   const handlePressIn = () => {
     scale.value = withTiming(0.97, { duration: 120 });
     pressY.value = withTiming(2, { duration: 120 });
+    pressProgress.value = withTiming(1, { duration: 120 });
   };
 
   const handlePressOut = () => {
     scale.value = withTiming(1, { duration: 120 });
     pressY.value = withTiming(0, { duration: 120 });
+    pressProgress.value = withTiming(0, { duration: 120 });
   };
 
   const handlePress = () => {
@@ -52,21 +61,44 @@ export function CheckButton({ label, checked, onPress, shake = false }: Props) {
     }
   }, [shake, shakeX]);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }, { translateY: pressY.value }, { translateX: shakeX.value }],
-  }));
+  const animatedStyle = useAnimatedStyle(() => {
+    const restingBorder = interpolateColor(
+      pressProgress.value,
+      [0, 1],
+      [colors.graphite, colors.brandGreen],
+    );
+
+    return {
+      transform: [{ scale: scale.value }, { translateY: pressY.value }, { translateX: shakeX.value }],
+      backgroundColor: interpolateColor(checkedProgress.value, [0, 1], [colors.surface, '#0a2200']),
+      borderColor: interpolateColor(checkedProgress.value, [0, 1], [restingBorder, colors.brandGreen]),
+    };
+  });
+
+  const checkboxStyle = useAnimatedStyle(() => {
+    const restingBorder = interpolateColor(
+      pressProgress.value,
+      [0, 1],
+      [colors.graphite, colors.brandGreen],
+    );
+    return { borderColor: restingBorder };
+  });
 
   return (
-    <Animated.View style={animatedStyle}>
+    <Animated.View style={[styles.button, animatedStyle]}>
       <Pressable
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={handlePress}
-        style={[styles.button, checked && styles.selected]}
+        style={styles.pressable}
         accessibilityRole="checkbox"
         accessibilityState={{ checked }}
       >
-        {checked ? <CheckboxTick size={20} /> : <View style={styles.checkbox} />}
+        {checked ? (
+          <CheckboxTick size={20} />
+        ) : (
+          <Animated.View style={[styles.checkbox, checkboxStyle]} />
+        )}
         <Text style={styles.label} numberOfLines={2}>
           {label}
         </Text>
@@ -78,26 +110,22 @@ export function CheckButton({ label, checked, onPress, shake = false }: Props) {
 const styles = StyleSheet.create({
   button: {
     width: '100%',
-    minHeight: 54,
+    minHeight: 48,
     borderRadius: radius.input,
-    backgroundColor: colors.surface,
     borderWidth: 2,
-    borderColor: colors.brandGreen,
+  },
+  pressable: {
+    flex: 1,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-  },
-  selected: {
-    borderColor: colors.brandGreen,
-    backgroundColor: '#0a2200',
   },
   checkbox: {
     width: 20,
     height: 20,
     borderRadius: 4,
     borderWidth: 2,
-    borderColor: colors.brandGreen,
     backgroundColor: 'transparent',
   },
   label: {

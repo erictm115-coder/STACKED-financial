@@ -1,8 +1,8 @@
 import { useRouter } from 'expo-router';
+import { Target } from 'lucide-react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { TargetIcon } from '@/components/icons/TargetIcon';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, spacing } from '@/constants/theme';
@@ -13,7 +13,7 @@ export default function ThankYou() {
   return (
     <SafeAreaView style={styles.safe}>
       <ScreenEntrance style={styles.content}>
-        <TargetIcon size={72} />
+        <Target size={72} color={colors.brandGreen} />
         <Text style={styles.title}>Thank you for your honesty, friend.</Text>
         <Text style={styles.body}>Now we have something powerful for you :)</Text>
 

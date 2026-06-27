@@ -17,7 +17,7 @@ type Props = {
 };
 
 const COUNT_UP_DURATION = 1000;
-const CARD_HEIGHT = 110;
+const MIN_CARD_HEIGHT = 85;
 
 /** Counts from `from` to `to` over the given duration using an ease-out curve, after an optional delay. */
 function useCountUp(to: number, from: number, duration: number, delayMs: number) {
@@ -94,7 +94,7 @@ export function ScoreCard({ icon, label, score, delta = null, isHigh, delayMs = 
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    height: CARD_HEIGHT,
+    minHeight: MIN_CARD_HEIGHT,
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.graphite,

@@ -1,16 +1,9 @@
 import { useRouter } from 'expo-router';
+import { BarChart2, Crosshair, Eye, Lightbulb, TrendingUp, Zap } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import {
-  ClarityIcon,
-  DisciplineIcon,
-  FocusIcon,
-  InvestmentIcon,
-  MoneyMindsetIcon,
-  OverallIcon,
-} from '@/components/icons/ScoreIcons';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScoreCard } from '@/components/ui/ScoreCard';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
@@ -55,71 +48,77 @@ export default function Results() {
   if (!scores) return null;
 
   const cards = [
-    { icon: <OverallIcon color={RED} />, label: 'Overall', score: scores.overall },
-    { icon: <MoneyMindsetIcon />, label: 'Money Mindset', score: scores.moneyMindset },
-    { icon: <ClarityIcon />, label: 'Clarity', score: scores.clarity },
-    { icon: <DisciplineIcon />, label: 'Discipline', score: scores.discipline },
-    { icon: <FocusIcon />, label: 'Focus', score: scores.focus },
-    { icon: <InvestmentIcon />, label: 'Investment Readiness', score: scores.investmentReadiness },
+    { icon: <TrendingUp size={16} color={RED} />, label: 'Overall', score: scores.overall },
+    {
+      icon: <Lightbulb size={16} color={colors.accentBlue} />,
+      label: 'Money Mindset',
+      score: scores.moneyMindset,
+    },
+    {
+      icon: <Eye size={16} color={colors.brandGreenOutline} />,
+      label: 'Clarity',
+      score: scores.clarity,
+    },
+    { icon: <Zap size={16} color="#f4c430" />, label: 'Discipline', score: scores.discipline },
+    {
+      icon: <Crosshair size={16} color={colors.brandGreen} />,
+      label: 'Focus',
+      score: scores.focus,
+    },
+    {
+      icon: <BarChart2 size={16} color={colors.accentBlue} />,
+      label: 'Investment Readiness',
+      score: scores.investmentReadiness,
+    },
   ];
+  const rows = [cards.slice(0, 2), cards.slice(2, 4), cards.slice(4, 6)];
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <ScreenEntrance>
-          <Text style={styles.title}>Your Stacked Score</Text>
-          <Text style={styles.subtitle}>
-            Based on your answers, here is your Stacked Score. The higher the rating, the closer you
-            are to true financial freedom.
-          </Text>
+      <ScreenEntrance style={styles.content}>
+        <Text style={styles.title}>Your Stacked Score</Text>
+        <Text style={styles.subtitle}>
+          Based on your answers, here is your Stacked Score. The higher the rating, the closer you
+          are to true financial freedom.
+        </Text>
 
-          <View style={styles.grid}>
-            {cards.map((c, i) => (
-              <View key={c.label} style={styles.gridItem}>
+        <View style={styles.grid}>
+          {rows.map((row, i) => (
+            <View key={i} style={styles.row}>
+              {row.map((c, j) => (
                 <ScoreCard
+                  key={c.label}
                   icon={c.icon}
                   label={c.label}
                   score={c.score}
                   isHigh={false}
-                  delayMs={i * STAGGER_MS}
+                  delayMs={(i * 2 + j) * STAGGER_MS}
                 />
-              </View>
-            ))}
-          </View>
-        </ScreenEntrance>
-      </ScrollView>
+              ))}
+            </View>
+          ))}
+        </View>
 
-      <View style={styles.cta}>
         <PrimaryButton
           label="Show my potential score →"
           onPress={() => router.push('/onboarding/potential')}
         />
-      </View>
+      </ScreenEntrance>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
-  scrollContent: { paddingHorizontal: spacing.xl, paddingTop: spacing.lg, paddingBottom: 140 },
-  title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary },
+  content: { flex: 1, paddingHorizontal: spacing.xl, paddingBottom: spacing.lg },
+  title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary, marginTop: spacing.lg },
   subtitle: {
     fontFamily: fonts.medium,
     fontSize: 14,
     color: colors.ash,
     marginTop: spacing.sm,
-    marginBottom: spacing.xl,
+    marginBottom: spacing.lg,
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing.md,
-  },
-  gridItem: { width: '47%' },
-  cta: {
-    position: 'absolute',
-    left: spacing.xl,
-    right: spacing.xl,
-    bottom: 34,
-  },
+  grid: { flex: 1, gap: spacing.sm },
+  row: { flex: 1, flexDirection: 'row', gap: spacing.sm },
 });

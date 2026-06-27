@@ -1,25 +1,35 @@
-import { useState } from 'react';
+import { CheckCircle, Circle, CheckCircle2, X } from 'lucide-react-native';
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { TickIcon } from '@/components/icons/TickIcon';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
 import { useOnboarding } from '@/hooks/useOnboarding';
 
-type PlanId = 'weekly' | 'monthly' | 'annual';
+type PlanId = 'weekly' | 'annual';
 
-const PLANS: { id: PlanId; name: string; price: string; badge?: string; sub?: string }[] = [
-  { id: 'weekly', name: 'Weekly', price: '€1.99 / week' },
-  { id: 'monthly', name: 'Monthly', price: '€3.09 / month', badge: '14% OFF' },
+type Plan = {
+  id: PlanId;
+  label: string;
+  price: string;
+  period: string;
+  subLabel: string | null;
+  badge: string | null;
+};
+
+const PLANS: Plan[] = [
   {
     id: 'annual',
-    name: 'Annual',
-    price: '€34.99 / yr',
-    badge: '60% OFF',
-    sub: '1 week free, cancel anytime',
+    label: 'Annual',
+    price: '€39.99',
+    period: 'per year',
+    subLabel: '€3.33/month · billed yearly',
+    badge: 'BEST VALUE',
   },
+  { id: 'weekly', label: 'Weekly', price: '€3.99', period: 'per week', subLabel: null, badge: null },
 ];
 
 const FEATURES = [
@@ -30,6 +40,42 @@ const FEATURES = [
 /** Placeholder purchase flow — wire up to RevenueCat/StoreKit when ready. */
 function startPurchase(planId: PlanId) {
   console.log('[paywall] purchase initiated for plan:', planId);
+}
+
+function PlanCard({ plan, selected, onPress }: { plan: Plan; selected: boolean; onPress: () => void }) {
+  const progress = useSharedValue(selected ? 1 : 0);
+
+  useEffect(() => {
+    progress.value = withTiming(selected ? 1 : 0, { duration: 150 });
+  }, [selected, progress]);
+
+  const cardStyle = useAnimatedStyle(() => ({
+    borderColor: interpolateColor(progress.value, [0, 1], [colors.graphite, colors.brandGreen]),
+    backgroundColor: interpolateColor(progress.value, [0, 1], [colors.surface, '#0a2200']),
+  }));
+
+  return (
+    <Pressable onPress={onPress} accessibilityRole="radio" accessibilityState={{ selected }}>
+      <Animated.View style={[styles.planCard, cardStyle]}>
+        {plan.badge && (
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{plan.badge}</Text>
+          </View>
+        )}
+        {selected ? (
+          <CheckCircle2 size={20} color={colors.brandGreen} />
+        ) : (
+          <Circle size={20} color={colors.graphite} />
+        )}
+        <View style={styles.planInfo}>
+          <Text style={styles.planName}>
+            {plan.label} <Text style={styles.planPrice}>{plan.price} {plan.period}</Text>
+          </Text>
+          {plan.subLabel && <Text style={styles.planSub}>{plan.subLabel}</Text>}
+        </View>
+      </Animated.View>
+    </Pressable>
+  );
 }
 
 export default function Paywall() {
@@ -46,7 +92,7 @@ export default function Paywall() {
   return (
     <SafeAreaView style={styles.safe}>
       <Pressable onPress={handleClose} style={styles.closeButton} accessibilityRole="button">
-        <Text style={styles.closeIcon}>✕</Text>
+        <X size={20} color={colors.ash} />
       </Pressable>
 
       <ScreenEntrance style={styles.content}>
@@ -58,60 +104,41 @@ export default function Paywall() {
         <View style={styles.features}>
           {FEATURES.map((feature) => (
             <View key={feature} style={styles.featureRow}>
-              <TickIcon size={20} />
+              <CheckCircle size={18} color={colors.brandGreen} />
               <Text style={styles.featureText}>{feature}</Text>
             </View>
           ))}
         </View>
 
         <View style={styles.plans}>
-          {PLANS.map((plan) => {
-            const selected = plan.id === selectedPlan;
-            return (
-              <Pressable
-                key={plan.id}
-                onPress={() => setSelectedPlan(plan.id)}
-                style={[styles.planCard, selected && styles.planCardSelected]}
-                accessibilityRole="radio"
-                accessibilityState={{ selected }}
-              >
-                <View style={[styles.radio, selected && styles.radioSelected]} />
-                <View style={styles.planInfo}>
-                  <Text style={styles.planName}>
-                    {plan.name} <Text style={styles.planPrice}>{plan.price}</Text>
-                  </Text>
-                  {plan.sub && <Text style={styles.planSub}>{plan.sub}</Text>}
-                </View>
-                {plan.badge && (
-                  <View style={[styles.badge, plan.id === 'annual' && styles.badgeFilled]}>
-                    <Text style={[styles.badgeText, plan.id === 'annual' && styles.badgeTextFilled]}>
-                      {plan.badge}
-                    </Text>
-                  </View>
-                )}
-              </Pressable>
-            );
-          })}
+          {PLANS.map((plan) => (
+            <PlanCard
+              key={plan.id}
+              plan={plan}
+              selected={plan.id === selectedPlan}
+              onPress={() => setSelectedPlan(plan.id)}
+            />
+          ))}
         </View>
 
         <View style={styles.cta}>
-          <PrimaryButton label="Continue for free →" onPress={handleContinue} />
-        </View>
-
-        <View style={styles.footer}>
-          <Pressable onPress={() => console.log('[paywall] restore tapped')}>
-            <Text style={styles.footerText}>Restore</Text>
-          </Pressable>
-          <Text style={styles.footerDot}>·</Text>
-          <Pressable onPress={() => console.log('[paywall] terms tapped')}>
-            <Text style={styles.footerText}>Terms and conditions</Text>
-          </Pressable>
-          <Text style={styles.footerDot}>·</Text>
-          <Pressable onPress={() => console.log('[paywall] privacy tapped')}>
-            <Text style={styles.footerText}>Privacy policy</Text>
-          </Pressable>
+          <PrimaryButton label="Continue" onPress={handleContinue} />
         </View>
       </ScreenEntrance>
+
+      <View style={styles.footer}>
+        <Pressable onPress={() => console.log('[paywall] restore tapped')}>
+          <Text style={styles.footerText}>Restore</Text>
+        </Pressable>
+        <Text style={styles.footerDot}>·</Text>
+        <Pressable onPress={() => console.log('[paywall] terms tapped')}>
+          <Text style={styles.footerText}>Terms</Text>
+        </Pressable>
+        <Text style={styles.footerDot}>·</Text>
+        <Pressable onPress={() => console.log('[paywall] privacy tapped')}>
+          <Text style={styles.footerText}>Privacy</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
@@ -120,69 +147,59 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   closeButton: {
     position: 'absolute',
-    top: spacing.lg,
-    right: spacing.lg,
+    top: 52,
+    right: spacing.xl,
     width: 44,
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10,
   },
-  closeIcon: { color: colors.ash, fontSize: 20 },
-  content: { paddingHorizontal: spacing.xl, paddingTop: spacing.xxl },
-  title: { fontFamily: fonts.extraBold, fontSize: 26, color: colors.textPrimary },
+  content: { flex: 1, paddingHorizontal: spacing.xl, paddingTop: 64 },
+  title: { fontFamily: fonts.extraBold, fontSize: 24, color: colors.textPrimary },
   subtitle: {
     fontFamily: fonts.medium,
-    fontSize: 15,
+    fontSize: 14,
     color: colors.textSecondary,
     marginTop: spacing.sm,
-    marginBottom: spacing.lg,
   },
-  features: { gap: spacing.sm, marginBottom: spacing.xl },
+  features: { gap: spacing.sm, marginTop: spacing.lg },
   featureRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   featureText: { flex: 1, fontFamily: fonts.semiBold, fontSize: 15, color: colors.textPrimary },
-  plans: { gap: spacing.md },
+  plans: { gap: spacing.md, marginTop: spacing.xl },
   planCard: {
     height: 64,
     borderRadius: radius.input,
-    backgroundColor: colors.surface,
     borderWidth: 2,
-    borderColor: colors.graphite,
     paddingHorizontal: spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
   },
-  planCardSelected: { borderColor: colors.brandGreen, backgroundColor: '#0a2200' },
-  radio: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: colors.graphite,
+  badge: {
+    position: 'absolute',
+    top: -12,
+    right: 16,
+    backgroundColor: colors.brandGreen,
+    borderRadius: radius.pill,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
   },
-  radioSelected: { borderColor: colors.brandGreen, backgroundColor: colors.brandGreen },
+  badgeText: { fontFamily: fonts.extraBold, fontSize: 11, color: colors.background },
   planInfo: { flex: 1 },
   planName: { fontFamily: fonts.bold, fontSize: 15, color: colors.textPrimary },
   planPrice: { fontFamily: fonts.medium, color: colors.textSecondary },
   planSub: { fontFamily: fonts.medium, fontSize: 12, color: colors.ash, marginTop: 2 },
-  badge: {
-    backgroundColor: colors.surface,
-    borderRadius: radius.pill,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  badgeFilled: { backgroundColor: colors.brandGreen },
-  badgeText: { fontFamily: fonts.bold, fontSize: 11, color: colors.brandGreen },
-  badgeTextFilled: { color: colors.background },
   cta: { marginTop: spacing.xl },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: spacing.sm,
-    marginTop: spacing.lg,
-    marginBottom: spacing.md,
+    position: 'absolute',
+    bottom: 24,
+    left: 0,
+    right: 0,
   },
   footerText: { fontFamily: fonts.medium, fontSize: 13, color: colors.textMuted },
   footerDot: { color: colors.textMuted, fontSize: 13 },

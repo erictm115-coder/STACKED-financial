@@ -25,7 +25,7 @@ const SMALL_SCREEN_WIDTH = 380;
 
 export default function Verify() {
   const router = useRouter();
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const { saveAnswers, saveScores } = useOnboardingData();
   const answers = useOnboardingStore((s) => s.answers);
   const setScores = useOnboardingStore((s) => s.setScores);
@@ -142,7 +142,7 @@ export default function Verify() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 80}
       >
-        <ScreenEntrance style={styles.content}>
+        <ScreenEntrance style={[styles.content, { paddingTop: height * 0.12 }]}>
           <Text style={styles.title}>Enter your code</Text>
           <Text style={styles.subtitle}>We sent a 6-digit code to your email</Text>
 
@@ -184,7 +184,7 @@ export default function Verify() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   flex: { flex: 1 },
-  content: { paddingHorizontal: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.lg, flex: 1 },
+  content: { paddingHorizontal: spacing.xl, alignItems: 'center', justifyContent: 'flex-start', gap: spacing.lg, flex: 1 },
   title: { fontFamily: fonts.extraBold, fontSize: 26, color: colors.textPrimary, textAlign: 'center' },
   subtitle: { fontFamily: fonts.medium, fontSize: 14, color: colors.ash, textAlign: 'center' },
   boxRow: { flexDirection: 'row', gap: 10, marginTop: spacing.md, marginBottom: 40 },

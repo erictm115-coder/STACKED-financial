@@ -1,6 +1,14 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -15,6 +23,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Signup() {
   const router = useRouter();
+  const { height } = useWindowDimensions();
   const setAnswer = useOnboardingStore((s) => s.setAnswer);
   const [email, setEmail] = useState('');
   const [focused, setFocused] = useState(false);
@@ -48,14 +57,15 @@ export default function Signup() {
   };
 
   // Collapse the blob out of the way when the keyboard is up, giving the
-  // email input maximum breathing room.
+  // email input maximum breathing room. Base sizes are ~15% smaller than the
+  // original to leave more room for the content sitting lower on screen.
   const blobProgress = useSharedValue(1);
   useEffect(() => {
     blobProgress.value = withTiming(focused ? 0 : 1, { duration: 200 });
   }, [focused, blobProgress]);
 
   const blobAreaStyle = useAnimatedStyle(() => ({
-    height: 80 + blobProgress.value * 140,
+    height: 58 + blobProgress.value * 100,
     opacity: blobProgress.value,
   }));
 
@@ -66,16 +76,12 @@ export default function Signup() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
-        >
+        <View style={styles.flex}>
           <Animated.View style={[styles.blobArea, blobAreaStyle]}>
-            <PulsingBlob />
+            <PulsingBlob size={150} />
           </Animated.View>
 
-          <ScreenEntrance style={styles.content}>
+          <ScreenEntrance style={[styles.content, { paddingTop: height * 0.1 }]}>
             <Text style={styles.title}>Let&apos;s get started</Text>
             <Text style={styles.subtitle}>
               Enter your email to unlock your personalised wealth plan.
@@ -106,7 +112,7 @@ export default function Signup() {
 
             <Text style={styles.privacy}>We respect your privacy. No spam, ever.</Text>
           </ScreenEntrance>
-        </ScrollView>
+        </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -115,9 +121,8 @@ export default function Signup() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   flex: { flex: 1 },
-  scrollContent: { flexGrow: 1 },
   blobArea: { alignItems: 'center', justifyContent: 'center' },
-  content: { paddingHorizontal: spacing.xl, paddingBottom: spacing.xxl, gap: spacing.md },
+  content: { paddingHorizontal: spacing.xl, gap: spacing.md },
   title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary },
   subtitle: { fontFamily: fonts.medium, fontSize: 15, color: colors.textSecondary, marginBottom: spacing.sm },
   input: {

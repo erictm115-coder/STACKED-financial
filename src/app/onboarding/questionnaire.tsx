@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -27,6 +27,7 @@ type StepConfig = {
   skip: boolean;
   /** Override for titles that would otherwise wrap onto 3 lines (default 28). */
   titleFontSize?: number;
+  subtitleFontSize?: number;
 };
 
 const MAX_HABITS = 2;
@@ -107,14 +108,13 @@ const STEPS: StepConfig[] = [
     layout: 'list',
     type: 'multi',
     skip: false,
-    titleFontSize: 22,
+    titleFontSize: 20,
+    subtitleFontSize: 13,
     options: [
       'Impulse buying',
-      'Forgetting subscriptions',
       'Spending too much on food/eating out',
       'Not investing anything',
       'No budget or savings plan',
-      'Comparing myself to others online',
       'Avoiding my bank account',
     ],
   },
@@ -218,12 +218,8 @@ export default function Questionnaire() {
 
       <MaxSelectionToast visible={showMaxToast} />
 
-      <ScreenEntrance key={stepIndex} style={styles.flex}>
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
+      <ScreenEntrance key={stepIndex} style={styles.content}>
+        <View>
           <Text
             style={[
               styles.title,
@@ -232,8 +228,12 @@ export default function Questionnaire() {
           >
             {step.title}
           </Text>
-          <Text style={styles.subtitle}>{step.subtitle}</Text>
+          <Text style={[styles.subtitle, step.subtitleFontSize ? { fontSize: step.subtitleFontSize } : null]}>
+            {step.subtitle}
+          </Text>
+        </View>
 
+        <View style={styles.answersArea}>
           {step.layout === 'grid' ? (
             <View style={styles.grid}>
               {step.options.map((option) => (
@@ -268,18 +268,18 @@ export default function Questionnaire() {
               )}
             </View>
           )}
-
-          {step.skip && (
-            <Pressable onPress={handleSkip} style={styles.skip} accessibilityRole="button">
-              <Text style={styles.skipText}>Skip</Text>
-            </Pressable>
-          )}
-        </ScrollView>
+        </View>
 
         {step.type === 'multi' && selectedHabits.length > 0 && (
-          <View style={styles.stickyContinue}>
+          <View style={styles.continueWrap}>
             <PrimaryButton label="Continue →" onPress={advance} />
           </View>
+        )}
+
+        {step.skip && (
+          <Pressable onPress={handleSkip} style={styles.skip} accessibilityRole="button">
+            <Text style={styles.skipText}>Skip</Text>
+          </Pressable>
         )}
       </ScreenEntrance>
     </SafeAreaView>
@@ -288,7 +288,6 @@ export default function Questionnaire() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
-  flex: { flex: 1 },
   backButton: {
     width: 44,
     height: 44,
@@ -297,20 +296,21 @@ const styles = StyleSheet.create({
     marginLeft: spacing.sm,
   },
   backArrow: { color: colors.ash, fontSize: 22, fontFamily: fonts.bold },
-  scrollContent: { paddingHorizontal: spacing.xl, paddingTop: spacing.md, paddingBottom: 100 },
+  content: { paddingHorizontal: spacing.xl, paddingTop: spacing.sm, paddingBottom: spacing.lg },
   title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary },
   subtitle: {
     fontFamily: fonts.medium,
     fontSize: 15,
     color: colors.ash,
-    marginTop: spacing.sm,
-    marginBottom: spacing.xxl,
+    marginTop: spacing.xs,
+    marginBottom: spacing.sm,
   },
-  list: { gap: spacing.md },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md, justifyContent: 'space-between' },
+  answersArea: { flex: 1, justifyContent: 'center' },
+  list: { gap: 8 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, justifyContent: 'space-between' },
   gridItem: { width: '47%' },
-  stickyContinue: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 34 },
-  skip: { alignSelf: 'center', marginTop: spacing.xxl, padding: spacing.sm },
+  continueWrap: { paddingTop: spacing.sm },
+  skip: { alignSelf: 'center', padding: spacing.sm },
   skipText: { fontFamily: fonts.medium, fontSize: 14, color: colors.ash },
   toast: {
     position: 'absolute',

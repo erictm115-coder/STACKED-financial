@@ -1,9 +1,9 @@
 import { useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
+import { Bell, Check, X } from 'lucide-react-native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { BellIcon } from '@/components/icons/BellIcon';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, spacing } from '@/constants/theme';
@@ -27,7 +27,7 @@ export default function NotificationsScreen() {
         <View style={styles.bellWrap}>
           <View style={styles.glowOuter} />
           <View style={styles.glowInner} />
-          <BellIcon size={64} />
+          <Bell size={64} color={colors.accentBlue} />
         </View>
 
         <Text style={styles.title}>Want to actually hit your financial goals?</Text>
@@ -37,11 +37,16 @@ export default function NotificationsScreen() {
         </Text>
 
         <View style={styles.cta}>
-          <PrimaryButton label="✅  Enable notifications" onPress={handleEnable} />
+          <PrimaryButton
+            label="Enable notifications"
+            icon={<Check size={18} color={colors.background} />}
+            onPress={handleEnable}
+          />
         </View>
 
         <Pressable onPress={handleSkip} style={styles.skip} accessibilityRole="button">
-          <Text style={styles.skipText}>✗  Skip for now</Text>
+          <X size={16} color={colors.ash} />
+          <Text style={styles.skipText}>Skip for now</Text>
         </Pressable>
       </ScreenEntrance>
     </SafeAreaView>
@@ -93,6 +98,11 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   cta: { width: '100%', marginTop: spacing.md },
-  skip: { padding: spacing.md },
+  skip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
   skipText: { fontFamily: fonts.medium, fontSize: 14, color: colors.ash },
 });
