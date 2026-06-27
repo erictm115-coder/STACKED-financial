@@ -1,5 +1,6 @@
 import {
   Nunito_500Medium,
+  Nunito_600SemiBold,
   Nunito_700Bold,
   Nunito_800ExtraBold,
   Nunito_900Black,
@@ -19,6 +20,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     Nunito_500Medium,
+    Nunito_600SemiBold,
     Nunito_700Bold,
     Nunito_800ExtraBold,
     Nunito_900Black,

@@ -38,6 +38,7 @@ export const radius = { input: 12, button: 16, card: 16, pill: 100 } as const;
 /** Font family names as registered by @expo-google-fonts/nunito. */
 export const fonts = {
   medium: 'Nunito_500Medium',
+  semiBold: 'Nunito_600SemiBold',
   bold: 'Nunito_700Bold',
   extraBold: 'Nunito_800ExtraBold',
   black: 'Nunito_900Black',

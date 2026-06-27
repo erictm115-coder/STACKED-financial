@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import Animated, {
@@ -11,7 +12,6 @@ import Svg, { Circle, Path } from 'react-native-svg';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { colors, spacing, typography } from '@/constants/theme';
-import { useOnboarding } from '@/hooks/useOnboarding';
 
 type Props = { index: number; activeIndex: number };
 
@@ -44,7 +44,7 @@ function GrowthMark({ size = 132 }: { size?: number }) {
 
 export function WelcomeSlide({ index, activeIndex }: Props) {
   const { width } = useWindowDimensions();
-  const { completeOnboarding } = useOnboarding();
+  const router = useRouter();
   const active = index === activeIndex;
 
   const enter = useSharedValue(0);
@@ -70,7 +70,10 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
       </Animated.View>
 
       <View style={styles.cta}>
-        <PrimaryButton label="GET STARTED →" onPress={completeOnboarding} />
+        <PrimaryButton
+          label="GET STARTED →"
+          onPress={() => router.push('/onboarding/questionnaire')}
+        />
       </View>
     </View>
   );
