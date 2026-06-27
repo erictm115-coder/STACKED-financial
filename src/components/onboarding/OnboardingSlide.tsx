@@ -91,10 +91,9 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
 
 const styles = StyleSheet.create({
   page: { flex: 1, paddingHorizontal: spacing.xl },
-  // Smaller blob area + textArea given extra weight pulls the text block up to
-  // roughly the 52%-from-top mark instead of sitting low against the bottom.
-  blobArea: { flex: 0.85, alignItems: 'center', justifyContent: 'center' },
-  textArea: { flex: 1.15, justifyContent: 'flex-start', paddingBottom: 80 },
+  // Even split puts the text block's top edge at ~50% of the screen.
+  blobArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  textArea: { flex: 1, justifyContent: 'flex-start', paddingBottom: 24 },
   headline: { fontFamily: fonts.extraBold, fontSize: 26, lineHeight: 32, color: colors.textPrimary },
   body: { marginTop: 16, gap: 12 },
   paragraph: { fontFamily: fonts.medium, fontSize: 15, lineHeight: 23, color: colors.textSecondary },
