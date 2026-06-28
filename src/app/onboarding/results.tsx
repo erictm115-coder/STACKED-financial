@@ -75,7 +75,9 @@ export default function Results() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScreenEntrance style={styles.content}>
-        <Text style={styles.title}>Your Stacked Score</Text>
+        <Text style={styles.title}>
+          Your <Text style={{ color: colors.brandGreen }}>Stacked Score</Text>
+        </Text>
         <Text style={styles.subtitle}>
           Based on your answers, here is your Stacked Score. The higher the rating, the closer you
           are to true financial freedom.

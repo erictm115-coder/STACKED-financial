@@ -67,6 +67,8 @@ export function ScoreCard({ icon, label, score, delta = null, isHigh, delayMs = 
     }),
   }));
 
+  const labelFontSize = label.length > 8 ? 13 : 16;
+
   return (
     <View style={styles.card}>
       {delta != null && (
@@ -77,7 +79,7 @@ export function ScoreCard({ icon, label, score, delta = null, isHigh, delayMs = 
 
       <View style={styles.headerRow}>
         {icon}
-        <Text style={styles.label} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>
+        <Text style={[styles.label, { fontSize: labelFontSize }]} numberOfLines={2}>
           {label}
         </Text>
       </View>
@@ -113,8 +115,8 @@ const styles = StyleSheet.create({
   },
   deltaText: { fontFamily: fonts.bold, fontSize: 11, color: colors.brandGreen },
   headerRow: { flexDirection: 'row', alignItems: 'center', gap: 6, paddingRight: 36 },
-  label: { fontFamily: fonts.bold, fontSize: 11, color: colors.ash, flexShrink: 1 },
-  score: { fontFamily: fonts.black, fontSize: 36, color: colors.textPrimary },
+  label: { fontFamily: fonts.bold, fontSize: 16, color: colors.ash, flexShrink: 1 },
+  score: { fontFamily: fonts.black, fontSize: 40, color: colors.textPrimary },
   barTrack: {
     height: 5,
     width: '100%',

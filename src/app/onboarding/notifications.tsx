@@ -1,7 +1,8 @@
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
 import { Check, X } from 'lucide-react-native';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
@@ -26,9 +27,11 @@ export default function NotificationsScreen() {
       <ScreenEntrance style={styles.content}>
         <View style={styles.bellWrap}>
           <Image 
-            source={require('../../../assets/images/notification.png')} 
+            source={require('@/assets/images/notification.webp')} 
             style={{ width: 115, height: 115 }} 
-            resizeMode="contain"
+            contentFit="contain"
+            transition={0}
+            priority="high"
           />
         </View>
 

@@ -54,7 +54,7 @@ const STEPS: StepConfig[] = [
     skip: true,
     options: [
       'Financial freedom',
-      'To stop living paycheck to paycheck',
+      'Stop living by a paycheck',
       'To wake up without money stress',
       'To feel in control of my future',
       'To retire early',
@@ -122,11 +122,9 @@ const STEPS: StepConfig[] = [
     skip: true,
     options: [
       'I feel stuck financially',
-      'I want to stop living paycheck to paycheck',
-      'I lost my drive to build wealth',
+      'Stop living by a paycheck',
       'I want to find my financial purpose',
       'I want to stop wasting money',
-      "I'm not sure but it looked interesting",
       'Other',
     ],
   },
@@ -215,7 +213,7 @@ export default function Questionnaire() {
 
       <ScreenEntrance key={stepIndex} style={styles.content}>
         <View>
-          <Text style={styles.title}>{step.title}</Text>
+          <Text style={[styles.title, step.key === 'resonatingWord' && styles.titleResonates]}>{step.title}</Text>
           <Text style={styles.subtitle}>{step.subtitle}</Text>
         </View>
 
@@ -259,16 +257,14 @@ export default function Questionnaire() {
         </View>
 
         {step.type === 'multi' && selectedHabits.length > 0 && (
-          <View style={[styles.continueWrap, step.key === 'moneyHabits' && styles.continueHabits]}>
+          <View style={styles.continueWrap}>
             <PrimaryButton label="Continue →" onPress={advance} />
           </View>
         )}
 
-        {step.skip && (
-          <Pressable onPress={handleSkip} style={styles.skip} accessibilityRole="button">
-            <Text style={styles.skipText}>Skip</Text>
-          </Pressable>
-        )}
+        <Pressable onPress={handleSkip} style={styles.skip} accessibilityRole="button">
+          <Text style={styles.skipText}>Skip</Text>
+        </Pressable>
       </ScreenEntrance>
     </SafeAreaView>
   );
@@ -286,6 +282,10 @@ const styles = StyleSheet.create({
   backArrow: { color: colors.ash, fontSize: 22, fontFamily: fonts.bold },
   content: { paddingHorizontal: spacing.xl, paddingTop: spacing.sm, paddingBottom: spacing.lg },
   title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary },
+  titleResonates: {
+    fontSize: 24,
+    lineHeight: 30,
+  },
   subtitle: {
     fontFamily: fonts.medium,
     fontSize: 15,
@@ -297,19 +297,13 @@ const styles = StyleSheet.create({
   list: { flex: 1, justifyContent: 'center', gap: 8 },
   flexButton: {
     flex: 1,
-    minHeight: 42,
-    maxHeight: 54,
+    minHeight: 56,
+    maxHeight: 64,
   },
   habitButton: {
-    height: 48,
-    minHeight: 48,
-    maxHeight: 48,
-  },
-  continueHabits: {
-    position: 'absolute',
-    bottom: 34,
-    left: 24,
-    right: 24,
+    height: 56,
+    minHeight: 56,
+    maxHeight: 56,
   },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, justifyContent: 'space-between' },
   gridItem: { width: '47%' },

@@ -117,7 +117,7 @@ export function CheckButton({ label, checked, onPress, shake = false, style }: P
 const styles = StyleSheet.create({
   button: {
     width: '100%',
-    minHeight: 48,
+    minHeight: 56,
     borderRadius: radius.input,
     borderWidth: 2,
   },
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
     fontFamily: fonts.semiBold,
-    fontSize: 15,
+    fontSize: 17,
   },
   labelSelected: {
     fontFamily: fonts.bold,

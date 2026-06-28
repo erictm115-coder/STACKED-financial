@@ -1,40 +1,66 @@
-import * as Haptics from 'expo-haptics';
-import { Bookmark, ChevronRight, Lock } from 'lucide-react-native';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-
-import { GoalIcon } from '@/components/main/GoalIcon';
+import { Bookmark, Lock, Plus } from 'lucide-react-native';
+import * as Haptics from 'expo-haptics';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
-import { goalMetaLabel, type Goal } from '@/data/goals';
+import { GoalIcon } from '@/components/main/GoalIcon';
+import { type Goal } from '@/data/goals';
 
-type Props = {
+interface Props {
   goal: Goal;
   saved: boolean;
-  onToggleSaved: () => void;
-  /** Open this goal's plan (free goals). */
-  onOpen: () => void;
-  /** Locked goal tapped — surface the paywall. */
+  active: boolean; // whether plan is active / started
+  onToggleSaved: (goalId: string) => void;
+  onOpen: (goalId: string) => void;
   onLocked: () => void;
-};
+  onRequestStartPlan: (goalId: string) => void; // bottom sheet confirmation trigger
+}
 
-/**
- * A single goal in the Discover list. Swipe right to reveal "Create plan" (the
- * primary action), or tap the row. Locked (premium) goals route to the paywall.
- */
-export function GoalRow({ goal, saved, onToggleSaved, onOpen, onLocked }: Props) {
+export function GoalRow({
+  goal,
+  saved,
+  active,
+  onToggleSaved,
+  onOpen,
+  onLocked,
+  onRequestStartPlan,
+}: Props) {
   const swipeRef = useRef<Swipeable>(null);
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (goal.isPremium) onLocked();
-    else onOpen();
+    if (goal.isPremium) {
+      onLocked();
+    } else {
+      onOpen(goal.id);
+    }
   };
 
+  const getDifficultyStyles = (diff: string) => {
+    switch (diff) {
+      case 'beginner':
+        return { bg: '#0a2200', text: colors.brandGreen, border: colors.brandGreen };
+      case 'intermediate':
+        return { bg: '#0a1a3a', text: colors.accentBlue, border: colors.accentBlue };
+      default:
+        return { bg: '#2a0a0a', text: '#ff4b4b', border: '#ff4b4b' };
+    }
+  };
+
+  const diffStyles = getDifficultyStyles(goal.difficulty);
+
   const renderLeftActions = () => (
-    <View style={styles.swipeAction}>
-      <Text style={styles.swipeText}>Create plan</Text>
-      <ChevronRight size={18} color={colors.textPrimary} />
+    <View style={styles.swipeLeftAction}>
+      <Plus size={20} color="#ffffff" />
+      <Text style={styles.swipeLeftText}>{active ? 'Continue' : 'Create Plan'}</Text>
+    </View>
+  );
+
+  const renderRightActions = () => (
+    <View style={styles.swipeRightAction}>
+      <Bookmark size={20} color={colors.brandGreen} fill={saved ? colors.brandGreen : 'transparent'} />
+      <Text style={styles.swipeRightText}>{saved ? 'Saved' : 'Save'}</Text>
     </View>
   );
 
@@ -43,12 +69,24 @@ export function GoalRow({ goal, saved, onToggleSaved, onOpen, onLocked }: Props)
       ref={swipeRef}
       enabled={!goal.isPremium}
       renderLeftActions={renderLeftActions}
-      leftThreshold={48}
-      friction={2}
+      renderRightActions={renderRightActions}
+      leftThreshold={50}
+      rightThreshold={50}
+      friction={1.5}
       onSwipeableOpen={(direction) => {
+        swipeRef.current?.close();
         if (direction === 'left') {
-          swipeRef.current?.close();
-          onOpen();
+          // Swiped right -> Reveals Left Action (Create Plan)
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          if (active) {
+            onOpen(goal.id);
+          } else {
+            onRequestStartPlan(goal.id);
+          }
+        } else if (direction === 'right') {
+          // Swiped left -> Reveals Right Action (Save)
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+          onToggleSaved(goal.id);
         }
       }}
     >
@@ -56,7 +94,7 @@ export function GoalRow({ goal, saved, onToggleSaved, onOpen, onLocked }: Props)
         <View style={styles.iconWrap}>
           <GoalIcon
             iconKey={goal.iconKey}
-            color={goal.isPremium ? colors.ash : colors.brandGreen}
+            color={goal.isPremium ? colors.ash : diffStyles.text}
           />
         </View>
 
@@ -64,29 +102,40 @@ export function GoalRow({ goal, saved, onToggleSaved, onOpen, onLocked }: Props)
           <Text style={styles.title} numberOfLines={1}>
             {goal.title}
           </Text>
-          <Text style={styles.meta}>{goalMetaLabel(goal)}</Text>
+          <View style={styles.metaRow}>
+            <View
+              style={[
+                styles.diffPill,
+                { backgroundColor: diffStyles.bg, borderColor: diffStyles.border },
+              ]}
+            >
+              <Text style={[styles.diffText, { color: diffStyles.text }]}>
+                {goal.difficulty}
+              </Text>
+            </View>
+            {goal.estDuration && <Text style={styles.duration}>{goal.estDuration}</Text>}
+          </View>
         </View>
 
-        {goal.isPremium ? (
-          <View style={styles.trailingBtn}>
-            <Lock size={18} color={colors.ash} />
-          </View>
-        ) : (
-          <Pressable
-            style={styles.trailingBtn}
-            hitSlop={8}
-            onPress={() => {
-              Haptics.selectionAsync();
-              onToggleSaved();
-            }}
-          >
-            <Bookmark
-              size={20}
-              color={saved ? colors.brandGreen : colors.ash}
-              fill={saved ? colors.brandGreen : 'transparent'}
-            />
-          </Pressable>
-        )}
+        <View style={styles.trailing}>
+          {goal.isPremium ? (
+            <Lock size={16} color="#555555" />
+          ) : (
+            <Pressable
+              hitSlop={8}
+              onPress={() => {
+                Haptics.selectionAsync();
+                onToggleSaved(goal.id);
+              }}
+            >
+              <Bookmark
+                size={16}
+                color={saved ? colors.brandGreen : '#555555'}
+                fill={saved ? colors.brandGreen : 'transparent'}
+              />
+            </Pressable>
+          )}
+        </View>
       </Pressable>
     </Swipeable>
   );
@@ -102,29 +151,79 @@ const styles = StyleSheet.create({
     borderColor: colors.graphite,
     borderRadius: radius.card,
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
+    paddingVertical: 18,
   },
   iconWrap: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: radius.input,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.background,
   },
-  textBlock: { flex: 1, gap: 2 },
+  textBlock: { flex: 1, gap: 4 },
   title: { fontFamily: fonts.bold, fontSize: 16, color: colors.textPrimary },
-  meta: { fontFamily: fonts.semiBold, fontSize: 12, color: colors.ash },
-  trailingBtn: { width: 32, height: 32, alignItems: 'center', justifyContent: 'center' },
-  swipeAction: {
+  metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: spacing.sm,
+  },
+  diffPill: {
+    borderWidth: 1,
+    borderRadius: 100,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  diffText: {
+    fontFamily: fonts.bold,
+    fontSize: 10,
+    textTransform: 'capitalize',
+  },
+  duration: {
+    fontFamily: fonts.semiBold,
+    fontSize: 12,
+    color: colors.ash,
+  },
+  trailing: {
+    width: 32,
+    height: 32,
+    alignItems: 'center',
     justifyContent: 'center',
-    gap: 4,
+  },
+  
+  // Swipe styles
+  swipeLeftAction: {
+    flex: 1,
     backgroundColor: colors.brandGreen,
     borderRadius: radius.card,
-    marginRight: spacing.sm,
-    paddingHorizontal: spacing.lg,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingHorizontal: spacing.xl,
+    gap: spacing.sm,
+    marginVertical: 1, // subtle visual separation
   },
-  swipeText: { fontFamily: fonts.extraBold, fontSize: 14, color: colors.textPrimary },
+  swipeLeftText: {
+    fontFamily: fonts.bold,
+    fontSize: 13,
+    color: '#ffffff',
+  },
+  swipeRightAction: {
+    flex: 1,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.brandGreenOutline,
+    borderRadius: radius.card,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingHorizontal: spacing.xl,
+    gap: spacing.sm,
+    marginVertical: 1,
+  },
+  swipeRightText: {
+    fontFamily: fonts.bold,
+    fontSize: 13,
+    color: colors.brandGreen,
+  },
 });

@@ -1,16 +1,25 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ArrowLeft, ChevronDown, ChevronUp, Play, BookOpen, Wrench, Square, CheckSquare } from 'lucide-react-native';
+import { useState } from 'react';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { GoalIcon } from '@/components/main/GoalIcon';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
-import { getGoalById, goalMetaLabel } from '@/data/goals';
+import { goalMetaLabel } from '@/data/goals';
+import { useAppStore } from '@/store/appStore';
 
 export default function PlanDetail() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const getGoalById = useAppStore((s) => s.getGoalById);
   const goal = getGoalById(id);
+
+  // Track which step is expanded (null means none)
+  const [expandedStep, setExpandedStep] = useState<number | null>(1);
+  
+  // Track checked action items (key format: 'stepNumber-actionIndex')
+  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
 
   if (!goal) {
     return (
@@ -22,6 +31,43 @@ export default function PlanDetail() {
       </SafeAreaView>
     );
   }
+
+  const toggleStep = (stepNumber: number) => {
+    setExpandedStep(expandedStep === stepNumber ? null : stepNumber);
+  };
+
+  const toggleActionItem = (stepNumber: number, actionIndex: number) => {
+    const key = `${stepNumber}-${actionIndex}`;
+    setCheckedItems((prev) => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
+
+  const openLink = async (url: string) => {
+    if (!url) return;
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        console.error("Don't know how to open URI: " + url);
+      }
+    } catch (err) {
+      console.error('Failed to open link:', err);
+    }
+  };
+
+  const getContentIcon = (type: string) => {
+    switch (type) {
+      case 'video':
+        return <Play size={16} color={colors.brandGreen} fill={colors.brandGreen} />;
+      case 'article':
+        return <BookOpen size={16} color={colors.accentBlue} />;
+      default:
+        return <Wrench size={16} color={colors.brandGreen} />;
+    }
+  };
 
   return (
     <SafeAreaView style={styles.safe} edges={['top']}>
@@ -41,17 +87,96 @@ export default function PlanDetail() {
           </View>
         </View>
 
-        {/* Step timeline (collapsed) */}
+        {/* Step timeline (collapsible accordions) */}
         {goal.steps.length > 0 ? (
           <View style={styles.timeline}>
-            {goal.steps.map((step) => (
-              <View key={step.stepNumber} style={styles.stepRow}>
-                <View style={styles.stepNumber}>
-                  <Text style={styles.stepNumberText}>{step.stepNumber}</Text>
+            {goal.steps.map((step) => {
+              const isExpanded = expandedStep === step.stepNumber;
+              return (
+                <View key={step.stepNumber} style={styles.stepCard}>
+                  {/* Accordion Header */}
+                  <Pressable style={styles.stepHeader} onPress={() => toggleStep(step.stepNumber)}>
+                    <View style={styles.stepNumberBadge}>
+                      <Text style={styles.stepNumberText}>{step.stepNumber}</Text>
+                    </View>
+                    <Text style={styles.stepTitle}>{step.title}</Text>
+                    {isExpanded ? (
+                      <ChevronUp size={20} color={colors.ash} />
+                    ) : (
+                      <ChevronDown size={20} color={colors.ash} />
+                    )}
+                  </Pressable>
+
+                  {/* Accordion Body */}
+                  {isExpanded && (
+                    <View style={styles.stepBody}>
+                      {step.whyItMatters && (
+                        <View style={styles.whyBlock}>
+                          <Text style={styles.whyLabel}>Why it matters:</Text>
+                          <Text style={styles.whyText}>{step.whyItMatters}</Text>
+                        </View>
+                      )}
+
+                      {/* Action Items Checklist */}
+                      {step.actionItems && step.actionItems.length > 0 && (
+                        <View style={styles.sectionBlock}>
+                          <Text style={styles.sectionTitle}>Action Items</Text>
+                          <View style={styles.checklist}>
+                            {step.actionItems.map((item, idx) => {
+                              const isChecked = !!checkedItems[`${step.stepNumber}-${idx}`];
+                              return (
+                                <Pressable
+                                  key={idx}
+                                  style={styles.checkRow}
+                                  onPress={() => toggleActionItem(step.stepNumber, idx)}
+                                >
+                                  {isChecked ? (
+                                    <CheckSquare size={20} color={colors.brandGreen} />
+                                  ) : (
+                                    <Square size={20} color={colors.graphite} />
+                                  )}
+                                  <Text style={[styles.checkText, isChecked && styles.checkTextChecked]}>
+                                    {item}
+                                  </Text>
+                                </Pressable>
+                              );
+                            })}
+                          </View>
+                        </View>
+                      )}
+
+                      {/* Curated Lessons / Resources */}
+                      {step.content && step.content.length > 0 && (
+                        <View style={styles.sectionBlock}>
+                          <Text style={styles.sectionTitle}>Lessons & Resources</Text>
+                          <View style={styles.contentList}>
+                            {step.content.map((item, idx) => (
+                              <Pressable
+                                key={idx}
+                                style={styles.contentRow}
+                                onPress={() => item.url && openLink(item.url)}
+                              >
+                                <View style={styles.contentIconWrap}>
+                                  {getContentIcon(item.type)}
+                                </View>
+                                <View style={styles.contentTextWrap}>
+                                  <Text style={styles.contentTitle} numberOfLines={2}>
+                                    {item.title}
+                                  </Text>
+                                  <Text style={styles.contentMeta}>
+                                    {item.type.toUpperCase()} • {item.estMinutes} MIN
+                                  </Text>
+                                </View>
+                              </Pressable>
+                            ))}
+                          </View>
+                        </View>
+                      )}
+                    </View>
+                  )}
                 </View>
-                <Text style={styles.stepTitle}>{step.title}</Text>
-              </View>
-            ))}
+              );
+            })}
           </View>
         ) : (
           <Text style={styles.placeholder}>
@@ -85,17 +210,20 @@ const styles = StyleSheet.create({
   meta: { fontFamily: fonts.semiBold, fontSize: 13, color: colors.ash },
 
   timeline: { gap: spacing.md, marginTop: spacing.sm },
-  stepRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
+  stepCard: {
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.graphite,
     borderRadius: radius.card,
+    overflow: 'hidden',
+  },
+  stepHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
     padding: spacing.lg,
   },
-  stepNumber: {
+  stepNumberBadge: {
     width: 28,
     height: 28,
     borderRadius: 14,
@@ -106,6 +234,52 @@ const styles = StyleSheet.create({
   },
   stepNumberText: { fontFamily: fonts.bold, fontSize: 14, color: colors.brandGreen },
   stepTitle: { flex: 1, fontFamily: fonts.bold, fontSize: 15, color: colors.textPrimary },
+  
+  stepBody: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
+    gap: spacing.lg,
+    borderTopWidth: 1,
+    borderTopColor: colors.graphite,
+    paddingTop: spacing.md,
+  },
+  whyBlock: {
+    backgroundColor: colors.background,
+    borderRadius: radius.input,
+    padding: spacing.md,
+    gap: 4,
+  },
+  whyLabel: { fontFamily: fonts.bold, fontSize: 12, color: colors.ash, textTransform: 'uppercase' },
+  whyText: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.textSecondary, lineHeight: 20 },
+  
+  sectionBlock: { gap: spacing.xs },
+  sectionTitle: { fontFamily: fonts.bold, fontSize: 13, color: colors.ash, textTransform: 'uppercase' },
+  
+  checklist: { gap: spacing.sm },
+  checkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, paddingVertical: 2 },
+  checkText: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.textPrimary, flex: 1 },
+  checkTextChecked: { textDecorationLine: 'line-through', color: colors.ash },
+  
+  contentList: { gap: spacing.sm },
+  contentRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    backgroundColor: colors.background,
+    borderRadius: radius.input,
+    padding: spacing.md,
+  },
+  contentIconWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: radius.input,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.surface,
+  },
+  contentTextWrap: { flex: 1, gap: 2 },
+  contentTitle: { fontFamily: fonts.bold, fontSize: 14, color: colors.textPrimary },
+  contentMeta: { fontFamily: fonts.bold, fontSize: 11, color: colors.ash },
 
   placeholder: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.ash, lineHeight: 21 },
   notFound: {

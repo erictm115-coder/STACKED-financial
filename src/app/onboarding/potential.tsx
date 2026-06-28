@@ -62,7 +62,9 @@ export default function Potential() {
   return (
     <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScreenEntrance style={styles.content}>
-        <Text style={styles.title}>Your Potential Stacked Score</Text>
+        <Text style={styles.title}>
+          Your <Text style={{ color: GREEN }}>Potential</Text> Score
+        </Text>
         <Text style={styles.subtitle}>
           Based on your answers, we believe you have the potential to reach a {potential.overall}{' '}
           overall score using Stacked — and finally take control of your financial future.

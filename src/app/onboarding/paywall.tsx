@@ -103,7 +103,7 @@ export default function Paywall() {
 
       <ScreenEntrance style={styles.content}>
         <Text style={styles.title}>
-          Do <Text style={{ color: colors.brandGreen }}>more</Text> of what builds your{' '}
+          Do <Text style={{ color: colors.brandGreen, fontStyle: 'italic' }}>more</Text> of what builds your{' '}
           <Text style={{ color: colors.brandGreen }}>wealth</Text> and stress{' '}
           <Text style={{ fontStyle: 'italic' }}>less</Text>
         </Text>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 10,
   },
-  content: { flex: 1, paddingHorizontal: 20, paddingTop: 120 },
+  content: { flex: 1, paddingHorizontal: 20, paddingTop: 75 },
   title: { fontFamily: fonts.extraBold, fontSize: 32, color: colors.textPrimary },
   subtitle: {
     fontFamily: fonts.medium,

@@ -107,11 +107,11 @@ export function AnswerButton({ label, selected = false, onPress, variant = 'list
 const styles = StyleSheet.create({
   pressable: {
     width: '100%',
-    minHeight: 48,
+    minHeight: 56,
   },
   pressableGrid: {
     width: '100%',
-    height: 64,
+    height: 90,
   },
   button: {
     width: '100%',
@@ -131,13 +131,13 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: fonts.semiBold,
-    fontSize: 15,
+    fontSize: 17,
   },
   labelSelected: {
     fontFamily: fonts.bold,
   },
   labelGrid: {
-    fontSize: 18,
+    fontSize: 20,
     textAlign: 'center',
   },
 });

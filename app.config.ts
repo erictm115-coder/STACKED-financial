@@ -5,12 +5,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: 'Stacked',
   slug: 'Stacked',
   version: '1.0.0',
+  jsEngine: 'hermes',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'stacked',
   userInterfaceStyle: 'dark',
   ios: {
-    icon: './assets/expo.icon',
+    icon: './assets/images/icon.png',
+    bundleIdentifier: 'com.erictm2626.stacked',
   },
   android: {
     adaptiveIcon: {
@@ -20,12 +22,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
     predictiveBackGestureEnabled: false,
+    package: 'com.erictm2626.stacked',
   },
   web: {
     output: 'single',
     favicon: './assets/images/favicon.png',
   },
   plugins: [
+    'expo-dev-client',
     'expo-router',
     [
       'expo-splash-screen',
@@ -49,5 +53,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // Never put the Resend (or any server-only) key here.
     supabaseUrl: process.env.SUPABASE_URL ?? 'https://cmmbakbxxbjonzmcklkr.supabase.co',
     supabaseAnonKey: process.env.SUPABASE_ANON_KEY ?? 'sb_publishable_OfeWpLXeVVKMDjqVHE0DqQ_eR--bpV7',
+    eas: {
+      projectId: '3703d635-48dd-4912-9ae6-4e917eda5421',
+    },
   },
 });

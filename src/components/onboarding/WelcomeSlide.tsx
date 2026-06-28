@@ -125,7 +125,7 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
       <View style={[styles.page, { width }]}>
         <Animated.View style={[styles.content, styles.contentWelcome, contentStyle]}>
           <Image
-            source={require('@/assets/images/welcome-illustration.png')}
+            source={require('@/assets/images/welcome-illustration.webp')}
             style={styles.art}
             contentFit="contain"
           />
@@ -242,8 +242,8 @@ const styles = StyleSheet.create({
   codeInput: { textAlign: 'center', fontFamily: fonts.bold, fontSize: 20, letterSpacing: 4 },
   error: { fontFamily: fonts.medium, fontSize: 13, color: '#ff4b4b', textAlign: 'center' },
   // Welcome mode: fixed positions, tuned by hand. No keyboard ever appears here.
-  cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 135 },
-  secondaryLink: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 101, alignItems: 'center' },
+  cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 115 },
+  secondaryLink: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 81, alignItems: 'center' },
   // Email/OTP mode: button sits right under the input, inside the same
   // centered+keyboard-avoiding block, so it never drifts from it.
   inlineButtonsBlock: { width: '100%', gap: 16, marginTop: 12 },

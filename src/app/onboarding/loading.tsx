@@ -32,7 +32,6 @@ export default function Loading() {
   const pulse = useSharedValue(1);
   const messageOpacity = useSharedValue(1);
   const [messageIndex, setMessageIndex] = useState(0);
-  const isFirstRender = useRef(true);
 
   useEffect(() => {
     progress.value = withTiming(1, { duration: FILL_DURATION, easing: Easing.inOut(Easing.ease) });
@@ -52,10 +51,7 @@ export default function Loading() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Step the message index on the JS thread via plain React state — driving
-  // this from inside a Reanimated worklet callback (the previous approach)
-  // silently got stuck, since worklets capture closed-over variables by
-  // value and mutations inside them never propagate back to the JS thread.
+  // Step the message index immediately on the interval tick.
   useEffect(() => {
     const messageTimer = setInterval(() => {
       setMessageIndex((i) => (i < MESSAGES.length - 1 ? i + 1 : i));
@@ -63,31 +59,17 @@ export default function Loading() {
     return () => clearInterval(messageTimer);
   }, []);
 
-  // Crossfade whenever the message actually changes (skip on initial mount).
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    messageOpacity.value = withSequence(
-      withTiming(0, { duration: 200 }),
-      withTiming(1, { duration: 200 }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messageIndex]);
-
   const fillStyle = useAnimatedStyle(() => ({ width: `${progress.value * 100}%` }));
   const titleStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
-  const messageStyle = useAnimatedStyle(() => ({ opacity: messageOpacity.value }));
 
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.content}>
         <Animated.Text style={[styles.title, titleStyle]}>Here we go!</Animated.Text>
 
-        <Animated.Text style={[styles.subtitle, messageStyle]}>
+        <Text style={styles.subtitle}>
           {MESSAGES[messageIndex]}
-        </Animated.Text>
+        </Text>
 
         <View style={styles.barTrack}>
           <Animated.View style={[styles.barFill, fillStyle]} />

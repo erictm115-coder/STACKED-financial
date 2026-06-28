@@ -6,6 +6,7 @@
 
 export type GoalCategory = 'debt' | 'investing' | 'saving' | 'budgeting' | 'income';
 export type GoalDifficulty = 'beginner' | 'intermediate' | 'advanced';
+export type GoalStream = 'money_foundations' | 'income_builders' | 'wealthy_habits';
 
 /** Stack Score dimensions a step can raise (matches calculateScores). */
 export type ScoreDimension =
@@ -34,7 +35,10 @@ export type GoalStep = {
 
 export type Goal = {
   id: string;
+  databaseId?: string;
   title: string;
+  /** Which catalogue stream this goal belongs to (drives Discover grouping). */
+  stream?: GoalStream;
   category: GoalCategory;
   difficulty: GoalDifficulty;
   /** Human-readable estimate, e.g. "~3 wks". Null for premium teasers. */
