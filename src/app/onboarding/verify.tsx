@@ -142,7 +142,7 @@ export default function Verify() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 80}
       >
-        <ScreenEntrance style={[styles.content, { paddingTop: height * 0.12 }]}>
+        <ScreenEntrance style={[styles.content, { marginTop: height * 0.12, paddingTop: height * 0.15 }]}>
           <Text style={styles.title}>Enter your code</Text>
           <Text style={styles.subtitle}>We sent a 6-digit code to your email</Text>
 
@@ -170,7 +170,12 @@ export default function Verify() {
 
           {error && <Text style={styles.error}>{error}</Text>}
 
-          <Pressable onPress={handleResend} disabled={secondsLeft > 0} accessibilityRole="button">
+          <Pressable
+            onPress={handleResend}
+            disabled={secondsLeft > 0}
+            accessibilityRole="button"
+            style={styles.resendButton}
+          >
             <Text style={styles.resend}>
               {secondsLeft > 0 ? `Resend available in ${secondsLeft}s` : "Didn't get it? Resend"}
             </Text>
@@ -187,7 +192,7 @@ const styles = StyleSheet.create({
   content: { paddingHorizontal: spacing.xl, alignItems: 'center', justifyContent: 'flex-start', gap: spacing.lg, flex: 1 },
   title: { fontFamily: fonts.extraBold, fontSize: 26, color: colors.textPrimary, textAlign: 'center' },
   subtitle: { fontFamily: fonts.medium, fontSize: 14, color: colors.ash, textAlign: 'center' },
-  boxRow: { flexDirection: 'row', gap: 10, marginTop: spacing.md, marginBottom: 40 },
+  boxRow: { flexDirection: 'row', gap: 10, marginTop: spacing.md, marginBottom: 0 },
   box: {
     height: 62,
     borderRadius: radius.input,
@@ -201,5 +206,6 @@ const styles = StyleSheet.create({
   },
   boxActive: { borderColor: colors.brandGreen },
   error: { fontFamily: fonts.medium, fontSize: 13, color: '#ff4b4b', textAlign: 'center' },
+  resendButton: { marginTop: 24 },
   resend: { fontFamily: fonts.medium, fontSize: 14, color: colors.accentBlue },
 });

@@ -256,6 +256,7 @@ export default function Questionnaire() {
                     label={option}
                     checked={selectedHabits.includes(option)}
                     onPress={() => handleToggleHabit(option)}
+                    style={step.key === 'moneyHabits' ? styles.habitButton : styles.flexButton}
                   />
                 ) : (
                   <AnswerButton
@@ -263,6 +264,7 @@ export default function Questionnaire() {
                     label={option}
                     selected={answers[step.key] === option}
                     onPress={() => handleSingleSelect(option)}
+                    style={styles.flexButton}
                   />
                 ),
               )}
@@ -271,7 +273,7 @@ export default function Questionnaire() {
         </View>
 
         {step.type === 'multi' && selectedHabits.length > 0 && (
-          <View style={styles.continueWrap}>
+          <View style={[styles.continueWrap, step.key === 'moneyHabits' && styles.continueHabits]}>
             <PrimaryButton label="Continue →" onPress={advance} />
           </View>
         )}
@@ -306,7 +308,23 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   answersArea: { flex: 1, justifyContent: 'center' },
-  list: { gap: 8 },
+  list: { flex: 1, justifyContent: 'center', gap: 8 },
+  flexButton: {
+    flex: 1,
+    minHeight: 42,
+    maxHeight: 54,
+  },
+  habitButton: {
+    height: 48,
+    minHeight: 48,
+    maxHeight: 48,
+  },
+  continueHabits: {
+    position: 'absolute',
+    bottom: 34,
+    left: 24,
+    right: 24,
+  },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, justifyContent: 'space-between' },
   gridItem: { width: '47%' },
   continueWrap: { paddingTop: spacing.sm },

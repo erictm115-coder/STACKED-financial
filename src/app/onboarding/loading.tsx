@@ -19,12 +19,12 @@ const FILL_DURATION = 3000;
 const MESSAGE_INTERVAL = 500;
 
 const MESSAGES = [
-  "Let's go!",
-  'Analysing your answers...',
-  'Understanding your goals...',
-  'Calculating your Stacked Score...',
-  'Building your personalised plan...',
-  'Almost ready...',
+  "Here we go! Let's go!",
+  "Analysing your answers...",
+  "Understanding your goals...",
+  "Calculating your Stacked Score...",
+  "Building your personalised plan...",
+  "Almost ready...",
 ];
 
 export default function Loading() {
@@ -73,7 +73,7 @@ export default function Loading() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.content}>
+      <View style={styles.upperContent}>
         <Animated.Text style={[styles.title, titleStyle]}>HERE WE GO!!!</Animated.Text>
 
         <Animated.Text style={[styles.subtitle, messageStyle]}>
@@ -86,7 +86,7 @@ export default function Loading() {
       </View>
 
       <View style={styles.socialProof}>
-        <StarRow size={13} />
+        <StarRow size={14} />
         <Text style={styles.socialProofText}>40,000+ people already on their path</Text>
       </View>
     </SafeAreaView>
@@ -95,16 +95,16 @@ export default function Loading() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background, paddingHorizontal: spacing.xl },
-  content: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: spacing.md, width: '100%' },
+  upperContent: { height: '60%', justifyContent: 'center', alignItems: 'center', width: '100%' },
   title: { fontFamily: fonts.black, fontSize: 36, color: colors.textPrimary, textAlign: 'center' },
-  subtitle: { fontFamily: fonts.medium, fontSize: 15, color: colors.ash, textAlign: 'center' },
+  subtitle: { fontFamily: fonts.medium, fontSize: 15, color: colors.ash, textAlign: 'center', marginTop: 12 },
   barTrack: {
     width: '100%',
     height: 8,
     borderRadius: 100,
     backgroundColor: colors.surface,
     overflow: 'hidden',
-    marginTop: spacing.lg,
+    marginTop: 24,
   },
   barFill: { height: '100%', borderRadius: 100, backgroundColor: colors.brandGreen },
   socialProof: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   socialProofText: {
     fontFamily: fonts.semiBold,
     fontSize: 13,
-    color: colors.textMuted,
+    color: '#555555',
     textAlign: 'center',
   },
 });

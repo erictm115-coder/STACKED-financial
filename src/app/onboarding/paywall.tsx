@@ -29,7 +29,14 @@ const PLANS: Plan[] = [
     subLabel: '€3.33/month · billed yearly',
     badge: 'BEST VALUE',
   },
-  { id: 'weekly', label: 'Weekly', price: '€3.99', period: 'per week', subLabel: null, badge: null },
+  {
+    id: 'weekly',
+    label: 'Weekly',
+    price: '€3.99',
+    period: 'per week',
+    subLabel: null,
+    badge: null,
+  },
 ];
 
 const FEATURES = [
@@ -148,25 +155,25 @@ const styles = StyleSheet.create({
   closeButton: {
     position: 'absolute',
     top: 52,
-    right: spacing.xl,
+    right: 24,
     width: 44,
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10,
   },
-  content: { flex: 1, paddingHorizontal: spacing.xl, paddingTop: 64 },
+  content: { flex: 1, paddingHorizontal: 24, paddingTop: 120 },
   title: { fontFamily: fonts.extraBold, fontSize: 24, color: colors.textPrimary },
   subtitle: {
     fontFamily: fonts.medium,
     fontSize: 14,
     color: colors.textSecondary,
-    marginTop: spacing.sm,
+    marginTop: 8,
   },
-  features: { gap: spacing.sm, marginTop: spacing.lg },
+  features: { gap: 8, marginTop: 16 },
   featureRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
   featureText: { flex: 1, fontFamily: fonts.semiBold, fontSize: 15, color: colors.textPrimary },
-  plans: { gap: spacing.md, marginTop: spacing.xl },
+  plans: { gap: 12, marginTop: 20 },
   planCard: {
     height: 64,
     borderRadius: radius.input,
@@ -190,7 +197,7 @@ const styles = StyleSheet.create({
   planName: { fontFamily: fonts.bold, fontSize: 15, color: colors.textPrimary },
   planPrice: { fontFamily: fonts.medium, color: colors.textSecondary },
   planSub: { fontFamily: fonts.medium, fontSize: 12, color: colors.ash, marginTop: 2 },
-  cta: { marginTop: spacing.xl },
+  cta: { marginTop: 20 },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',

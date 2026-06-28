@@ -18,9 +18,10 @@ type Props = {
   onPress: () => void;
   /** Pulse true momentarily (then back to false) to shake this button — used when the max selection is exceeded. */
   shake?: boolean;
+  style?: any;
 };
 
-export function CheckButton({ label, checked, onPress, shake = false }: Props) {
+export function CheckButton({ label, checked, onPress, shake = false, style }: Props) {
   const scale = useSharedValue(1);
   const pressY = useSharedValue(0);
   const shakeX = useSharedValue(0);
@@ -70,8 +71,8 @@ export function CheckButton({ label, checked, onPress, shake = false }: Props) {
 
     return {
       transform: [{ scale: scale.value }, { translateY: pressY.value }, { translateX: shakeX.value }],
-      backgroundColor: interpolateColor(checkedProgress.value, [0, 1], [colors.surface, '#0a2200']),
-      borderColor: interpolateColor(checkedProgress.value, [0, 1], [restingBorder, colors.brandGreen]),
+      backgroundColor: interpolateColor(checkedProgress.value, [0, 1], [colors.surface, colors.brandGreen]),
+      borderColor: interpolateColor(checkedProgress.value, [0, 1], [restingBorder, colors.brandGreenBorder]),
     };
   });
 
@@ -84,8 +85,14 @@ export function CheckButton({ label, checked, onPress, shake = false }: Props) {
     return { borderColor: restingBorder };
   });
 
+  const textStyle = useAnimatedStyle(() => ({
+    color: interpolateColor(checkedProgress.value, [0, 1], [colors.textPrimary, colors.background]),
+  }));
+
+  const isSelected = checked;
+
   return (
-    <Animated.View style={[styles.button, animatedStyle]}>
+    <Animated.View style={[styles.button, isSelected && styles.selectedBorder, animatedStyle, style]}>
       <Pressable
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
@@ -95,13 +102,13 @@ export function CheckButton({ label, checked, onPress, shake = false }: Props) {
         accessibilityState={{ checked }}
       >
         {checked ? (
-          <CheckboxTick size={20} />
+          <CheckboxTick size={20} color={colors.brandGreenBorder} />
         ) : (
           <Animated.View style={[styles.checkbox, checkboxStyle]} />
         )}
-        <Text style={styles.label} numberOfLines={2}>
+        <Animated.Text style={[styles.label, isSelected && styles.labelSelected, textStyle]} numberOfLines={2}>
           {label}
-        </Text>
+        </Animated.Text>
       </Pressable>
     </Animated.View>
   );
@@ -113,6 +120,9 @@ const styles = StyleSheet.create({
     minHeight: 48,
     borderRadius: radius.input,
     borderWidth: 2,
+  },
+  selectedBorder: {
+    borderBottomWidth: 3,
   },
   pressable: {
     flex: 1,
@@ -132,6 +142,8 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: fonts.semiBold,
     fontSize: 15,
-    color: colors.textPrimary,
+  },
+  labelSelected: {
+    fontFamily: fonts.bold,
   },
 });

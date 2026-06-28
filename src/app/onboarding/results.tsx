@@ -71,10 +71,9 @@ export default function Results() {
       score: scores.investmentReadiness,
     },
   ];
-  const rows = [cards.slice(0, 2), cards.slice(2, 4), cards.slice(4, 6)];
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <ScreenEntrance style={styles.content}>
         <Text style={styles.title}>Your Stacked Score</Text>
         <Text style={styles.subtitle}>
@@ -83,26 +82,25 @@ export default function Results() {
         </Text>
 
         <View style={styles.grid}>
-          {rows.map((row, i) => (
-            <View key={i} style={styles.row}>
-              {row.map((c, j) => (
-                <ScoreCard
-                  key={c.label}
-                  icon={c.icon}
-                  label={c.label}
-                  score={c.score}
-                  isHigh={false}
-                  delayMs={(i * 2 + j) * STAGGER_MS}
-                />
-              ))}
+          {cards.map((c, idx) => (
+            <View key={c.label} style={styles.cardWrapper}>
+              <ScoreCard
+                icon={c.icon}
+                label={c.label}
+                score={c.score}
+                isHigh={false}
+                delayMs={idx * STAGGER_MS}
+              />
             </View>
           ))}
         </View>
 
-        <PrimaryButton
-          label="Show my potential score →"
-          onPress={() => router.push('/onboarding/potential')}
-        />
+        <View style={styles.buttonContainer}>
+          <PrimaryButton
+            label="Show my potential score →"
+            onPress={() => router.push('/onboarding/potential')}
+          />
+        </View>
       </ScreenEntrance>
     </SafeAreaView>
   );
@@ -110,15 +108,28 @@ export default function Results() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
-  content: { flex: 1, paddingHorizontal: spacing.xl, paddingBottom: spacing.lg },
-  title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary, marginTop: spacing.lg },
+  content: { flex: 1, paddingHorizontal: 24 },
+  title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary, marginTop: 20 },
   subtitle: {
     fontFamily: fonts.medium,
     fontSize: 14,
     color: colors.ash,
-    marginTop: spacing.sm,
-    marginBottom: spacing.lg,
+    marginTop: 8,
+    marginBottom: 16,
   },
-  grid: { flex: 1, gap: spacing.sm },
-  row: { flex: 1, flexDirection: 'row', gap: spacing.sm },
+  grid: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: -6,
+  },
+  cardWrapper: {
+    width: '50%',
+    height: '33.33%',
+    padding: 6,
+  },
+  buttonContainer: {
+    width: '100%',
+    marginBottom: 24,
+  },
 });

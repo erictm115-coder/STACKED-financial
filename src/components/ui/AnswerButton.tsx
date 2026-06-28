@@ -16,9 +16,10 @@ type Props = {
   onPress: () => void;
   /** 'grid' is used for the 2-column word-pick layout: bigger, centered text. */
   variant?: 'list' | 'grid';
+  style?: any;
 };
 
-export function AnswerButton({ label, selected = false, onPress, variant = 'list' }: Props) {
+export function AnswerButton({ label, selected = false, onPress, variant = 'list', style }: Props) {
   const scale = useSharedValue(1);
   const pressY = useSharedValue(0);
   const pressProgress = useSharedValue(0);
@@ -82,6 +83,7 @@ export function AnswerButton({ label, selected = false, onPress, variant = 'list
       onPress={handlePress}
       accessibilityRole="button"
       accessibilityState={{ selected }}
+      style={[isGrid ? styles.pressableGrid : styles.pressable, style]}
     >
       <Animated.View
         style={[
@@ -103,9 +105,17 @@ export function AnswerButton({ label, selected = false, onPress, variant = 'list
 }
 
 const styles = StyleSheet.create({
-  button: {
+  pressable: {
     width: '100%',
     minHeight: 48,
+  },
+  pressableGrid: {
+    width: '100%',
+    height: 64,
+  },
+  button: {
+    width: '100%',
+    height: '100%',
     borderRadius: radius.input,
     borderWidth: 2,
     paddingHorizontal: 20,
@@ -113,12 +123,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonGrid: {
-    height: 64,
     alignItems: 'center',
   },
   // 3D "pressed-in" lip on the selected state, matching the button system's depth language.
   selectedBorder: {
-    borderBottomWidth: 4,
+    borderBottomWidth: 3,
   },
   label: {
     fontFamily: fonts.semiBold,

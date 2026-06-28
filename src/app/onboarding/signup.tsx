@@ -78,10 +78,10 @@ export default function Signup() {
       >
         <View style={styles.flex}>
           <Animated.View style={[styles.blobArea, blobAreaStyle]}>
-            <PulsingBlob size={150} />
+            <PulsingBlob size={128} />
           </Animated.View>
 
-          <ScreenEntrance style={[styles.content, { paddingTop: height * 0.1 }]}>
+          <ScreenEntrance style={[styles.content, { paddingTop: height * 0.15 }]}>
             <Text style={styles.title}>Let&apos;s get started</Text>
             <Text style={styles.subtitle}>
               Enter your email to unlock your personalised wealth plan.

@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
   page: { flex: 1, paddingHorizontal: spacing.xl },
   // Even split puts the text block's top edge at ~50% of the screen.
   blobArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  textArea: { flex: 1, justifyContent: 'flex-start', paddingBottom: 24 },
-  headline: { fontFamily: fonts.extraBold, fontSize: 26, lineHeight: 32, color: colors.textPrimary },
+  textArea: { flex: 1, justifyContent: 'center', paddingBottom: 24 },
+  headline: { fontFamily: fonts.extraBold, fontSize: 23, lineHeight: 29, color: colors.textPrimary },
   body: { marginTop: 16, gap: 12 },
   paragraph: { fontFamily: fonts.medium, fontSize: 15, lineHeight: 23, color: colors.textSecondary },
-  hint: { position: 'absolute', bottom: 52, left: 0, right: 0, alignItems: 'center' },
-  hintText: { fontFamily: fonts.bold, fontSize: 13, color: colors.textMuted },
+  hint: { position: 'absolute', bottom: 68, left: 0, right: 0, alignItems: 'center' },
+  hintText: { fontFamily: fonts.bold, fontSize: 13, color: colors.ash },
 });
