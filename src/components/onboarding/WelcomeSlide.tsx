@@ -1,7 +1,16 @@
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -101,81 +110,109 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
         ? handleSendCode
         : handleVerifyCode;
 
+  if (mode === 'welcome') {
+    return (
+      <View style={[styles.page, { width }]}>
+        <Animated.View style={[styles.content, contentStyle]}>
+          <Image
+            source={require('@/assets/images/welcome-illustration.png')}
+            style={styles.art}
+            contentFit="contain"
+          />
+          <Text style={styles.headline}>Welcome to Stacked</Text>
+          <Text style={styles.sub}>Starting today, let&apos;s build wealth on your terms.</Text>
+        </Animated.View>
+
+        <View style={styles.cta}>
+          <PrimaryButton label={primaryLabel} onPress={handlePrimary} disabled={primaryDisabled} />
+        </View>
+
+        <Pressable onPress={() => setMode('email')} style={styles.secondaryLink} accessibilityRole="button">
+          {({ pressed }) => (
+            <Text style={[styles.secondaryLinkText, pressed && styles.secondaryLinkTextPressed]}>
+              Already have an account?
+            </Text>
+          )}
+        </Pressable>
+      </View>
+    );
+  }
+
+  // Email/OTP login: a TextInput is on screen, so this half needs to respond
+  // to the keyboard. The button sits directly under the input (no flexible
+  // spacer between them) so it doesn't drift away from what it belongs to.
   return (
     <View style={[styles.page, { width }]}>
-      <Animated.View style={[styles.content, contentStyle]}>
-        {mode === 'welcome' && (
-          <>
-            <Image
-              source={require('@/assets/images/welcome-illustration.png')}
-              style={styles.art}
-              contentFit="contain"
-            />
-            <Text style={styles.headline}>Welcome to Stacked</Text>
-            <Text style={styles.sub}>Starting today, let&apos;s build wealth on your terms.</Text>
-          </>
-        )}
-
-        {mode === 'email' && (
-          <>
-            <Text style={styles.headline}>Welcome back</Text>
-            <Text style={styles.sub}>Enter your email and we&apos;ll send you a sign in code.</Text>
-            <TextInput
-              value={email}
-              onChangeText={setEmail}
-              placeholder="your@email.com"
-              placeholderTextColor={colors.textMuted}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoFocus
-              style={styles.input}
-            />
-          </>
-        )}
-
-        {mode === 'otp' && (
-          <>
-            <Text style={styles.headline}>Enter your code</Text>
-            <Text style={styles.sub}>We sent a 6-digit code to {email.trim()}</Text>
-            <TextInput
-              value={code}
-              onChangeText={(text) => setCode(text.replace(/[^0-9]/g, '').slice(0, CODE_LENGTH))}
-              placeholder="000000"
-              placeholderTextColor={colors.textMuted}
-              keyboardType="number-pad"
-              maxLength={CODE_LENGTH}
-              autoFocus
-              style={[styles.input, styles.codeInput]}
-            />
-          </>
-        )}
-
-        {error && <Text style={styles.error}>{error}</Text>}
-      </Animated.View>
-
-      <View style={styles.cta}>
-        <PrimaryButton label={primaryLabel} onPress={handlePrimary} disabled={primaryDisabled} />
-      </View>
-
-      <Pressable
-        onPress={mode === 'welcome' ? () => setMode('email') : handleBack}
-        style={styles.secondaryLink}
-        accessibilityRole="button"
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
-        {({ pressed }) => (
-          <Text style={[styles.secondaryLinkText, pressed && styles.secondaryLinkTextPressed]}>
-            {mode === 'welcome' ? 'Already have an account?' : 'Back'}
-          </Text>
-        )}
-      </Pressable>
+        <View style={styles.topArea}>
+          <Animated.View style={[styles.content, contentStyle]}>
+            {mode === 'email' && (
+              <>
+                <Text style={styles.headline}>Welcome back</Text>
+                <Text style={styles.sub}>Enter your email and we&apos;ll send you a sign in code.</Text>
+                <TextInput
+                  value={email}
+                  onChangeText={setEmail}
+                  placeholder="your@email.com"
+                  placeholderTextColor={colors.textMuted}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoFocus
+                  style={styles.input}
+                />
+              </>
+            )}
+
+            {mode === 'otp' && (
+              <>
+                <Text style={styles.headline}>Enter your code</Text>
+                <Text style={styles.sub}>We sent a 6-digit code to {email.trim()}</Text>
+                <TextInput
+                  value={code}
+                  onChangeText={(text) => setCode(text.replace(/[^0-9]/g, '').slice(0, CODE_LENGTH))}
+                  placeholder="000000"
+                  placeholderTextColor={colors.textMuted}
+                  keyboardType="number-pad"
+                  maxLength={CODE_LENGTH}
+                  autoFocus
+                  style={[styles.input, styles.codeInput]}
+                />
+              </>
+            )}
+
+            {error && <Text style={styles.error}>{error}</Text>}
+
+            <View style={styles.inlineButtonsBlock}>
+              <PrimaryButton label={primaryLabel} onPress={handlePrimary} disabled={primaryDisabled} />
+
+              <Pressable onPress={handleBack} style={styles.secondaryLinkInline} accessibilityRole="button">
+                {({ pressed }) => (
+                  <Text style={[styles.secondaryLinkText, pressed && styles.secondaryLinkTextPressed]}>
+                    Back
+                  </Text>
+                )}
+              </Pressable>
+            </View>
+          </Animated.View>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, paddingHorizontal: spacing.xl, justifyContent: 'center' },
-  content: { alignItems: 'center', gap: 20, marginTop: -70 },
+  page: { flex: 1, paddingHorizontal: spacing.xl },
+  flex: { flex: 1 },
+  // Content centers within whatever space is left above the buttons block —
+  // this adapts automatically to both the tall welcome illustration and the
+  // much shorter email/OTP content, and to the keyboard shrinking the area.
+  topArea: { flex: 1, justifyContent: 'center' },
+  content: { alignItems: 'center', gap: 20 },
   art: { width: 300, aspectRatio: 960 / 1080, marginBottom: 8 },
   headline: { ...typography.heading, color: colors.textPrimary, textAlign: 'center' },
   sub: { ...typography.bodyLg, color: colors.textSecondary, textAlign: 'center', marginTop: -8 },
@@ -193,8 +230,13 @@ const styles = StyleSheet.create({
   },
   codeInput: { textAlign: 'center', fontFamily: fonts.bold, fontSize: 20, letterSpacing: 4 },
   error: { fontFamily: fonts.medium, fontSize: 13, color: '#ff4b4b', textAlign: 'center' },
+  // Welcome mode: fixed positions, tuned by hand. No keyboard ever appears here.
   cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 140 },
   secondaryLink: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 106, alignItems: 'center' },
+  // Email/OTP mode: button sits right under the input, inside the same
+  // centered+keyboard-avoiding block, so it never drifts from it.
+  inlineButtonsBlock: { width: '100%', gap: 16, marginTop: 12 },
+  secondaryLinkInline: { alignItems: 'center' },
   secondaryLinkText: { fontFamily: fonts.semiBold, fontSize: 17, color: colors.textPrimary },
   secondaryLinkTextPressed: { opacity: 0.5 },
 });
