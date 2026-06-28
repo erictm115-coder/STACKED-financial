@@ -1,3 +1,4 @@
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
@@ -8,39 +9,11 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import Svg, { Circle, Path } from 'react-native-svg';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { colors, spacing, typography } from '@/constants/theme';
 
 type Props = { index: number; activeIndex: number };
-
-/**
- * Flat line-art placeholder: green ring + upward arrow (growth).
- * TODO: replace with final illustration art.
- */
-function GrowthMark({ size = 132 }: { size?: number }) {
-  const stroke = 6;
-  return (
-    <Svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-      <Circle cx="50" cy="50" r="42" stroke={colors.brandGreen} strokeWidth={stroke} />
-      <Path
-        d="M30 62 L46 46 L57 57 L72 40"
-        stroke={colors.accentBlue}
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <Path
-        d="M62 40 L72 40 L72 50"
-        stroke={colors.accentBlue}
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
-  );
-}
 
 export function WelcomeSlide({ index, activeIndex }: Props) {
   const { width } = useWindowDimensions();
@@ -62,9 +35,11 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
   return (
     <View style={[styles.page, { width }]}>
       <Animated.View style={[styles.content, contentStyle]}>
-        <View style={styles.art}>
-          <GrowthMark />
-        </View>
+        <Image
+          source={require('@/assets/images/welcome-illustration.png')}
+          style={styles.art}
+          contentFit="contain"
+        />
         <Text style={styles.headline}>Welcome to Stacked</Text>
         <Text style={styles.sub}>Starting today, let&apos;s build wealth — on your terms.</Text>
       </Animated.View>
@@ -82,7 +57,7 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
 const styles = StyleSheet.create({
   page: { flex: 1, paddingHorizontal: spacing.xl, justifyContent: 'center' },
   content: { alignItems: 'center', gap: 20 },
-  art: { marginBottom: 8 },
+  art: { width: 220, aspectRatio: 960 / 1080, marginBottom: 8 },
   headline: { ...typography.heading, color: colors.textPrimary, textAlign: 'center' },
   sub: { ...typography.bodyLg, color: colors.textSecondary, textAlign: 'center' },
   cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 48 },

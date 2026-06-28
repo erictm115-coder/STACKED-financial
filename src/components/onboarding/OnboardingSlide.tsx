@@ -61,7 +61,7 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
   return (
     <Pressable onPress={onAdvance} style={[styles.page, { width }]}>
       <View style={styles.blobArea}>
-        <PulsingBlob />
+        <PulsingBlob size={130} />
       </View>
 
       <View style={styles.textArea}>
@@ -91,8 +91,10 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
 
 const styles = StyleSheet.create({
   page: { flex: 1, paddingHorizontal: spacing.xl },
-  // Even split puts the text block's top edge at ~50% of the screen.
-  blobArea: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  // Blob is a small fixed-height element up top; the text gets the rest of
+  // the screen to center within, so it actually lands near visual center
+  // instead of just the center of a cramped half.
+  blobArea: { height: 160, alignItems: 'center', justifyContent: 'center' },
   textArea: { flex: 1, justifyContent: 'center', paddingBottom: 24 },
   headline: { fontFamily: fonts.extraBold, fontSize: 23, lineHeight: 29, color: colors.textPrimary },
   body: { marginTop: 16, gap: 12 },
