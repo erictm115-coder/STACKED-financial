@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScoreCard } from '@/components/ui/ScoreCard';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
-import { colors, fonts, spacing } from '@/constants/theme';
+import { colors, fonts } from '@/constants/theme';
 import { calculatePotentialScores } from '@/lib/calculateScores';
 import { useOnboardingStore } from '@/store/onboardingStore';
 

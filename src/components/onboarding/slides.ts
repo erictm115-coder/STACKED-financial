@@ -18,7 +18,7 @@ export const SLIDES: Slide[] = [
       { text: 'excitement?', color: colors.brandGreen },
     ],
     body: [
-      'Has it been a while? Was the last time you felt truly free… before the bills, the debt, the paycheck-to-paycheck cycle crept in?',
+      'Has it been a while? Was the last time you felt truly free… before the bills, the debt, the paycheck to paycheck cycle crept in?',
     ],
   },
   {

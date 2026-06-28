@@ -41,7 +41,7 @@ const PLANS: Plan[] = [
 
 const FEATURES = [
   'Unlimited financial goal plans',
-  'Actionable step-by-step lessons for any money goal',
+  'Actionable, step by step lessons for any money goal',
 ];
 
 /** Placeholder purchase flow — wire up to RevenueCat/StoreKit when ready. */

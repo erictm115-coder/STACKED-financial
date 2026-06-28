@@ -10,13 +10,13 @@ import Animated, {
 
 import { colors } from '@/constants/theme';
 
-type Props = { size?: number };
+type Props = { size?: number; color?: string };
 
 /**
- * Soft glowing blue orb with a gentle ~3s scale pulse (1.0 -> 1.08 -> 1.0).
+ * Soft glowing orb with a gentle ~3s scale pulse (1.0 -> 1.08 -> 1.0).
  * The glow is built from layered translucent circles — no gradients, no shadows.
  */
-export function PulsingBlob({ size = 180 }: Props) {
+export function PulsingBlob({ size = 180, color = colors.accentBlue }: Props) {
   const scale = useSharedValue(1);
 
   useEffect(() => {
@@ -34,18 +34,27 @@ export function PulsingBlob({ size = 180 }: Props) {
   return (
     <Animated.View style={[styles.container, { width: size, height: size }, animatedStyle]}>
       <View
-        style={[styles.halo, { width: size, height: size, borderRadius: size / 2, opacity: 0.12 }]}
-      />
-      <View
         style={[
           styles.halo,
-          { width: size * 0.72, height: size * 0.72, borderRadius: size * 0.36, opacity: 0.22 },
+          { width: size, height: size, borderRadius: size / 2, opacity: 0.12, backgroundColor: color },
         ]}
       />
       <View
         style={[
           styles.halo,
-          { width: size * 0.48, height: size * 0.48, borderRadius: size * 0.24, opacity: 1 },
+          {
+            width: size * 0.72,
+            height: size * 0.72,
+            borderRadius: size * 0.36,
+            opacity: 0.22,
+            backgroundColor: color,
+          },
+        ]}
+      />
+      <View
+        style={[
+          styles.halo,
+          { width: size * 0.48, height: size * 0.48, borderRadius: size * 0.24, backgroundColor: color },
         ]}
       />
     </Animated.View>
@@ -54,5 +63,5 @@ export function PulsingBlob({ size = 180 }: Props) {
 
 const styles = StyleSheet.create({
   container: { alignItems: 'center', justifyContent: 'center' },
-  halo: { position: 'absolute', backgroundColor: colors.accentBlue },
+  halo: { position: 'absolute' },
 });

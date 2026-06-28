@@ -60,26 +60,28 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
 
   return (
     <Pressable onPress={onAdvance} style={[styles.page, { width }]}>
-      <View style={styles.blobArea}>
-        <PulsingBlob size={130} />
-      </View>
+      <View style={styles.centeredGroup}>
+        <View style={styles.blobArea}>
+          <PulsingBlob size={84} color={colors.brandGreen} />
+        </View>
 
-      <View style={styles.textArea}>
-        <Animated.View style={headlineStyle}>
-          <HighlightedText
-            segments={slide.headline}
-            style={styles.headline}
-            baseColor={colors.textPrimary}
-          />
-        </Animated.View>
+        <View style={styles.textArea}>
+          <Animated.View style={headlineStyle}>
+            <HighlightedText
+              segments={slide.headline}
+              style={styles.headline}
+              baseColor={colors.textPrimary}
+            />
+          </Animated.View>
 
-        <Animated.View style={[styles.body, bodyStyle]}>
-          {slide.body.map((paragraph, i) => (
-            <Text key={i} style={styles.paragraph}>
-              {paragraph}
-            </Text>
-          ))}
-        </Animated.View>
+          <Animated.View style={[styles.body, bodyStyle]}>
+            {slide.body.map((paragraph, i) => (
+              <Text key={i} style={styles.paragraph}>
+                {paragraph}
+              </Text>
+            ))}
+          </Animated.View>
+        </View>
       </View>
 
       <Animated.View style={[styles.hint, hintStyle]} pointerEvents="none">
@@ -91,14 +93,19 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
 
 const styles = StyleSheet.create({
   page: { flex: 1, paddingHorizontal: spacing.xl },
-  // Blob is a small fixed-height element up top; the text gets the rest of
-  // the screen to center within, so it actually lands near visual center
-  // instead of just the center of a cramped half.
-  blobArea: { height: 160, alignItems: 'center', justifyContent: 'center' },
-  textArea: { flex: 1, justifyContent: 'center', paddingBottom: 24 },
+  // Blob + text are one centered group, so the blob sits directly above the
+  // text instead of being pinned to the top edge of the screen.
+  centeredGroup: { flex: 1, justifyContent: 'center' },
+  blobArea: { alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  textArea: { paddingBottom: 24 },
   headline: { fontFamily: fonts.extraBold, fontSize: 23, lineHeight: 29, color: colors.textPrimary },
   body: { marginTop: 16, gap: 12 },
-  paragraph: { fontFamily: fonts.medium, fontSize: 15, lineHeight: 23, color: colors.textSecondary },
-  hint: { position: 'absolute', bottom: 68, left: 0, right: 0, alignItems: 'center' },
-  hintText: { fontFamily: fonts.bold, fontSize: 13, color: colors.ash },
+  paragraph: {
+    fontFamily: fonts.extraBold,
+    fontSize: 23,
+    lineHeight: 29,
+    color: colors.textSecondary,
+  },
+  hint: { position: 'absolute', bottom: 84, left: 0, right: 0, alignItems: 'center' },
+  hintText: { fontFamily: fonts.bold, fontSize: 16, color: '#999999' },
 });
