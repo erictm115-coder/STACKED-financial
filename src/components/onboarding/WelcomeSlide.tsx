@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   content: { alignItems: 'center', gap: 20, marginTop: -70 },
   art: { width: 300, aspectRatio: 960 / 1080, marginBottom: 8 },
   headline: { ...typography.heading, color: colors.textPrimary, textAlign: 'center' },
-  sub: { ...typography.bodyLg, color: colors.textSecondary, textAlign: 'center' },
+  sub: { ...typography.bodyLg, color: colors.textSecondary, textAlign: 'center', marginTop: -8 },
   input: {
     width: '100%',
     height: 54,
@@ -193,8 +193,8 @@ const styles = StyleSheet.create({
   },
   codeInput: { textAlign: 'center', fontFamily: fonts.bold, fontSize: 20, letterSpacing: 4 },
   error: { fontFamily: fonts.medium, fontSize: 13, color: '#ff4b4b', textAlign: 'center' },
-  cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 150 },
-  secondaryLink: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 100, alignItems: 'center' },
+  cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 140 },
+  secondaryLink: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 106, alignItems: 'center' },
   secondaryLinkText: { fontFamily: fonts.semiBold, fontSize: 17, color: colors.textPrimary },
   secondaryLinkTextPressed: { opacity: 0.5 },
 });

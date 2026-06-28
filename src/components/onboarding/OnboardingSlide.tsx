@@ -96,7 +96,12 @@ const styles = StyleSheet.create({
   // Blob + text are one centered group, so the blob sits directly above the
   // text instead of being pinned to the top edge of the screen.
   centeredGroup: { flex: 1, justifyContent: 'center' },
-  blobArea: { alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  blobArea: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+    transform: [{ translateY: -16 }],
+  },
   textArea: { paddingBottom: 24 },
   headline: { fontFamily: fonts.extraBold, fontSize: 23, lineHeight: 29, color: colors.textPrimary },
   body: { marginTop: 16, gap: 12 },
