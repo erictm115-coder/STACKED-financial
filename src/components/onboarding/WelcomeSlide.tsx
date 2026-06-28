@@ -63,10 +63,20 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
     }
     setError(null);
     setSubmitting(true);
-    const { error: otpError } = await supabase.auth.signInWithOtp({ email: trimmedEmail });
+    // shouldCreateUser: false — this is the "already have an account" login path,
+    // not signup, so an email with no existing account should fail, not silently
+    // create one.
+    const { error: otpError } = await supabase.auth.signInWithOtp({
+      email: trimmedEmail,
+      options: { shouldCreateUser: false },
+    });
     setSubmitting(false);
     if (otpError) {
-      setError('Something went wrong. Please try again.');
+      setError(
+        otpError.message.toLowerCase().includes('signup')
+          ? 'No account found with that email.'
+          : 'Something went wrong. Please try again.',
+      );
       return;
     }
     setMode('otp');
@@ -113,7 +123,7 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
   if (mode === 'welcome') {
     return (
       <View style={[styles.page, { width }]}>
-        <Animated.View style={[styles.content, contentStyle]}>
+        <Animated.View style={[styles.content, styles.contentWelcome, contentStyle]}>
           <Image
             source={require('@/assets/images/welcome-illustration.png')}
             style={styles.art}
@@ -206,8 +216,9 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, paddingHorizontal: spacing.xl },
+  page: { flex: 1, paddingHorizontal: spacing.xl, justifyContent: 'center' },
   flex: { flex: 1 },
+  contentWelcome: { marginTop: -40 },
   // Content centers within whatever space is left above the buttons block —
   // this adapts automatically to both the tall welcome illustration and the
   // much shorter email/OTP content, and to the keyboard shrinking the area.
@@ -215,7 +226,7 @@ const styles = StyleSheet.create({
   content: { alignItems: 'center', gap: 20 },
   art: { width: 300, aspectRatio: 960 / 1080, marginBottom: 8 },
   headline: { ...typography.heading, color: colors.textPrimary, textAlign: 'center' },
-  sub: { ...typography.bodyLg, color: colors.textSecondary, textAlign: 'center', marginTop: -8 },
+  sub: { ...typography.bodyLg, color: colors.textSecondary, textAlign: 'center', marginTop: -16 },
   input: {
     width: '100%',
     height: 54,
@@ -231,8 +242,8 @@ const styles = StyleSheet.create({
   codeInput: { textAlign: 'center', fontFamily: fonts.bold, fontSize: 20, letterSpacing: 4 },
   error: { fontFamily: fonts.medium, fontSize: 13, color: '#ff4b4b', textAlign: 'center' },
   // Welcome mode: fixed positions, tuned by hand. No keyboard ever appears here.
-  cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 140 },
-  secondaryLink: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 106, alignItems: 'center' },
+  cta: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 135 },
+  secondaryLink: { position: 'absolute', left: spacing.xl, right: spacing.xl, bottom: 101, alignItems: 'center' },
   // Email/OTP mode: button sits right under the input, inside the same
   // centered+keyboard-avoiding block, so it never drifts from it.
   inlineButtonsBlock: { width: '100%', gap: 16, marginTop: 12 },
