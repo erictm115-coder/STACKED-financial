@@ -22,20 +22,20 @@ type Plan = {
 
 const PLANS: Plan[] = [
   {
-    id: 'annual',
-    label: 'Annual',
-    price: '€39.99',
-    period: 'per year',
-    subLabel: '€3.33/month · billed yearly',
-    badge: 'BEST VALUE',
-  },
-  {
     id: 'weekly',
     label: 'Weekly',
     price: '€3.99',
     period: 'per week',
     subLabel: null,
     badge: null,
+  },
+  {
+    id: 'annual',
+    label: 'Annual',
+    price: '€39.99',
+    period: 'per year',
+    subLabel: '1 week free, then €0.76/week',
+    badge: 'BEST VALUE',
   },
 ];
 
@@ -75,9 +75,8 @@ function PlanCard({ plan, selected, onPress }: { plan: Plan; selected: boolean; 
           <Circle size={20} color={colors.graphite} />
         )}
         <View style={styles.planInfo}>
-          <Text style={styles.planName}>
-            {plan.label} <Text style={styles.planPrice}>{plan.price} {plan.period}</Text>
-          </Text>
+          <Text style={styles.planName}>{plan.label}</Text>
+          <Text style={styles.planPrice}>{plan.price} {plan.period}</Text>
           {plan.subLabel && <Text style={styles.planSub}>{plan.subLabel}</Text>}
         </View>
       </Animated.View>
@@ -103,7 +102,11 @@ export default function Paywall() {
       </Pressable>
 
       <ScreenEntrance style={styles.content}>
-        <Text style={styles.title}>Do more of what builds your wealth — and stress less</Text>
+        <Text style={styles.title}>
+          Do <Text style={{ color: colors.brandGreen }}>more</Text> of what builds your{' '}
+          <Text style={{ color: colors.brandGreen }}>wealth</Text> and stress{' '}
+          <Text style={{ fontStyle: 'italic' }}>less</Text>
+        </Text>
         <Text style={styles.subtitle}>
           Reclaim your focus, your money, and your future today with our premium plan.
         </Text>
@@ -129,7 +132,7 @@ export default function Paywall() {
         </View>
 
         <View style={styles.cta}>
-          <PrimaryButton label="Continue" onPress={handleContinue} />
+          <PrimaryButton label="Continue for free" onPress={handleContinue} />
         </View>
       </ScreenEntrance>
 
@@ -162,11 +165,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 10,
   },
-  content: { flex: 1, paddingHorizontal: 24, paddingTop: 120 },
-  title: { fontFamily: fonts.extraBold, fontSize: 24, color: colors.textPrimary },
+  content: { flex: 1, paddingHorizontal: 20, paddingTop: 120 },
+  title: { fontFamily: fonts.extraBold, fontSize: 32, color: colors.textPrimary },
   subtitle: {
     fontFamily: fonts.medium,
-    fontSize: 14,
+    fontSize: 16,
     color: colors.textSecondary,
     marginTop: 8,
   },
@@ -175,27 +178,27 @@ const styles = StyleSheet.create({
   featureText: { flex: 1, fontFamily: fonts.semiBold, fontSize: 15, color: colors.textPrimary },
   plans: { gap: 12, marginTop: 20 },
   planCard: {
-    height: 64,
+    height: 84,
     borderRadius: radius.input,
     borderWidth: 2,
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
   },
   badge: {
     position: 'absolute',
-    top: -12,
+    top: -14,
     right: 16,
     backgroundColor: colors.brandGreen,
     borderRadius: radius.pill,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
   },
-  badgeText: { fontFamily: fonts.extraBold, fontSize: 11, color: colors.background },
+  badgeText: { fontFamily: fonts.extraBold, fontSize: 13, color: '#FFFFFF' },
   planInfo: { flex: 1 },
-  planName: { fontFamily: fonts.bold, fontSize: 15, color: colors.textPrimary },
-  planPrice: { fontFamily: fonts.medium, color: colors.textSecondary },
+  planName: { fontFamily: fonts.bold, fontSize: 18, color: colors.textPrimary, marginBottom: 2 },
+  planPrice: { fontFamily: fonts.medium, fontSize: 16, color: colors.textSecondary },
   planSub: { fontFamily: fonts.medium, fontSize: 12, color: colors.ash, marginTop: 2 },
   cta: { marginTop: 20 },
   footer: {

@@ -37,7 +37,7 @@ export function useOnboarding(): UseOnboarding {
   const completeOnboarding = useCallback(async () => {
     await AsyncStorage.setItem(STORAGE_KEY, 'true');
     setIsComplete(true);
-    router.replace('/home');
+    router.replace('/discover');
   }, [router]);
 
   const resetOnboarding = useCallback(async () => {

@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
   },
   label: {
     ...typography.body,
-    color: colors.accentMidnight,
+    fontSize: 18,
+    color: '#FFFFFF',
   },
 });

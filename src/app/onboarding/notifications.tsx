@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import * as Notifications from 'expo-notifications';
-import { Bell, Check, X } from 'lucide-react-native';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Check, X } from 'lucide-react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
@@ -25,9 +25,11 @@ export default function NotificationsScreen() {
     <SafeAreaView style={styles.safe}>
       <ScreenEntrance style={styles.content}>
         <View style={styles.bellWrap}>
-          <View style={styles.glowOuter} />
-          <View style={styles.glowInner} />
-          <Bell size={64} color={colors.accentBlue} />
+          <Image 
+            source={require('../../../assets/images/notification.png')} 
+            style={{ width: 115, height: 115 }} 
+            resizeMode="contain"
+          />
         </View>
 
         <Text style={styles.title}>Want to actually hit your financial goals?</Text>
@@ -62,27 +64,9 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   bellWrap: {
-    width: 140,
-    height: 140,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: spacing.lg,
-  },
-  glowOuter: {
-    position: 'absolute',
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    backgroundColor: colors.accentBlue,
-    opacity: 0.12,
-  },
-  glowInner: {
-    position: 'absolute',
-    width: 92,
-    height: 92,
-    borderRadius: 46,
-    backgroundColor: colors.accentBlue,
-    opacity: 0.22,
   },
   title: {
     fontFamily: fonts.extraBold,

@@ -15,5 +15,5 @@ export default function Index() {
     return <View style={{ flex: 1, backgroundColor: colors.background }} />;
   }
 
-  return <Redirect href={isComplete ? '/home' : '/onboarding'} />;
+  return <Redirect href={isComplete ? '/discover' : '/onboarding'} />;
 }
