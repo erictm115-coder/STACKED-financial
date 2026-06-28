@@ -25,9 +25,6 @@ type StepConfig = {
   layout: 'list' | 'grid';
   type: 'single' | 'multi';
   skip: boolean;
-  /** Override for titles that would otherwise wrap onto 3 lines (default 28). */
-  titleFontSize?: number;
-  subtitleFontSize?: number;
 };
 
 const MAX_HABITS = 2;
@@ -108,11 +105,9 @@ const STEPS: StepConfig[] = [
     layout: 'list',
     type: 'multi',
     skip: false,
-    titleFontSize: 20,
-    subtitleFontSize: 13,
     options: [
       'Impulse buying',
-      'Spending too much on food/eating out',
+      'Spending too much on food',
       'Not investing anything',
       'No budget or savings plan',
       'Avoiding my bank account',
@@ -220,17 +215,8 @@ export default function Questionnaire() {
 
       <ScreenEntrance key={stepIndex} style={styles.content}>
         <View>
-          <Text
-            style={[
-              styles.title,
-              step.titleFontSize ? { fontSize: step.titleFontSize } : null,
-            ]}
-          >
-            {step.title}
-          </Text>
-          <Text style={[styles.subtitle, step.subtitleFontSize ? { fontSize: step.subtitleFontSize } : null]}>
-            {step.subtitle}
-          </Text>
+          <Text style={styles.title}>{step.title}</Text>
+          <Text style={styles.subtitle}>{step.subtitle}</Text>
         </View>
 
         <View style={styles.answersArea}>

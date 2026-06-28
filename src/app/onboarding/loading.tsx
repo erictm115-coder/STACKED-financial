@@ -1,9 +1,8 @@
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -15,16 +14,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StarRow } from '@/components/icons/StarIcon';
 import { colors, fonts, spacing } from '@/constants/theme';
 
-const FILL_DURATION = 3000;
-const MESSAGE_INTERVAL = 500;
+const FILL_DURATION = 4500;
+const MESSAGE_INTERVAL = 750;
 
 const MESSAGES = [
-  "Here we go! Let's go!",
-  "Analysing your answers...",
-  "Understanding your goals...",
-  "Calculating your Stacked Score...",
-  "Building your personalised plan...",
-  "Almost ready...",
+  'Analysing your choices...',
+  'Considering your options...',
+  'Deep-diving your plans...',
+  'Calculating your Stacked Score...',
+  'Building your personalised plan...',
+  'Almost ready...',
 ];
 
 export default function Loading() {
@@ -33,6 +32,7 @@ export default function Loading() {
   const pulse = useSharedValue(1);
   const messageOpacity = useSharedValue(1);
   const [messageIndex, setMessageIndex] = useState(0);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
     progress.value = withTiming(1, { duration: FILL_DURATION, easing: Easing.inOut(Easing.ease) });
@@ -44,28 +44,37 @@ export default function Loading() {
       -1,
     );
 
-    let index = 0;
-    const advanceMessage = () => {
-      if (index >= MESSAGES.length - 1) return;
-      messageOpacity.value = withTiming(0, { duration: 200 }, (finished) => {
-        if (!finished) return;
-        index += 1;
-        runOnJS(setMessageIndex)(index);
-        messageOpacity.value = withTiming(1, { duration: 200 });
-      });
-    };
-    const messageTimer = setInterval(advanceMessage, MESSAGE_INTERVAL);
-
     const navTimer = setTimeout(() => {
       router.push('/onboarding/signup');
     }, FILL_DURATION);
 
-    return () => {
-      clearInterval(messageTimer);
-      clearTimeout(navTimer);
-    };
+    return () => clearTimeout(navTimer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Step the message index on the JS thread via plain React state — driving
+  // this from inside a Reanimated worklet callback (the previous approach)
+  // silently got stuck, since worklets capture closed-over variables by
+  // value and mutations inside them never propagate back to the JS thread.
+  useEffect(() => {
+    const messageTimer = setInterval(() => {
+      setMessageIndex((i) => (i < MESSAGES.length - 1 ? i + 1 : i));
+    }, MESSAGE_INTERVAL);
+    return () => clearInterval(messageTimer);
+  }, []);
+
+  // Crossfade whenever the message actually changes (skip on initial mount).
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    messageOpacity.value = withSequence(
+      withTiming(0, { duration: 200 }),
+      withTiming(1, { duration: 200 }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messageIndex]);
 
   const fillStyle = useAnimatedStyle(() => ({ width: `${progress.value * 100}%` }));
   const titleStyle = useAnimatedStyle(() => ({ transform: [{ scale: pulse.value }] }));
@@ -73,8 +82,8 @@ export default function Loading() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.upperContent}>
-        <Animated.Text style={[styles.title, titleStyle]}>HERE WE GO!!!</Animated.Text>
+      <View style={styles.content}>
+        <Animated.Text style={[styles.title, titleStyle]}>Here we go!</Animated.Text>
 
         <Animated.Text style={[styles.subtitle, messageStyle]}>
           {MESSAGES[messageIndex]}
@@ -83,11 +92,11 @@ export default function Loading() {
         <View style={styles.barTrack}>
           <Animated.View style={[styles.barFill, fillStyle]} />
         </View>
-      </View>
 
-      <View style={styles.socialProof}>
-        <StarRow size={14} />
-        <Text style={styles.socialProofText}>40,000+ people already on their path</Text>
+        <View style={styles.socialProof}>
+          <StarRow size={14} />
+          <Text style={styles.socialProofText}>40,000+ people already on their path</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -95,7 +104,7 @@ export default function Loading() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background, paddingHorizontal: spacing.xl },
-  upperContent: { height: '60%', justifyContent: 'center', alignItems: 'center', width: '100%' },
+  content: { flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%' },
   title: { fontFamily: fonts.black, fontSize: 36, color: colors.textPrimary, textAlign: 'center' },
   subtitle: { fontFamily: fonts.medium, fontSize: 15, color: colors.ash, textAlign: 'center', marginTop: 12 },
   barTrack: {
@@ -108,14 +117,11 @@ const styles = StyleSheet.create({
   },
   barFill: { height: '100%', borderRadius: 100, backgroundColor: colors.brandGreen },
   socialProof: {
-    position: 'absolute',
-    bottom: 40,
-    left: 0,
-    right: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing.xs,
+    marginTop: 24,
   },
   socialProofText: {
     fontFamily: fonts.semiBold,
