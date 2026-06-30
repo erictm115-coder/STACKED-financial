@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from './useAuth';
 
@@ -18,6 +18,19 @@ export function useStepProgress(
   const { user } = useAuth();
   const [progressMap, setProgressMap] = useState<Record<string, StepProgress>>({});
   const [isLoading, setIsLoading] = useState(false);
+  // Steps with an in-flight mutation — used to disable the UI and to guard
+  // against rapid double-taps racing each other (Bug 1, cause E).
+  const [busySteps, setBusySteps] = useState<Set<string>>(new Set());
+  const inFlight = useRef<Set<string>>(new Set());
+
+  const setBusy = (stepId: string, busy: boolean) => {
+    setBusySteps((prev) => {
+      const next = new Set(prev);
+      if (busy) next.add(stepId);
+      else next.delete(stepId);
+      return next;
+    });
+  };
 
   const fetchProgress = useCallback(async () => {
     if (!user || stepIds.length === 0) return;
@@ -56,63 +69,68 @@ export function useStepProgress(
   const toggleActionItem = async (
     stepId: string,
     itemIndex: number,
-    onStepCompleteAnimation?: (scoreImpact: Record<string, number>) => void
+    onStepCompleteAnimation?: (scoreImpact: Record<string, number>) => void,
+    onError?: (message: string) => void
   ) => {
     if (!user) return;
 
-    let progress = progressMap[stepId] ?? null;
+    // Race guard: ignore taps while a mutation for this step is in flight.
+    if (inFlight.current.has(stepId)) return;
+    inFlight.current.add(stepId);
+    setBusy(stepId, true);
 
-    // 1. Get or create progress row for this step
-    if (!progress) {
-      const { data, error } = await supabase
-        .from('user_step_progress')
-        .insert({
-          user_id: user.id,
-          step_id: stepId,
-          completed: false,
-          checked_items: [],
-          score_impact: null,
-        })
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error creating step progress:', error.message);
-        return;
-      }
-      progress = {
-        id: data.id,
-        step_id: data.step_id,
-        completed: data.completed,
-        checked_items: data.checked_items || [],
-        score_impact: data.score_impact,
-      };
-    }
-
-    // 2. Toggle the item in the checked_items array
-    const currentChecked = progress.checked_items ?? [];
-    const newChecked = currentChecked.includes(itemIndex)
-      ? currentChecked.filter(i => i !== itemIndex)
-      : [...currentChecked, itemIndex];
-
-    // 3. Get total action items count for this step
-    const step = stepsMap[stepId];
-    if (!step) return;
-    const totalItems = step.action_items.length;
-    const allDone = newChecked.length >= totalItems;
-
-    // Optimistic UI update
-    setProgressMap((prev) => ({
-      ...prev,
-      [stepId]: {
-        ...progress!,
-        checked_items: newChecked,
-        completed: allDone,
-      },
-    }));
+    // Snapshot for rollback on failure.
+    const prev = progressMap[stepId] ? { ...progressMap[stepId] } : null;
+    const prevChecked = prev?.checked_items ?? [];
+    const prevCompleted = prev?.completed ?? false;
 
     try {
-      // 4. Update progress row
+      let progress = prev;
+
+      // 1. Get or create the progress row for this step.
+      if (!progress) {
+        const { data, error } = await supabase
+          .from('user_step_progress')
+          .insert({
+            user_id: user.id,
+            step_id: stepId,
+            completed: false,
+            checked_items: [],
+            score_impact: null,
+          })
+          .select()
+          .single();
+
+        if (error) throw error;
+        progress = {
+          id: data.id,
+          step_id: data.step_id,
+          completed: data.completed,
+          checked_items: data.checked_items || [],
+          score_impact: data.score_impact,
+        };
+      }
+
+      // 2. Toggle the item in the checked_items array.
+      const currentChecked = progress.checked_items ?? [];
+      const newChecked = currentChecked.includes(itemIndex)
+        ? currentChecked.filter((i) => i !== itemIndex)
+        : [...currentChecked, itemIndex];
+
+      // 3. Determine completion.
+      const step = stepsMap[stepId];
+      if (!step) return;
+      const totalItems = step.action_items.length;
+      const allDone = totalItems > 0 && newChecked.length >= totalItems;
+      const justCompleted = allDone && !prevCompleted;
+
+      // Optimistic UI update.
+      setProgressMap((p) => ({
+        ...p,
+        [stepId]: { ...progress!, checked_items: newChecked, completed: allDone },
+      }));
+
+      // 4. Persist the checkbox state.
       const { error: updateErr } = await supabase
         .from('user_step_progress')
         .update({
@@ -125,14 +143,44 @@ export function useStepProgress(
 
       if (updateErr) throw updateErr;
 
-      // 5. If step just completed → trigger score update + celebration
-      if (allDone && !progress.completed) {
+      // 5. If the step just completed, run the score + gamification chain.
+      //    handleStepComplete throws on failure so we can roll back below.
+      if (justCompleted) {
         await handleStepComplete(stepId, step.score_impact, onStepCompleteAnimation);
       }
     } catch (err: any) {
-      console.error('Failed to update action item progress:', err.message);
-      // Revert optimistic update
-      fetchProgress();
+      console.error('[toggleActionItem] Failed:', {
+        message: err?.message,
+        details: err?.details,
+        hint: err?.hint,
+        code: err?.code,
+        stepId,
+        itemIndex,
+      });
+
+      // Roll back the optimistic state so a checkbox never appears ticked when
+      // the write actually failed. Revert the DB row, then re-sync from DB.
+      try {
+        const rowId = progressMap[stepId]?.id ?? prev?.id;
+        if (rowId) {
+          await supabase
+            .from('user_step_progress')
+            .update({
+              checked_items: prevChecked,
+              completed: prevCompleted,
+              completed_at: prevCompleted ? new Date().toISOString() : null,
+              score_impact: prevCompleted ? stepsMap[stepId]?.score_impact ?? null : null,
+            })
+            .eq('id', rowId);
+        }
+      } catch (revertErr) {
+        console.error('[toggleActionItem] Rollback also failed:', revertErr);
+      }
+      await fetchProgress();
+      onError?.('Could not save your progress — please try again');
+    } finally {
+      inFlight.current.delete(stepId);
+      setBusy(stepId, false);
     }
   };
 
@@ -142,6 +190,21 @@ export function useStepProgress(
     return dim;
   };
 
+  // Valid Stack Score columns — score_impact keys that don't map to one of these
+  // are logged and ignored rather than crashing the update (Bug 1, cause D).
+  const VALID_SCORE_COLUMNS = new Set([
+    'overall',
+    'money_mindset',
+    'clarity',
+    'discipline',
+    'focus',
+    'investment_readiness',
+  ]);
+
+  /**
+   * Applies a completed step's score impact and bumps gamification.
+   * Throws on any failure so the caller can roll back the optimistic UI.
+   */
   const handleStepComplete = async (
     stepId: string,
     scoreImpact: Record<string, number>,
@@ -149,17 +212,22 @@ export function useStepProgress(
   ) => {
     if (!user) return;
     try {
-      // 1. Update Stack Score dimensions
+      // 1. Load the user's current Stack Score.
+      //    order+limit(1) tolerates duplicate rows (the historical root cause of
+      //    "Failed to handle step completion") instead of throwing on >1 row.
       const { data: currentScore, error: scoreErr } = await supabase
         .from('stacked_scores')
         .select('*')
         .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
         .maybeSingle();
 
       if (scoreErr) throw scoreErr;
 
       let scoresToUpdate = currentScore;
       if (!scoresToUpdate) {
+        // No score row yet — create a default one before updating.
         const { data: newScore, error: insertScoreErr } = await supabase
           .from('stacked_scores')
           .insert({
@@ -177,41 +245,54 @@ export function useStepProgress(
         scoresToUpdate = newScore;
       }
 
-      /*
-       * BUG FIX:
-       * The scoreImpact object contains camelCase keys (e.g., moneyMindset, investmentReadiness).
-       * However, the database table columns are defined in snake_case (money_mindset, investment_readiness).
-       * We must map the dimensions to snake_case columns, otherwise Supabase throws a "column does not exist" error.
-       */
+      // 2. Build the update, mapping camelCase dimensions to snake_case columns
+      //    and ignoring (logging) any unknown keys.
       const updates: Record<string, number> = {};
-      Object.entries(scoreImpact).forEach(([dimension, delta]) => {
+      const validDeltas: number[] = [];
+      Object.entries(scoreImpact || {}).forEach(([dimension, delta]) => {
         const dbColumn = mapDimensionToColumn(dimension);
+        if (!VALID_SCORE_COLUMNS.has(dbColumn)) {
+          console.warn(`[handleStepComplete] Ignoring unknown score dimension: ${dimension}`);
+          return;
+        }
         const current = scoresToUpdate[dbColumn] ?? 0;
         updates[dbColumn] = Math.min(99, current + delta);
+        validDeltas.push(delta);
       });
-      
-      const maxDelta = Math.max(...Object.values(scoreImpact));
-      updates['overall'] = Math.min(99, (scoresToUpdate.overall ?? 0) + maxDelta);
 
-      console.log('[handleStepComplete] Mutating stacked_scores. User ID:', user.id, 'step ID:', stepId, 'Payload:', updates);
-      const { error: updateScoreErr } = await supabase
-        .from('stacked_scores')
-        .update(updates)
-        .eq('user_id', user.id);
+      if (validDeltas.length > 0) {
+        const maxDelta = Math.max(...validDeltas);
+        updates['overall'] = Math.min(99, (scoresToUpdate.overall ?? 0) + maxDelta);
 
-      if (updateScoreErr) throw updateScoreErr;
-      console.log('[handleStepComplete] Mutation successful. User ID:', user.id, 'step ID:', stepId);
+        // Scope the update to the specific row we read so duplicate rows don't
+        // all get bumped.
+        const { error: updateScoreErr } = await supabase
+          .from('stacked_scores')
+          .update(updates)
+          .eq('id', scoresToUpdate.id);
 
-      // 2. Update gamification (streak + stacks)
+        if (updateScoreErr) throw updateScoreErr;
+      }
+
+      // 3. Bump gamification (stacks + streak).
       const { error: rpcErr } = await supabase.rpc('increment_stacks', { uid: user.id });
       if (rpcErr) throw rpcErr;
 
-      // 3. Trigger celebration animation callback
+      // 4. Celebration callback.
       if (onStepCompleteAnimation) {
         onStepCompleteAnimation(scoreImpact);
       }
     } catch (err: any) {
-      console.error('Failed to handle step completion:', err.message);
+      console.error('[handleStepComplete] Failed:', {
+        message: err?.message,
+        details: err?.details,
+        hint: err?.hint,
+        code: err?.code,
+        stepId,
+        scoreImpact,
+      });
+      // Rethrow so toggleActionItem rolls back and surfaces a toast.
+      throw err;
     }
   };
 
@@ -229,11 +310,14 @@ export function useStepProgress(
     }
   };
 
+  const isStepBusy = (stepId: string) => busySteps.has(stepId);
+
   return {
     progressMap,
     isLoading,
     toggleActionItem,
     completePlan,
     refreshProgress: fetchProgress,
+    isStepBusy,
   };
 }

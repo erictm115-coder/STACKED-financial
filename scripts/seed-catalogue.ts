@@ -177,11 +177,42 @@ async function main() {
     }
   }
 
+  // Prevention (Bug 2): never let a step ship with zero content rows. Any step
+  // still empty after seeding gets an in-app "guide" fallback generated from its
+  // own why_it_matters / title.
+  let fallbacksInserted = 0;
+  const { data: allSteps } = await supabaseAdmin
+    .from('goal_steps')
+    .select('id, title, why_it_matters');
+  const { data: allContent } = await supabaseAdmin.from('step_content').select('step_id');
+  const haveContent = new Set((allContent || []).map((c: any) => c.step_id));
+  const emptySteps = (allSteps || []).filter((s: any) => !haveContent.has(s.id));
+
+  for (const step of emptySteps) {
+    const { error } = await supabaseAdmin.from('step_content').insert({
+      step_id: step.id,
+      content_type: 'guide',
+      title: step.title,
+      brief: step.why_it_matters || step.title,
+      url: null,
+      est_minutes: 5,
+      source_query: null,
+      verified: true, // real in-app content, just not an external link
+      last_checked: new Date().toISOString(),
+    });
+    if (!error) fallbacksInserted++;
+  }
+
   console.log('\nSeeding completed.');
   console.log(`Goals upserted: ${goalsUpserted}`);
   console.log(`Steps upserted: ${stepsUpserted}`);
   console.log(`Content items inserted: ${contentInserted}`);
   console.log(`Content items skipped (unverified): ${contentSkipped}`);
+  if (fallbacksInserted > 0) {
+    console.log(`⚠️  ${fallbacksInserted} steps had no content — fallback guides generated`);
+  } else {
+    console.log('All steps have at least one content row.');
+  }
 }
 
 main().catch(err => {

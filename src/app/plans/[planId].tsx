@@ -224,6 +224,28 @@ export default function PlanDetail() {
   // Track delta of dimensions for completion sheet summary
   const [scoresDelta, setScoresDelta] = useState<Record<string, number>>({});
 
+  // Inline error toast (Bug 1 — surface failures instead of silent crash)
+  const [toastText, setToastText] = useState<string | null>(null);
+  const toastTranslateY = useSharedValue(-120);
+  const toastOpacity = useSharedValue(0);
+
+  const showErrorToast = (message: string) => {
+    setToastText(message);
+    toastTranslateY.value = withTiming(0, { duration: 300, easing: Easing.out(Easing.ease) });
+    toastOpacity.value = withTiming(1, { duration: 300 });
+    setTimeout(() => {
+      toastTranslateY.value = withTiming(-120, { duration: 250 });
+      toastOpacity.value = withTiming(0, { duration: 250 }, (finished) => {
+        if (finished) runOnJS(setToastText)(null);
+      });
+    }, 2600);
+  };
+
+  const toastStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: toastTranslateY.value }],
+    opacity: toastOpacity.value,
+  }));
+
   // 1. Fetch user plan and catalogue joins from Supabase
   const fetchPlanDetails = async () => {
     if (!planId) return;
@@ -289,6 +311,7 @@ export default function PlanDetail() {
     progressMap,
     toggleActionItem,
     completePlan,
+    isStepBusy,
   } = useStepProgress(planId, stepIds, stepsMap);
 
   // Auto expand current active step on load
@@ -319,8 +342,12 @@ export default function PlanDetail() {
   };
 
   const handleToggleItem = async (stepId: string, itemIdx: number) => {
+    if (isStepBusy(stepId)) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    await toggleActionItem(stepId, itemIdx, (scoreImpact) => {
+    await toggleActionItem(
+      stepId,
+      itemIdx,
+      (scoreImpact) => {
       // Step just completed! Trigger celebration animation
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
       
@@ -340,7 +367,9 @@ export default function PlanDetail() {
         });
         return next;
       });
-    });
+      },
+      (msg) => showErrorToast(msg)
+    );
   };
 
   // Check plan completion status
@@ -413,6 +442,13 @@ export default function PlanDetail() {
       {/* Dynamic confetti overlay */}
       <ConfettiOverlay active={showConfetti} />
 
+      {/* Error toast */}
+      {toastText && (
+        <Animated.View style={[styles.toast, toastStyle]} pointerEvents="none">
+          <Text style={styles.toastText}>{toastText}</Text>
+        </Animated.View>
+      )}
+
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <Pressable style={styles.back} onPress={() => router.back()} hitSlop={10}>
           <ArrowLeft size={24} color={colors.textPrimary} />
@@ -447,6 +483,7 @@ export default function PlanDetail() {
             // Next step check
             const isActiveStep = !isLocked && !isCompleted;
             const stepContent = dbContent.filter((c) => c.step_id === step.id);
+            const stepBusy = isStepBusy(step.id);
 
             return (
               <View key={step.id} style={styles.timelineSegment}>
@@ -525,7 +562,8 @@ export default function PlanDetail() {
                                 return (
                                   <Pressable
                                     key={itemIdx}
-                                    style={styles.checkRow}
+                                    style={[styles.checkRow, stepBusy && styles.checkRowBusy]}
+                                    disabled={stepBusy}
                                     onPress={() => handleToggleItem(step.id, itemIdx)}
                                   >
                                     <View style={styles.checkCell}>
@@ -552,32 +590,61 @@ export default function PlanDetail() {
                           </View>
                         )}
 
-                        {/* Lessons & Resources */}
-                        {stepContent.length > 0 && (
+                        {/* Lessons & Resources — three states:
+                            1) external content (has url)  → tappable resource row
+                            2) in-app guide (no url)       → dashed guide card, no button
+                            3) nothing at all              → calm informational note */}
+                        {stepContent.length > 0 ? (
                           <View style={styles.sectionBlock}>
                             <Text style={styles.sectionTitle}>Lessons & Resources</Text>
                             <View style={styles.contentList}>
-                              {stepContent.map((item) => (
-                                <Pressable
-                                  key={item.id}
-                                  style={styles.contentRow}
-                                  onPress={() => openLink(item.url)}
-                                >
-                                  <View style={styles.contentIconWrap}>
-                                    {getContentIcon(item.content_type)}
-                                  </View>
-                                  <View style={styles.contentTextWrap}>
-                                    <Text style={styles.contentTitle} numberOfLines={2}>
-                                      {item.title}
-                                    </Text>
-                                    <Text style={styles.contentMeta}>
-                                      {item.content_type?.toUpperCase()} • {item.est_minutes} MIN
-                                    </Text>
-                                  </View>
-                                </Pressable>
-                              ))}
+                              {stepContent.map((item) => {
+                                const isGuide = item.content_type === 'guide' || !item.url;
+
+                                // State 2 — in-app guide
+                                if (isGuide) {
+                                  return (
+                                    <View key={item.id} style={styles.guideCard}>
+                                      <View style={styles.guideHeader}>
+                                        <BookOpen size={16} color={colors.brandGreen} />
+                                        <Text style={styles.guideLabel}>QUICK GUIDE</Text>
+                                      </View>
+                                      <Text style={styles.guideBody}>
+                                        {item.brief || item.title}
+                                      </Text>
+                                    </View>
+                                  );
+                                }
+
+                                // State 1 — external resource
+                                return (
+                                  <Pressable
+                                    key={item.id}
+                                    style={styles.contentRow}
+                                    onPress={() => openLink(item.url)}
+                                  >
+                                    <View style={styles.contentIconWrap}>
+                                      {getContentIcon(item.content_type)}
+                                    </View>
+                                    <View style={styles.contentTextWrap}>
+                                      <Text style={styles.contentTitle} numberOfLines={2}>
+                                        {item.title}
+                                      </Text>
+                                      <Text style={styles.contentMeta}>
+                                        {item.content_type?.toUpperCase()} • {item.est_minutes} MIN
+                                      </Text>
+                                    </View>
+                                  </Pressable>
+                                );
+                              })}
                             </View>
                           </View>
+                        ) : (
+                          // State 3 — guard: should not happen once fallback guides exist
+                          <Text style={styles.noResourcesNote}>
+                            No additional resources for this step yet — but you can still
+                            complete the action items above.
+                          </Text>
                         )}
                       </View>
                     )}
@@ -830,6 +897,61 @@ const styles = StyleSheet.create({
   contentMeta: { fontFamily: fonts.bold, fontSize: 11, color: colors.ash },
 
   placeholder: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.ash, lineHeight: 21 },
+
+  checkRowBusy: { opacity: 0.4 },
+
+  // State 2 — in-app guide card (dashed border signals "not an external link")
+  guideCard: {
+    backgroundColor: '#1a1a1a',
+    borderWidth: 1,
+    borderColor: '#3c3c3c',
+    borderStyle: 'dashed',
+    borderRadius: radius.input,
+    padding: spacing.md,
+    gap: spacing.xs,
+  },
+  guideHeader: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  guideLabel: {
+    fontFamily: fonts.bold,
+    fontSize: 12,
+    color: '#777777',
+    letterSpacing: 0.5,
+  },
+  guideBody: {
+    fontFamily: fonts.semiBold,
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 21,
+  },
+
+  // State 3 — calm informational note
+  noResourcesNote: {
+    fontFamily: fonts.semiBold,
+    fontSize: 13,
+    color: '#555555',
+    lineHeight: 19,
+  },
+
+  // Error toast
+  toast: {
+    position: 'absolute',
+    top: 50,
+    left: spacing.xl,
+    right: spacing.xl,
+    backgroundColor: '#3a0a0a',
+    borderWidth: 1,
+    borderColor: '#ff4b4b',
+    borderRadius: radius.card,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    zIndex: 9999,
+  },
+  toastText: {
+    fontFamily: fonts.bold,
+    fontSize: 14,
+    color: '#ffffff',
+    textAlign: 'center',
+  },
 
   // Rising badges overlay container
   badgeContainer: {

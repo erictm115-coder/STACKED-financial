@@ -23,6 +23,12 @@ export function useOnboardingData() {
   };
 
   const saveScores = async (userId: string, scores: Scores): Promise<Result<null>> => {
+    // Clear any prior score rows first so a user never accumulates duplicates.
+    // (stacked_scores has no unique constraint on user_id, so a plain insert on
+    // re-onboarding would leave multiple rows — which then breaks single-row
+    // reads elsewhere. See useStepProgress.handleStepComplete.)
+    await supabase.from('stacked_scores').delete().eq('user_id', userId);
+
     const { error } = await supabase.from('stacked_scores').insert({
       user_id: userId,
       overall: scores.overall,
