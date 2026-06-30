@@ -127,6 +127,13 @@ async function validateURL(url: string): Promise<boolean> {
   }
 }
 
+/**
+ * Resolves a single content item. Returns the chosen URL, or null if nothing
+ * validated. Article/tool web search occasionally surfaces a YouTube result
+ * (Yahoo doesn't restrict by domain) — when that happens we reclassify the
+ * item's type to 'video' on the caller's copy rather than discarding a
+ * perfectly good, already-validated link.
+ */
 async function resolveOne(item: ContentItem): Promise<string | null> {
   const queries = [item.search_query, broaden(item.search_query)].filter(
     (q, i, arr) => q && arr.indexOf(q) === i
@@ -136,7 +143,12 @@ async function resolveOne(item: ContentItem): Promise<string | null> {
       item.type === 'video' ? await searchYouTube(q) : await searchWeb(q);
     for (const c of candidates) {
       if (item.type === 'video') return c; // YouTube IDs are reliable
-      if (await validateURL(c)) return c;
+      if (await validateURL(c)) {
+        if (c.includes('youtube.com') || c.includes('youtu.be')) {
+          item.type = 'video';
+        }
+        return c;
+      }
     }
     await sleep(item.type === 'video' ? 400 : 800);
   }

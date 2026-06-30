@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Settings, Flame, Gem } from 'lucide-react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { StacksCard } from '@/components/profile/StacksCard';
@@ -29,40 +31,56 @@ export default function Profile() {
   });
   const [scoreDelta, setScoreDelta] = useState(0);
 
-  // ── Fetch live gamification data ────────────────────────────────────────────
+  const fetchGamification = async () => {
+    if (!user) return;
+    const { data, error } = await supabase
+      .from('user_gamification')
+      .select('total_stacks, day_streak')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error('[profile] gamification fetch failed:', error.message);
+      return;
+    }
+
+    if (data) {
+      setGamification({
+        stack_count: data.total_stacks ?? 0,
+        day_streak: data.day_streak ?? 0,
+      });
+    }
+  };
+
+  const fetchScoreDelta = async () => {
+    if (!user) return;
+    // Pull weekly delta from stacked_scores (overall column acts as running total)
+    const { data, error } = await supabase
+      .from('stacked_scores')
+      .select('overall')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error('[profile] score fetch failed:', error.message);
+      return;
+    }
+
+    if (data?.overall) setScoreDelta(data.overall);
+  };
+
+  // ── Fetch live gamification data on focus ─────────────────────────────────────
+  useFocusEffect(
+    useCallback(() => {
+      fetchGamification();
+      fetchScoreDelta();
+    }, [user])
+  );
+
+  // Realtime subscription so stack count updates without refresh
   useEffect(() => {
     if (!user) return;
 
-    const fetchGamification = async () => {
-      const { data } = await supabase
-        .from('user_gamification')
-        .select('stack_count, day_streak')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (data) {
-        setGamification({
-          stack_count: data.stack_count ?? 0,
-          day_streak: data.day_streak ?? 0,
-        });
-      }
-    };
-
-    const fetchScoreDelta = async () => {
-      // Pull weekly delta from stacked_scores (overall column acts as running total)
-      const { data } = await supabase
-        .from('stacked_scores')
-        .select('overall')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (data?.overall) setScoreDelta(data.overall);
-    };
-
-    fetchGamification();
-    fetchScoreDelta();
-
-    // Realtime subscription so stack count updates without refresh
     const channel = supabase
       .channel('profile-gamification')
       .on(
@@ -74,9 +92,9 @@ export default function Profile() {
           filter: `user_id=eq.${user.id}`,
         },
         (payload) => {
-          const updated = payload.new as Gamification;
+          const updated = payload.new as any;
           setGamification({
-            stack_count: updated.stack_count ?? 0,
+            stack_count: updated.total_stacks ?? 0,
             day_streak: updated.day_streak ?? 0,
           });
         }
@@ -122,9 +140,11 @@ export default function Profile() {
 
         {/* ── League Avatar ── */}
         <View style={styles.avatarSection}>
-          <View style={styles.avatarRing}>
-            <Text style={styles.avatarEmoji}>🏆</Text>
-          </View>
+          <Image
+            source={require('../../../assets/images/appicon.png')}
+            style={styles.avatarImage}
+            contentFit="contain"
+          />
           <Text style={styles.leagueName}>
             {gamification.stack_count >= 100
               ? 'Stacked Elite'
@@ -219,18 +239,10 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     paddingVertical: spacing.sm,
   },
-  avatarRing: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.surface,
-    borderWidth: 2,
-    borderColor: colors.brandGreenOutline,
-  },
-  avatarEmoji: {
-    fontSize: 44,
+  avatarImage: {
+    width: 140,
+    height: 140,
+    borderRadius: 28,
   },
   leagueName: {
     fontFamily: fonts.bold,

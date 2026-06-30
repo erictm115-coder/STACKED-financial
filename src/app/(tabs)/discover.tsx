@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import {
+  ActivityIndicator,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,24 +12,25 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { Search, SlidersHorizontal, ArrowRightLeft, Sparkles, Check } from 'lucide-react-native';
+import { Search, ArrowRightLeft, Check } from 'lucide-react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-  withDelay,
   Easing,
   runOnJS,
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { GoalRow } from '@/components/discover/GoalRow';
-import { SectionHeader } from '@/components/discover/SectionHeader';
 import { DifficultyDivider } from '@/components/discover/DifficultyDivider';
 import { RecommendedStrip } from '@/components/discover/RecommendedStrip';
+import { StreamTabs, type Stream } from '@/components/discover/StreamTabs';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
 import { useAppStore } from '@/store/appStore';
-import { useOnboardingStore } from '@/store/onboardingStore';
+import { useEntitlementStatus } from '@/lib/purchases';
 import { usePlans } from '@/hooks/usePlans';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/hooks/useAuth';
@@ -50,9 +52,12 @@ type Tab = 'unexplored' | 'saved';
 export default function Discover() {
   const router = useRouter();
   const { user } = useAuth();
+  const { hasPro } = useEntitlementStatus();
   
   const goals = useAppStore((s) => s.goals);
   const fetchCatalog = useAppStore((s) => s.fetchCatalog);
+  const isLoadingCatalog = useAppStore((s) => s.isLoading);
+  const catalogError = useAppStore((s) => s.error);
   
   const {
     createPlan,
@@ -60,11 +65,16 @@ export default function Discover() {
     unsavePlan,
     isSaved,
     isActive,
+    isCompleted,
     userPlans,
+    refresh,
   } = usePlans();
 
   const [tab, setTab] = useState<Tab>('unexplored');
+  const [deferredTab, setDeferredTab] = useState<Tab>('unexplored');
   const [query, setQuery] = useState('');
+  const [activeStream, setActiveStream] = useState<Stream>('money_foundations');
+  const [deferredStream, setDeferredStream] = useState<Stream>('money_foundations');
   
   // Custom bottom sheet & toast state
   const [confirmGoalId, setConfirmGoalId] = useState<string | null>(null);
@@ -79,9 +89,51 @@ export default function Discover() {
   const toastTranslateY = useSharedValue(-100);
   const toastOpacity = useSharedValue(0);
 
+  // Reanimated value for Feed transition opacity
+  const feedOpacity = useSharedValue(1);
+
+  // Restore last stream tab on mount
   useEffect(() => {
-    fetchCatalog();
-  }, [fetchCatalog]);
+    AsyncStorage.getItem('lastActiveStream').then((val) => {
+      if (val) {
+        setActiveStream(val as Stream);
+        setDeferredStream(val as Stream);
+      }
+    });
+  }, []);
+
+  const handleStreamChange = (stream: Stream) => {
+    setActiveStream(stream);
+    feedOpacity.value = 0;
+    setTimeout(() => {
+      setDeferredStream(stream);
+      feedOpacity.value = withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) });
+    }, 50);
+    AsyncStorage.setItem('lastActiveStream', stream);
+  };
+
+  const handleTabChange = (newTab: Tab) => {
+    setTab(newTab);
+    feedOpacity.value = 0;
+    setTimeout(() => {
+      setDeferredTab(newTab);
+      feedOpacity.value = withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) });
+    }, 50);
+  };
+
+  const animatedFeedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: feedOpacity.value,
+    };
+  });
+
+  // Refetch data on screen focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchCatalog();
+      refresh();
+    }, [fetchCatalog, refresh])
+  );
 
   // Fetch scores for recommendation
   useEffect(() => {
@@ -196,11 +248,28 @@ export default function Discover() {
     return goals.find((g) => g.id === confirmGoalId);
   }, [confirmGoalId, goals]);
 
+  // Goal visual status helper
+  const getGoalStatus = (goalId: string) => {
+    if (isCompleted(goalId)) return 'completed';
+    if (isActive(goalId)) return 'active';
+    return 'not_started';
+  };
+
+  // Goal progress percent helper
+  const getProgressPercent = (goalId: string) => {
+    const goal = goals.find((g) => g.id === goalId);
+    const dbGoalId = goal?.databaseId || goalId;
+    const plan = userPlans.find((p) => p.goal_id === dbGoalId);
+    if (!plan) return undefined;
+    const completed = plan.user_step_progress?.filter((p) => p.completed).length ?? 0;
+    return (completed / 5) * 100;
+  };
+
   // Section / group goals
   const streams = useMemo(() => {
     const q = query.trim().toLowerCase();
     const filtered = goals.filter((g) => {
-      if (tab === 'saved' && !isSaved(g.id)) return false;
+      if (deferredTab === 'saved' && !isSaved(g.id)) return false;
       if (q && !g.title.toLowerCase().includes(q)) return false;
       return true;
     });
@@ -214,8 +283,6 @@ export default function Discover() {
     filtered.forEach((g) => {
       // Find stream
       if (g.sortWeight !== undefined) {
-        // Wait, stream in public.goals maps to category / stream
-        // Let's deduce the stream
         const stream = (g as any).stream || 'money_foundations';
         if (stream in groups) {
           groups[stream as keyof typeof groups].push(g);
@@ -231,11 +298,44 @@ export default function Discover() {
     });
 
     return groups;
-  }, [goals, query, tab, userPlans, isSaved]);
+  }, [goals, query, deferredTab, userPlans, isSaved]);
+
+  const renderSearchList = () => {
+    const q = query.trim().toLowerCase();
+    const filtered = goals.filter((g) => {
+      if (deferredTab === 'saved' && !isSaved(g.id)) return false;
+      return g.title.toLowerCase().includes(q);
+    });
+
+    if (filtered.length === 0) {
+      return <Text style={styles.empty}>No goals match your search.</Text>;
+    }
+
+    return (
+      <View style={styles.goalList}>
+        {filtered.map((goal) => (
+          <GoalRow
+            key={goal.id}
+            goal={goal}
+            saved={isSaved(goal.id)}
+            status={getGoalStatus(goal.id)}
+            progressPercent={getProgressPercent(goal.id)}
+            hasPro={hasPro}
+            onToggleSaved={handleToggleSaved}
+            onOpen={handleOpenGoal}
+            onLocked={openPaywall}
+            onRequestStartPlan={openConfirmSheet}
+          />
+        ))}
+      </View>
+    );
+  };
 
   const renderStreamSection = (streamKey: 'money_foundations' | 'income_builders' | 'wealthy_habits') => {
     const group = streams[streamKey];
-    if (group.length === 0) return null;
+    if (group.length === 0) {
+      return <Text style={styles.empty}>No goals in this stream yet.</Text>;
+    }
 
     // Group goals by difficulty
     const diffGroups = {
@@ -263,23 +363,13 @@ export default function Discover() {
     }[streamKey];
 
     return (
-      <View key={streamKey} style={styles.section}>
-        {streamKey !== 'money_foundations' && (
-          <SectionHeader
-            icon={streamMeta.icon}
-            title={streamMeta.title}
-            subtitle={streamMeta.subtitle}
-            stream={streamKey}
-          />
-        )}
+      <View style={styles.section}>
         {diffGroups.beginner.length > 0 && (
           <View>
-            {streamKey === 'money_foundations' && (
-              <View style={styles.hintRow}>
-                <ArrowRightLeft size={14} color={colors.ash} />
-                <Text style={styles.hintText}>Swipe right to Start Plan, swipe left to Save</Text>
-              </View>
-            )}
+            <View style={styles.hintRow}>
+              <ArrowRightLeft size={14} color={colors.ash} />
+              <Text style={styles.hintText}>Swipe right to Start Plan, swipe left to Save</Text>
+            </View>
             <DifficultyDivider label="Beginner" />
             <View style={styles.goalList}>
               {diffGroups.beginner.map((goal) => (
@@ -287,7 +377,9 @@ export default function Discover() {
                   key={goal.id}
                   goal={goal}
                   saved={isSaved(goal.id)}
-                  active={isActive(goal.id)}
+                  status={getGoalStatus(goal.id)}
+                  progressPercent={getProgressPercent(goal.id)}
+                  hasPro={hasPro}
                   onToggleSaved={handleToggleSaved}
                   onOpen={handleOpenGoal}
                   onLocked={openPaywall}
@@ -306,7 +398,9 @@ export default function Discover() {
                   key={goal.id}
                   goal={goal}
                   saved={isSaved(goal.id)}
-                  active={isActive(goal.id)}
+                  status={getGoalStatus(goal.id)}
+                  progressPercent={getProgressPercent(goal.id)}
+                  hasPro={hasPro}
                   onToggleSaved={handleToggleSaved}
                   onOpen={handleOpenGoal}
                   onLocked={openPaywall}
@@ -325,7 +419,9 @@ export default function Discover() {
                   key={goal.id}
                   goal={goal}
                   saved={isSaved(goal.id)}
-                  active={isActive(goal.id)}
+                  status={getGoalStatus(goal.id)}
+                  progressPercent={getProgressPercent(goal.id)}
+                  hasPro={hasPro}
                   onToggleSaved={handleToggleSaved}
                   onOpen={handleOpenGoal}
                   onLocked={openPaywall}
@@ -392,16 +488,13 @@ export default function Discover() {
               returnKeyType="search"
             />
           </View>
-          <Pressable style={styles.filterBtn} hitSlop={6}>
-            <SlidersHorizontal size={20} color={colors.textSecondary} />
-          </Pressable>
         </View>
 
         {/* Toggle pills */}
         <View style={styles.pills}>
           <Pressable
             style={[styles.pill, tab === 'unexplored' && styles.pillActive]}
-            onPress={() => setTab('unexplored')}
+            onPress={() => handleTabChange('unexplored')}
           >
             <Text style={[styles.pillText, tab === 'unexplored' && styles.pillTextActive]}>
               Unexplored
@@ -409,7 +502,7 @@ export default function Discover() {
           </Pressable>
           <Pressable
             style={[styles.pill, tab === 'saved' && styles.pillActive]}
-            onPress={() => setTab('saved')}
+            onPress={() => handleTabChange('saved')}
           >
             <Text style={[styles.pillText, tab === 'saved' && styles.pillTextActive]}>
               Saved ({goals.filter((g) => isSaved(g.id)).length})
@@ -418,25 +511,44 @@ export default function Discover() {
         </View>
 
         {/* Recommended Strip (Horizontal) */}
-        {tab === 'unexplored' && query.trim() === '' && recommendedGoals.length > 0 && (
+        {deferredTab === 'unexplored' && query.trim() === '' && recommendedGoals.length > 0 && (
           <RecommendedStrip goals={recommendedGoals} onOpenGoal={handleOpenGoal} />
         )}
 
+        {/* Segmented stream tabs (only when search query is empty) */}
+        {query.trim() === '' && (
+          <StreamTabs
+            activeStream={activeStream}
+            onChangeStream={handleStreamChange}
+          />
+        )}
 
-
-        {/* Categorized Feed */}
-        <View style={styles.feed}>
-          {renderStreamSection('money_foundations')}
-          {renderStreamSection('income_builders')}
-          {renderStreamSection('wealthy_habits')}
-
-          {goals.length > 0 &&
-            streams.money_foundations.length === 0 &&
-            streams.income_builders.length === 0 &&
-            streams.wealthy_habits.length === 0 && (
-              <Text style={styles.empty}>No goals match your search.</Text>
-            )}
-        </View>
+        <Animated.View
+          style={[styles.feed, animatedFeedStyle]}
+        >
+          {goals.length === 0 ? (
+            isLoadingCatalog ? (
+              <View style={styles.feedState}>
+                <ActivityIndicator color={colors.brandGreen} />
+              </View>
+            ) : catalogError ? (
+              <View style={styles.feedState}>
+                <Text style={styles.feedStateText}>
+                  Couldn&apos;t load goals. Check your connection and try again.
+                </Text>
+                <Pressable style={styles.retryBtn} onPress={() => fetchCatalog()}>
+                  <Text style={styles.retryText}>Try again</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <Text style={styles.empty}>No goals available yet.</Text>
+            )
+          ) : query.trim() !== '' ? (
+            renderSearchList()
+          ) : (
+            renderStreamSection(deferredStream)
+          )}
+        </Animated.View>
       </ScrollView>
 
       {/* Confirmation Bottom Sheet (Modal Overlay) */}
@@ -455,7 +567,7 @@ export default function Discover() {
                 <Text style={styles.sheetTitle}>Start this plan?</Text>
                 {confirmGoal && (
                   <Text style={styles.sheetSubtitle}>
-                    Generate your custom 5-step timeline for "{confirmGoal.title}". Let's get Stacked!
+                    Generate your custom 5-step timeline for &quot;{confirmGoal.title}&quot;. Let&apos;s get Stacked!
                   </Text>
                 )}
                 <View style={styles.sheetButtons}>
@@ -547,6 +659,31 @@ const styles = StyleSheet.create({
     color: colors.ash,
     textAlign: 'center',
     paddingVertical: spacing.xxl,
+  },
+  feedState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.md,
+    paddingVertical: spacing.xxl * 2,
+  },
+  feedStateText: {
+    fontFamily: fonts.semiBold,
+    fontSize: 14,
+    color: colors.ash,
+    textAlign: 'center',
+    paddingHorizontal: spacing.xl,
+  },
+  retryBtn: {
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.pill,
+    borderWidth: 1.5,
+    borderColor: colors.brandGreen,
+  },
+  retryText: {
+    fontFamily: fonts.bold,
+    fontSize: 14,
+    color: colors.brandGreen,
   },
 
   // Toast Styles

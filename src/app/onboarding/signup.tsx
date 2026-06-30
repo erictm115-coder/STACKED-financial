@@ -11,9 +11,11 @@ import {
 } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
+
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
-import { PulsingBlob } from '@/components/ui/PulsingBlob';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
 import { supabase } from '@/lib/supabase';
@@ -48,25 +50,21 @@ export default function Signup() {
 
     setAnswer('email', trimmedEmail);
 
-    // Best-effort: send the branded Resend email wrapper. The Supabase OTP
-    // itself already went out above, so a failure here shouldn't block signup.
-    supabase.functions.invoke('send-otp-email', { body: { email: trimmedEmail } }).catch(() => {});
-
     setSubmitting(false);
     router.push('/onboarding/verify');
   };
 
-  // Collapse the blob out of the way when the keyboard is up, giving the
-  // email input maximum breathing room. Base sizes are ~15% smaller than the
-  // original to leave more room for the content sitting lower on screen.
-  const blobProgress = useSharedValue(1);
+  // Smoothly shrink/fade the hero image when the input gets focused to leave
+  // maximum space for the keyboard.
+  const heroProgress = useSharedValue(1);
   useEffect(() => {
-    blobProgress.value = withTiming(focused ? 0 : 1, { duration: 200 });
-  }, [focused, blobProgress]);
+    heroProgress.value = withTiming(focused ? 0 : 1, { duration: 200 });
+  }, [focused, heroProgress]);
 
-  const blobAreaStyle = useAnimatedStyle(() => ({
-    height: 58 + blobProgress.value * 100,
-    opacity: blobProgress.value,
+  const heroImageAnimatedStyle = useAnimatedStyle(() => ({
+    height: heroProgress.value * 240,
+    opacity: heroProgress.value,
+    marginBottom: heroProgress.value * spacing.md,
   }));
 
   return (
@@ -77,11 +75,12 @@ export default function Signup() {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
       >
         <View style={styles.flex}>
-          <Animated.View style={[styles.blobArea, blobAreaStyle]}>
-            <PulsingBlob size={128} />
-          </Animated.View>
-
-          <ScreenEntrance style={[styles.content, { paddingTop: height * 0.15 }]}>
+          <ScreenEntrance style={[styles.content, { paddingTop: height * 0.095 }]}>
+            <AnimatedImage
+              source={require('../../../assets/images/hero.png')}
+              style={[styles.heroImage, heroImageAnimatedStyle]}
+              contentFit="contain"
+            />
             <Text style={styles.title}>Let&apos;s get started</Text>
             <Text style={styles.subtitle}>
               Enter your email to unlock your personalised wealth plan.
@@ -121,7 +120,7 @@ export default function Signup() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background },
   flex: { flex: 1 },
-  blobArea: { alignItems: 'center', justifyContent: 'center' },
+  heroImage: { width: '100%', height: 240, alignSelf: 'center' },
   content: { paddingHorizontal: spacing.xl, gap: spacing.md },
   title: { fontFamily: fonts.extraBold, fontSize: 28, color: colors.textPrimary },
   subtitle: { fontFamily: fonts.medium, fontSize: 15, color: colors.textSecondary, marginBottom: spacing.sm },

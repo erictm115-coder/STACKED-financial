@@ -44,7 +44,7 @@ export const SLIDES: Slide[] = [
     headline: [{ text: 'Your ' }, { text: 'financial potential.', color: colors.accentBlue }],
     body: [
       "It's as unique to you as your fingerprint.",
-      'And it’s your key to breaking free from the system, taking back control, and building the life you actually want.',
+      'And it’s your key to breaking free from the system.',
     ],
   },
   {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, Switch, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -16,8 +16,12 @@ ExpoNotifications.setNotificationHandler({
   }),
 });
 
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/lib/supabase';
+
 export default function Notifications() {
   const router = useRouter();
+  const { user } = useAuth();
   
   // State for toggles
   const [streakReminders, setStreakReminders] = useState(true);
@@ -26,6 +30,54 @@ export default function Notifications() {
   const [selectedTime, setSelectedTime] = useState('09:00 AM');
 
   const times = ['08:00 AM', '09:00 AM', '12:00 PM', '06:00 PM', '08:00 PM'];
+
+  // Load database preferences on mount
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from('profiles')
+      .select('daily_stack_reminder')
+      .eq('id', user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setStreakReminders(data.daily_stack_reminder ?? true);
+        }
+      });
+  }, [user]);
+
+  const handleToggleStreakReminders = async (val: boolean) => {
+    setStreakReminders(val);
+    if (!user) return;
+
+    try {
+      let pushToken = null;
+      if (val) {
+        const { status } = await ExpoNotifications.getPermissionsAsync();
+        let currentStatus = status;
+        if (currentStatus !== 'granted') {
+          const { status: newStatus } = await ExpoNotifications.requestPermissionsAsync();
+          currentStatus = newStatus;
+        }
+        if (currentStatus === 'granted') {
+          const tokenData = await ExpoNotifications.getExpoPushTokenAsync();
+          pushToken = tokenData.data;
+        }
+      }
+
+      const updates: any = { daily_stack_reminder: val };
+      if (pushToken) {
+        updates.expo_push_token = pushToken;
+      }
+
+      await supabase
+        .from('profiles')
+        .update(updates)
+        .eq('id', user.id);
+    } catch (err) {
+      console.error('Error updating notification settings:', err);
+    }
+  };
 
   const triggerTestNotification = async () => {
     const { status } = await ExpoNotifications.getPermissionsAsync();
@@ -81,12 +133,12 @@ export default function Notifications() {
             <View style={styles.optionTextContainer}>
               <Text style={styles.optionTitle}>Streak Protection</Text>
               <Text style={styles.optionDesc}>
-                "Your money doesn't sleep, but your streak might! 🔥" Reminders to log daily.
+                &quot;Your money doesn&apos;t sleep, but your streak might! 🔥&quot; Reminders to log daily.
               </Text>
             </View>
             <Switch
               value={streakReminders}
-              onValueChange={setStreakReminders}
+              onValueChange={handleToggleStreakReminders}
               trackColor={{ false: colors.graphite, true: colors.brandGreen }}
               thumbColor={colors.textPrimary}
             />

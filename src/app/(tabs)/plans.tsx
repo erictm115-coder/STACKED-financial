@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Layers, Flame, ArrowUpDown, ChevronDown, ChevronUp } from 'lucide-react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { PlanCard } from '@/components/plans/PlanCard';
@@ -14,7 +15,7 @@ import { supabase } from '@/lib/supabase';
 export default function Plans() {
   const router = useRouter();
   const { user } = useAuth();
-  const { userPlans, isLoading, refresh } = usePlans();
+  const { userPlans, isLoading, error, refresh } = usePlans();
   
   const [streak, setStreak] = useState(0);
   const [completedExpanded, setCompletedExpanded] = useState(false);
@@ -33,9 +34,11 @@ export default function Plans() {
   }, [user, userPlans]);
 
   // Refresh on focus
-  useEffect(() => {
-    refresh();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh])
+  );
 
   // Categorize plans
   const categorizedPlans = useMemo(() => {
@@ -88,7 +91,19 @@ export default function Plans() {
         </View>
       )}
 
-      {hasPlans ? (
+      {isLoading && !hasPlans ? (
+        <View style={styles.center}>
+          <ActivityIndicator color={colors.brandGreen} />
+        </View>
+      ) : error && !hasPlans ? (
+        <View style={styles.center}>
+          <Text style={styles.emptyTitle}>Couldn&apos;t load your plans</Text>
+          <Text style={styles.emptyBody}>Check your connection and try again.</Text>
+          <View style={styles.cta}>
+            <PrimaryButton label="Try again" onPress={refresh} />
+          </View>
+        </View>
+      ) : hasPlans ? (
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {/* In Progress Section */}
           {categorizedPlans.inProgress.length > 0 && (

@@ -184,26 +184,13 @@ export function useStepProgress(
     }
   };
 
-  const mapDimensionToColumn = (dim: string): string => {
-    if (dim === 'moneyMindset') return 'money_mindset';
-    if (dim === 'investmentReadiness') return 'investment_readiness';
-    return dim;
-  };
-
-  // Valid Stack Score columns — score_impact keys that don't map to one of these
-  // are logged and ignored rather than crashing the update (Bug 1, cause D).
-  const VALID_SCORE_COLUMNS = new Set([
-    'overall',
-    'money_mindset',
-    'clarity',
-    'discipline',
-    'focus',
-    'investment_readiness',
-  ]);
-
   /**
-   * Applies a completed step's score impact and bumps gamification.
-   * Throws on any failure so the caller can roll back the optimistic UI.
+   * Applies a completed step's score impact and, if it was the last step,
+   * completes the plan. Both mutations run server-side in SECURITY DEFINER
+   * functions (migration 006) that read the canonical score_impact from
+   * goal_steps, are idempotent, and clamp to <= 99 — the client can no longer
+   * write scores or stacks directly. Throws on failure so the caller can roll
+   * back the optimistic UI.
    */
   const handleStepComplete = async (
     stepId: string,
@@ -212,73 +199,21 @@ export function useStepProgress(
   ) => {
     if (!user) return;
     try {
-      // 1. Load the user's current Stack Score.
-      //    order+limit(1) tolerates duplicate rows (the historical root cause of
-      //    "Failed to handle step completion") instead of throwing on >1 row.
-      const { data: currentScore, error: scoreErr } = await supabase
-        .from('stacked_scores')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .maybeSingle();
-
+      // 1. Apply this step's score. Idempotent: a step scores at most once, so
+      //    re-completing (uncheck -> recheck) will not re-add points.
+      const { error: scoreErr } = await supabase.rpc('apply_step_score', {
+        p_step_id: stepId,
+      });
       if (scoreErr) throw scoreErr;
 
-      let scoresToUpdate = currentScore;
-      if (!scoresToUpdate) {
-        // No score row yet — create a default one before updating.
-        const { data: newScore, error: insertScoreErr } = await supabase
-          .from('stacked_scores')
-          .insert({
-            user_id: user.id,
-            overall: 0,
-            money_mindset: 0,
-            clarity: 0,
-            discipline: 0,
-            focus: 0,
-            investment_readiness: 0,
-          })
-          .select()
-          .single();
-        if (insertScoreErr) throw insertScoreErr;
-        scoresToUpdate = newScore;
-      }
-
-      // 2. Build the update, mapping camelCase dimensions to snake_case columns
-      //    and ignoring (logging) any unknown keys.
-      const updates: Record<string, number> = {};
-      const validDeltas: number[] = [];
-      Object.entries(scoreImpact || {}).forEach(([dimension, delta]) => {
-        const dbColumn = mapDimensionToColumn(dimension);
-        if (!VALID_SCORE_COLUMNS.has(dbColumn)) {
-          console.warn(`[handleStepComplete] Ignoring unknown score dimension: ${dimension}`);
-          return;
-        }
-        const current = scoresToUpdate[dbColumn] ?? 0;
-        updates[dbColumn] = Math.min(99, current + delta);
-        validDeltas.push(delta);
+      // 2. Complete the plan + bump stacks, but only when every step is genuinely
+      //    done. Ownership-checked and idempotent inside the function.
+      const { error: planErr } = await supabase.rpc('complete_user_plan', {
+        p_plan_id: planId,
       });
+      if (planErr) throw planErr;
 
-      if (validDeltas.length > 0) {
-        const maxDelta = Math.max(...validDeltas);
-        updates['overall'] = Math.min(99, (scoresToUpdate.overall ?? 0) + maxDelta);
-
-        // Scope the update to the specific row we read so duplicate rows don't
-        // all get bumped.
-        const { error: updateScoreErr } = await supabase
-          .from('stacked_scores')
-          .update(updates)
-          .eq('id', scoresToUpdate.id);
-
-        if (updateScoreErr) throw updateScoreErr;
-      }
-
-      // 3. Bump gamification (stacks + streak).
-      const { error: rpcErr } = await supabase.rpc('increment_stacks', { uid: user.id });
-      if (rpcErr) throw rpcErr;
-
-      // 4. Celebration callback.
+      // 3. Celebration callback (uses the catalogue score_impact for the badge).
       if (onStepCompleteAnimation) {
         onStepCompleteAnimation(scoreImpact);
       }
@@ -299,14 +234,12 @@ export function useStepProgress(
   const completePlan = async () => {
     if (!user) return;
     try {
-      const { error } = await supabase
-        .from('user_plans')
-        .update({ status: 'completed' })
-        .eq('id', planId);
-
+      // Server-side: completes only if all steps are done, bumps stacks once.
+      const { error } = await supabase.rpc('complete_user_plan', { p_plan_id: planId });
       if (error) throw error;
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error completing plan:', err);
+      throw err;
     }
   };
 

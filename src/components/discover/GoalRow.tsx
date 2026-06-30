@@ -1,16 +1,20 @@
 import React, { useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
-import { Bookmark, Lock, Plus } from 'lucide-react-native';
+import { Bookmark, Lock, Plus, CheckCircle2 } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
 import { GoalIcon } from '@/components/main/GoalIcon';
 import { type Goal } from '@/data/goals';
 
+export type GoalStatus = 'not_started' | 'active' | 'completed';
+
 interface Props {
   goal: Goal;
   saved: boolean;
-  active: boolean; // whether plan is active / started
+  status: GoalStatus;
+  progressPercent?: number;
+  hasPro?: boolean;
   onToggleSaved: (goalId: string) => void;
   onOpen: (goalId: string) => void;
   onLocked: () => void;
@@ -20,7 +24,9 @@ interface Props {
 export function GoalRow({
   goal,
   saved,
-  active,
+  status,
+  progressPercent,
+  hasPro = false,
   onToggleSaved,
   onOpen,
   onLocked,
@@ -30,7 +36,7 @@ export function GoalRow({
 
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (goal.isPremium) {
+    if (goal.isPremium && !hasPro) {
       onLocked();
     } else {
       onOpen(goal.id);
@@ -53,7 +59,9 @@ export function GoalRow({
   const renderLeftActions = () => (
     <View style={styles.swipeLeftAction}>
       <Plus size={20} color="#ffffff" />
-      <Text style={styles.swipeLeftText}>{active ? 'Continue' : 'Create Plan'}</Text>
+      <Text style={styles.swipeLeftText}>
+        {status === 'active' ? 'Continue →' : 'Start Plan'}
+      </Text>
     </View>
   );
 
@@ -64,10 +72,28 @@ export function GoalRow({
     </View>
   );
 
+  const getContainerStyle = () => {
+    switch (status) {
+      case 'completed':
+        return [styles.row, { backgroundColor: '#0a2200', borderColor: '#58cc02' }];
+      case 'active':
+        return [styles.row, { borderColor: '#1cb0f6' }];
+      default:
+        return [styles.row, { borderColor: '#3c3c3c' }];
+    }
+  };
+
+  const getTitleStyle = () => {
+    if (status === 'completed') {
+      return [styles.title, { color: '#cccccc' }];
+    }
+    return styles.title;
+  };
+
   return (
     <Swipeable
       ref={swipeRef}
-      enabled={!goal.isPremium}
+      enabled={(!goal.isPremium || hasPro) && status !== 'completed'}
       renderLeftActions={renderLeftActions}
       renderRightActions={renderRightActions}
       leftThreshold={50}
@@ -76,9 +102,9 @@ export function GoalRow({
       onSwipeableOpen={(direction) => {
         swipeRef.current?.close();
         if (direction === 'left') {
-          // Swiped right -> Reveals Left Action (Create Plan)
+          // Swiped right -> Reveals Left Action (Create/Continue Plan)
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-          if (active) {
+          if (status === 'active') {
             onOpen(goal.id);
           } else {
             onRequestStartPlan(goal.id);
@@ -90,7 +116,13 @@ export function GoalRow({
         }
       }}
     >
-      <Pressable style={styles.row} onPress={handlePress}>
+      <Pressable style={getContainerStyle()} onPress={handlePress}>
+        {status === 'active' && progressPercent !== undefined && (
+          <View style={styles.activeBadge}>
+            <Text style={styles.activeBadgeText}>{Math.round(progressPercent)}%</Text>
+          </View>
+        )}
+
         <View style={styles.iconWrap}>
           <GoalIcon
             iconKey={goal.iconKey}
@@ -99,7 +131,7 @@ export function GoalRow({
         </View>
 
         <View style={styles.textBlock}>
-          <Text style={styles.title} numberOfLines={1}>
+          <Text style={getTitleStyle()} numberOfLines={1}>
             {goal.title}
           </Text>
           <View style={styles.metaRow}>
@@ -118,7 +150,9 @@ export function GoalRow({
         </View>
 
         <View style={styles.trailing}>
-          {goal.isPremium ? (
+          {status === 'completed' ? (
+            <CheckCircle2 size={20} color="#58cc02" fill="rgba(88, 204, 2, 0.1)" />
+          ) : (goal.isPremium && !hasPro) ? (
             <Lock size={16} color="#555555" />
           ) : (
             <Pressable
@@ -152,6 +186,23 @@ const styles = StyleSheet.create({
     borderRadius: radius.card,
     paddingHorizontal: spacing.lg,
     paddingVertical: 18,
+    position: 'relative',
+  },
+  activeBadge: {
+    position: 'absolute',
+    top: 6,
+    right: 12,
+    backgroundColor: 'rgba(28, 176, 246, 0.15)',
+    borderWidth: 1,
+    borderColor: '#1cb0f6',
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  activeBadgeText: {
+    fontFamily: fonts.bold,
+    fontSize: 9,
+    color: '#1cb0f6',
   },
   iconWrap: {
     width: 44,

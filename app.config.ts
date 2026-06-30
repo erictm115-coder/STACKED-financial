@@ -7,19 +7,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: '1.0.0',
   jsEngine: 'hermes',
   orientation: 'portrait',
-  icon: './assets/images/icon.png',
+  icon: './assets/images/appicon.png',
   scheme: 'stacked',
   userInterfaceStyle: 'dark',
   ios: {
-    icon: './assets/images/icon.png',
+    icon: './assets/images/appicon.png',
     bundleIdentifier: 'com.erictm2626.stacked',
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: '#E6F4FE',
-      foregroundImage: './assets/images/android-icon-foreground.png',
-      backgroundImage: './assets/images/android-icon-background.png',
-      monochromeImage: './assets/images/android-icon-monochrome.png',
+      backgroundColor: '#0d0d0d',
+      foregroundImage: './assets/images/appicon.png',
     },
     predictiveBackGestureEnabled: false,
     package: 'com.erictm2626.stacked',

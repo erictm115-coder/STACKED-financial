@@ -383,6 +383,9 @@ export default function PlanDetail() {
     if (allCompleted && planData && planData.status !== 'completed') {
       // Complete plan in database
       completePlan().then(() => {
+        // Update local status so we don't trigger this again and UI reflects completed state
+        setPlanData((prev: any) => prev ? { ...prev, status: 'completed' } : null);
+        
         // Trigger fullscreen celebration!
         setShowConfetti(true);
         setTimeout(() => {

@@ -8,6 +8,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+import { Image } from 'expo-image';
 
 import type { Slide } from '@/components/onboarding/slides';
 import { HighlightedText } from '@/components/ui/HighlightedText';
@@ -61,8 +62,25 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
   return (
     <Pressable onPress={onAdvance} style={[styles.page, { width }]}>
       <View style={styles.centeredGroup}>
-        <View style={styles.blobArea}>
-          <PulsingBlob size={84} color={colors.brandGreen} />
+        <View style={styles.mediaContainer}>
+          {slide.key === 's2' ? (
+            <Image
+              source={require('../../../assets/images/appicon.png')}
+              style={styles.appIconImage}
+              contentFit="contain"
+            />
+          ) : slide.key === 's5' ? (
+            <Image
+              source={require('../../../assets/images/love.png')}
+              style={styles.loveImage}
+              contentFit="contain"
+            />
+          ) : slide.key === 's4' ? (
+            // Empty placeholder to keep the headline/text height perfectly aligned
+            null
+          ) : (
+            <PulsingBlob size={110} color={colors.brandGreen} />
+          )}
         </View>
 
         <View style={styles.textArea}>
@@ -80,6 +98,13 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
                 {paragraph}
               </Text>
             ))}
+            {slide.key === 's4' && (
+              <Image
+                source={require('../../../assets/images/map.png')}
+                style={styles.mapImage}
+                contentFit="contain"
+              />
+            )}
           </Animated.View>
         </View>
       </View>
@@ -96,11 +121,28 @@ const styles = StyleSheet.create({
   // Blob + text are one centered group, so the blob sits directly above the
   // text instead of being pinned to the top edge of the screen.
   centeredGroup: { flex: 1, justifyContent: 'center' },
-  blobArea: {
+  mediaContainer: {
+    height: 120,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 8,
-    transform: [{ translateY: -16 }],
+    marginBottom: 20,
+    transform: [{ translateY: -10 }],
+  },
+  appIconImage: {
+    width: 110,
+    height: 110,
+    alignSelf: 'center',
+  },
+  loveImage: {
+    width: 110,
+    height: 110,
+    alignSelf: 'center',
+  },
+  mapImage: {
+    width: '100%',
+    height: 265,
+    marginTop: 20,
+    alignSelf: 'center',
   },
   textArea: { paddingBottom: 24 },
   headline: { fontFamily: fonts.extraBold, fontSize: 23, lineHeight: 29, color: colors.textPrimary },

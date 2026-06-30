@@ -252,7 +252,7 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "How to set up automatic investing",
               "search_query": "how to set up automatic investing beginners",
               "est_minutes": 6,
@@ -291,8 +291,8 @@
               "brief": "Why you need an emergency fund and how much",
               "search_query": "why emergency fund important how much",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.ramseysolutions.com/saving/quick-guide-to-your-emergency-fund"
             }
           ]
         },
@@ -313,8 +313,8 @@
               "brief": "Monthly expenses worksheet",
               "search_query": "monthly essential expenses calculator",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://monthlyexpensecalculator.com/"
             }
           ]
         },
@@ -501,8 +501,8 @@
               "brief": "Weekly money review habit",
               "search_query": "weekly money review habit",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://habitchronicle.com/goals/budgeting/weekly-money-review/"
             }
           ]
         }
@@ -678,8 +678,8 @@
               "brief": "Pension types explained beginners",
               "search_query": "pension types explained beginners",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.cgaa.org/article/how-does-a-pension-work"
             }
           ]
         },
@@ -701,8 +701,8 @@
               "brief": "Retirement savings calculator how much do I need",
               "search_query": "retirement savings calculator how much do I need",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8i63-4h-HCIhuGVIeMRdD_jVUCUygnC-pEGOPWg4BWzN410SlqLp_AtgW9tfiKJpaozyDhPSVPbLrQrmbsOynp5dZLGOYpE9UUteVlWM_BS0kUTvCu9Ak0Zc-ewft1KpQKYMm1sFQJPPPzC987S6EvIvU8zCKAY7efedizxQ9UC2pThjvxBunlh1NTl4zK5ImlhAuiA&u=aHR0cHMlM2ElMmYlMmZ3d3cuenVyaWNoLmllJTJmc2F2aW5ncy1hbmQtaW52ZXN0bWVudHMlMmYlM2ZQUENJbnZlc3RtZW50cyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNmRldmljZSUzZGMlMjZuZXR3b3JrJTNkbyUyNm1zY2xraWQlM2QzMWZkOWE3ZGI4N2ExZjhlYmE5Y2YwMzliODUzOWRlNyUyNnV0bV9jYW1wYWlnbiUzZFdHJTI1MjAtJTI1MjAyMDIyJTI1MjAtJTI1MjBJbnZlc3RtZW50cyUyNTIwLSUyNTIwR2VuZXJpYyUyNnV0bV90ZXJtJTNkaW52ZXN0bWVudCUyNTIwY2FsY3VsYXRvciUyNnV0bV9jb250ZW50JTNkSW52ZXN0bWVudCUyNTIwY2FsY3VsYXRvcg&rlid=31fd9a7db87a1f8eba9cf039b8539de7"
             }
           ]
         },
@@ -723,8 +723,8 @@
               "brief": "How to open a pension account beginners",
               "search_query": "how to open a pension account beginners",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.wallstreetprep.com/knowledge/investing-for-retirement/"
             }
           ]
         },
@@ -745,8 +745,8 @@
               "brief": "How to automate pension contributions",
               "search_query": "how to automate pension contributions",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8Zy2cOqlgAcTF4_9FVyI7ajVUCUyR3CbHzrpemA3M9J7rkLFS3lV4XA3rHoY-EiP-uFRqGWfRLxQjeQQoAy4KQiylPuJiOTTvQSg2nzHiyUJD6HgzvpfpeP4WL2vYssDz-sky04Dth9gOztOFcEqW5Yz4MtV65PKMvpi9swkc086xTlYsOLIL3PzvfKWNl5TPSJS8Bw&u=aHR0cHMlM2ElMmYlMmZwZW5pbnN1bGFpcmVsYW5kLmNvbSUyZnNlcnZpY2VzJTJmaHIlMmYlM2Z1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RwcGMlMjZ1dG1fY2FtcGFpZ24lM2RIUiUyNnV0bV9pZCUzZEhSJTI2Y3VzdG9tZXJfaWQlM2QzNDItMTk4LTY5MjglMjZhZGdyb3VwJTNkJTI2bXNjbGtpZCUzZDA4ODRmMWZiZmJmZjFiZTE5OWUwOWJiZmZiY2NhZjE5JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkSFJfU2VhcmNoX1NlcCUyNTIwMjUlMjZ1dG1fdGVybSUzZGVtcGxveWVlJTI1MjBwZW5zaW9uJTI1MjBzY2hlbWUlMjZ1dG1fY29udGVudCUzZFBlbnNpb24&rlid=0884f1fbfbff1be199e09bbffbccaf19"
             }
           ]
         }
@@ -800,8 +800,8 @@
               "brief": "Income tax brackets explained simply",
               "search_query": "income tax brackets explained simply",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.irs.gov/filing/federal-income-tax-rates-and-brackets"
             }
           ]
         },
@@ -822,8 +822,8 @@
               "brief": "Common tax deductions you might be missing",
               "search_query": "common tax deductions you might be missing",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://turbotax.intuit.com/tax-tips/fun-facts/the-10-most-overlooked-tax-deductions/L2WjmvZAH"
             }
           ]
         },
@@ -844,8 +844,8 @@
               "brief": "Self employment tax explained beginners",
               "search_query": "self employment tax explained beginners",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.trakmiles.com/blog/self-employment-tax-basics-beginners.html"
             }
           ]
         },
@@ -867,8 +867,8 @@
               "brief": "Free tax filing tool",
               "search_query": "free tax filing tool",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8zYHcVb1QrwH4PrOAumiAPTVUCUxuv8Xmq3HjdPiyiGAMJ94ujqybPZyOQLQqP6X-WV789PbTBhQk_eGRabdfV_Mva4B58-wY0oXWju-IyiwDHYZXUGiq8tQaYNc7Gm6dyUj7AfQGXZrms7-Q8LAADmuOWPWI1hKTYBT-ezfezOCWwBaqHzEBwWxS3sVm-H-cpKwSCg&u=aHR0cHMlM2ElMmYlMmZ3d3cubXlleHBhdHRheGVzLmNvbSUyZiUzZnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZFNFQV8wM19FdXJvcGVfMDdfSXJlbGFuZF8wMiUyNnV0bV90ZXJtJTNkdHVyYm90YXglMjZ1dG1fY29udGVudCUzZHBwYyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZG9ubGluZSUyNnV0bV9jYW1wYWlnbiUzZGRlZmF1bHQlMjZtc2Nsa2lkJTNkNTg1OGRlOGVkYTYxMWM0YWNlNmZiNGNhZGE1YjJlZWU&rlid=5858de8eda611c4ace6fb4cada5b2eee"
             }
           ]
         }
@@ -901,8 +901,8 @@
               "brief": "How to calculate net worth beginners",
               "search_query": "how to calculate net worth beginners",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://thefinancialroom.com/money-basics/net-worth-101-a-step-by-step-calculation-guide-for-beginners/"
             }
           ]
         },
@@ -923,8 +923,8 @@
               "brief": "Free net worth tracker spreadsheet",
               "search_query": "free net worth tracker spreadsheet",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e87In_-LVVaGSNepGA5QiJxzVUCUwIjwBKU3f6Ub_v2XJAV7vcNg1_5txmfIr6VyJHn1GVdB_6Ez0Tu-WPQGAP0ZiIqvVWMGn8Kclz1cNo_5uzbne7w7iUfgfxcA7QRnot9nqUBa8TutbvDwyWLitNMV6PeyMWiwE5M10QL8ZjOcHzP8v7aDJGlPVv50g-pw7LJRWk8w&u=aHR0cHMlM2ElMmYlMmZ3d3cuYXRsYXNzaWFuLmNvbSUyZnNvZnR3YXJlJTJmY29uZmx1ZW5jZSUzZmNhbXBhaWduJTNkNDcxNTE2OTU3JTI2YWRncm91cCUzZDEzMDk1MTk2NTI3MzYyMjElMjZ0YXJnZXRpZCUzZGt3ZC04MTg0NTMwMDQyMDI2OSUzYWxvYy05MiUyNm1hdGNodHlwZSUzZHAlMjZiaWRtYXRjaHR5cGUlM2RicCUyNm5ldHdvcmslM2RvJTI2ZGV2aWNlJTNkYyUyNmNyZWF0aXZlJTNkODE4NDUwNDM1Nzk0MzYlMjZrZXl3b3JkJTNkc3ByZWFkc2hlZXQlMjZxdWVyeXN0cmluZyUzZGZyZWUlMjUyMG5ldCUyNTIwd29ydGglMjUyMHRyYWNrZXIlMjUyMHNwcmVhZHNoZWV0JTI2ZHNfZWlkJTNkNzAwMDAwMDAxNzIxODM4JTI2ZHNfZTElM2RNSUNST1NPRlQlMjZtc19hY2NfaWQlM2RGMTExOE1EUSUyNm1zY2xraWQlM2RmYmNlODkxODVkN2IxZDExNDRjMWUzNWM1ZDQ2YTdmMg&rlid=fbce89185d7b1d1144c1e35c5d46a7f2"
             }
           ]
         },
@@ -966,8 +966,8 @@
               "brief": "How to set net worth goals",
               "search_query": "how to set net worth goals",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://moneyguy.com/article/how-to-set-timely-goals-with-the-the-net-worth-formula/"
             }
           ]
         },
@@ -1023,8 +1023,8 @@
               "brief": "How to audit subscriptions and bills",
               "search_query": "how to audit subscriptions and bills",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e84qhcODfpy75DBjF9Lxhc6DVUCUzDIX9vNH26OiTvJueYgdx_JX4VjVWyFyNRJnQLq-2M_5py4MH_qDRHHY-zpawFCuGXhGtsaKCHU_wOZZAwvm5TZ8qebQcu-eUQtD9x9_0CzTnGOrbvGZl26guU_pmYx809klGuPsa9f8UMQ5-vGdmQchRInOrywCrvQgWWiKYEPg&u=aHR0cHMlM2ElMmYlMmZnb2NhcmRsZXNzLmNvbSUyZmZlYXR1cmVzJTJmY29sbGVjdC1yZWN1cnJpbmctcGF5bWVudHMlMmYlM2ZfYnQlM2QlMjZfYmslM2RzdWJzY3JpcHRpb24lMjUyMHBheW1lbnRzJTI2X2JtJTNkcCUyNl9ibiUzZG8lMjZfYmclM2QxMjg2NDI5OTYxMTE4MTUyJTI2bXNjbGtpZCUzZDk5MWFkNmNhMjhhYTEyM2QzMzRiYmM4ZTI4ZWYzYWI3JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkTWljcm9zb2Z0JTI1MjAlMjU3QyUyNTIwUk5EJTI1MjAlMjU3QyUyNTIwR0MlMjUyMCUyNTdDJTI1MjBFTl9VSyUyNTIwJTI1N0MlMjUyMEdlbmVyaWMlMjZ1dG1fdGVybSUzZHN1YnNjcmlwdGlvbiUyNTIwcGF5bWVudHMlMjZ1dG1fY29udGVudCUzZFN1YnNjcmlwdGlvbnMlMjUyMCUyNTI2JTI1MjBSZWN1cnJpbmclMjUyMC0lMjUyMEJyb2Fk&rlid=991ad6ca28aa123d334bbc8e28ef3ab7"
             }
           ]
         },
@@ -1044,8 +1044,8 @@
               "brief": "How to cancel subscriptions easily",
               "search_query": "how to cancel subscriptions easily",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8P2QB9tWLRIMUt_puW-kx1jVUCUx_eoiz6EB98dVMONeyzeHKwM-S8PYXX83jQiBmZJccaQNTSeXn3uNNI_Ysw5ymE4yaxPe_Dfjv_8dpRX_mEvaNoGTXLZVHgJeqbpfmRyj6P7DWC1ZwEICHgUw5S3wKWXqzn82yT8yUIRmoUpHhzsMkE_G60s23QkbzaJkoYH4FxQ&u=aHR0cHMlM2ElMmYlMmZ1bnN1YmJ5LmNvbSUyZmVuLWllJTJmY2FuY2VsLWFsc2FhJTNmbXNjbGtpZCUzZDI5MGQyOGY5ZmYzOTE0YjNhMWMzNDJiZGZmN2Y4Yjhj&rlid=290d28f9ff3914b3a1c342bdff7f8b8c"
             }
           ]
         },
@@ -1090,8 +1090,8 @@
               "brief": "How to lower insurance premiums",
               "search_query": "how to lower insurance premiums",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8IxaUcjKgQYPXAjNVMS5MBTVUCUyzG25Z8SRHqvYq8Q3F-MHnBEWx5wOLKehY3i50Xv2e7rIhGXkJ9AEcfWqhnswO3b5CGBDgpiuSeg2goW-E44cBB_g2TVJ8C3eofQOnFi1EML4AsS9CM56hWxD9wfn0cCmcshZEc-mQUaoadxD1s_9-sTIJbCLS6dTmNA79mh6iuQ&u=aHR0cHMlM2ElMmYlMmZ3d3cub3V0c3VyYW5jZS5pZSUyZmhvbWUtaW5zdXJhbmNlJTJmJTNmc291cmNlJTNkYmluZ3BwY2dlbl9ob21lJTI2a3clM2Rob21lJTI1MjBpbnN1cmFuY2UlMjZtc2Nsa2lkJTNkYTc5YTZiNTM1MDAzMTBiNzJjYjAwMTE3NTA0YWVhMDglMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RNUyUyNTIwLSUyNTIwSW5zdXJlJTI1MjAtJTI1MjBIb21lJTI2dXRtX3Rlcm0lM2Rob21lJTI1MjBpbnN1cmFuY2UlMjZ1dG1fY29udGVudCUzZEhvbWUlMjUyMEluc3VyYW5jZQ&rlid=a79a6b53500310b72cb00117504aea08"
             }
           ]
         },
@@ -1169,8 +1169,8 @@
               "brief": "Dividend yield vs growth investing",
               "search_query": "dividend yield vs growth investing",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://dividendcalculator.net/dividend-yield-vs-dividend-growth/"
             }
           ]
         },
@@ -1213,8 +1213,8 @@
               "brief": "Dividend reinvestment plan explained",
               "search_query": "dividend reinvestment plan explained",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.investing.com/academy/analysis/dividend-reinvestment-plan-guide/"
             }
           ]
         },
@@ -1235,8 +1235,8 @@
               "brief": "Dividend income tracker spreadsheet",
               "search_query": "dividend income tracker spreadsheet",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8FY8BExcY4ul--K_RKFbwUzVUCUxbUX2f5Fhw8tE_6qdDj_UpQXxxg8loC024L4hTcrav8WQkBy0lmuAK4iS5kd81JcsJ9-8PFlnOJFITF9jFCvBO-0pfl9VdKZKVH8dMwTQIULHnDoTA-JvjPN_fTpumKnvGOWPlTQwOGNqBx4j6vOukR5YkpDyU7dWabaLXB7bvYQ&u=aHR0cHMlM2ElMmYlMmZzZWVraW5nYWxwaGEuY29tJTJmc2NyZWVuZXJzJTJmOTY3OTMyOWMtVG9wLURpdmlkZW5kLVN0b2NrcyUzZnNvdXJjZSUzZGFjcXVpc2l0aW9uX2NhbXBhaWduX2JpbmclMjZwcGNfY2FtcGFpZ25fdHlwZSUzZHNzMjZhYnRlc3QlMjZwcGNfZnVubmVsX3R5cGUlM2Rzc2FsZTI2JTI2Y2FtcGFpZ25faWQlM2Q2Nzc0MDQ4NDAlMjZpbnRlcm5hbF9wcm9tb3Rpb24lM2R0cnVlJTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkNjc3NDA0ODQwJTI2YWRncm91cF9pZCUzZDExNjk4ODIzMDkwNjk2NjIlMjZ1dG1fY29udGVudCUzZCUyNmFkX2lkJTNkJTI2a2V5d29yZCUzZGJlc3QlMjUyMGRpdmlkZW5kJTI1MjB0cmFja2VyJTI2bWF0Y2h0eXBlJTNkcCUyNmRldmljZSUzZGMlMjZwbGFjZW1lbnQlM2QlMjZuZXR3b3JrJTNkbyUyNnRhcmdldGlkJTNka3dkLTczMTE4Mzk1MzI0NjY0JTNhbG9jLTkyJTI2dXRtX3Rlcm0lM2QxMTY5ODgyMzA5MDY5NjYyJTVla3dkLTczMTE4Mzk1MzI0NjY0JTNhbG9jLTkyJTVlcCU1ZSU1ZSU1ZSU1ZW8lMjZtc2Nsa2lkJTNkOWU0MzUwMWYxOTQ3MTU3ZjJkZWQzYTViMTkxMzVhODk&rlid=9e43501f1947157f2ded3a5b19135a89"
             }
           ]
         }
@@ -1270,8 +1270,8 @@
               "brief": "How much house deposit do I need",
               "search_query": "how much house deposit do I need",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://fairdealpropertydublin.ie/how-much-deposit-do-you-need-to-buy-a-home-in-dublin/"
             }
           ]
         },
@@ -1314,8 +1314,8 @@
               "brief": "Best savings accounts for house deposit",
               "search_query": "best savings accounts for house deposit",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8Slrnwuwjrue35WW23ho9KDVUCUyIujhbimf2WDjxHeuOxrvCKsgP_-XPIRwCiagMIGkzRn9A8pZ0xQFpiPTHCusaZZuATpArCJcZJPoZ_8ry6mDvahvfaAEN4-KCw0v6soeyCiTVApQin-dDVo-lylGZVoQ0AkLoTKc5dJlhS76ypAgOY6LNYw6C1TNpYL0jM7TzYQ&u=aHR0cHMlM2ElMmYlMmZob25lc3QuaWUlMmZzYXZpbmdzJTJmY29tcGFyZS1zYXZpbmdzLWFjY291bnRzJTJmJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkSG9uZXN0LmllJTI1MjAtJTI1MjBTYXZpbmdzJTI2dXRtX3Rlcm0lM2RiZXN0JTI1MjBzYXZpbmdzJTI1MjBpbnRlcmVzdCUyNnV0bV9jb250ZW50JTNkODQwNDQzNjYyMDI3MDYlMjZtc2Nsa2lkJTNkMzgwYjgzMzA0NzQ1MTgzNmIxYWRlOTc0NDcxZTY4NGU&rlid=380b833047451836b1ade974471e684e"
             }
           ]
         },
@@ -1337,8 +1337,8 @@
               "brief": "House deposit savings calculator",
               "search_query": "house deposit savings calculator",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.mortgagecalculator.org/calcs/downpayment-savings.php"
             }
           ]
         },
@@ -1360,8 +1360,8 @@
               "brief": "How to improve mortgage eligibility",
               "search_query": "how to improve mortgage eligibility",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://mortgagezone.com/how-to-improve-mortgage-eligibility-fast/"
             }
           ]
         }
@@ -1394,8 +1394,8 @@
               "brief": "How to find your student loan details",
               "search_query": "how to find your student loan details",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8rPyCYvUCvlBEhzdAOi9UKDVUCUzeLTCRBdH9Ywq-yi7ws1ptinAwL_T21y56Sn29f9rS4MyZqsLc2pQq-ScyrRjgaZk9kqzQ3-rgncrWcBzdlqOaGDi6mpMw3HOHCgFGywPk0cxApR49OGwu0_NzsalA08I6Dg4LGhThUinOOUOVQrDLLwpYwl7tnlBaJjqxWZ9B3A&u=aHR0cHMlM2ElMmYlMmZ3d3cuZnVuZC5jb20lMmZ0b3AlMmZwcml2YXRlLXN0dWRlbnQtbG9hbnMlMmZwYXJlbnQtbG9hbnMlMmZkZXNrJTJmJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZhZGlkJTNkNzgwNjU1NDExNzQyNjIlMjZjcV9hY2NfYmluZyUzZEYxMjVIRzUyJTI2Y3FfY21wX2JpbmclM2Q0OTQyODA2OTAlMjZ1dG1fY2FtcGFpZ24lM2RQU0wlMjUyMEJpbmclMjUyMC0lMjUyMFBhcmVudCUyNmNxX2FkZ19iaW5nJTNkMTI0OTA0NjU1Mzc0ODgzOCUyNmNxX3Rlcm0lM2RwYXJlbnQlMjUyMHBsdXMlMjUyMHN0dWRlbnQlMjUyMGxvYW5zJTI2Y3FfcGxhYyUzZCUyNmNxX25ldCUzZG8lMjZjcV9tdHlwZSUzZGIlMjZjcV9kdmMlM2RjJTI2Y3FfbG9jJTNkMTUwMzg1JTI2dHZhciUzZCUyNnN0dmFyJTNkJTI2bXNjbGtpZCUzZGQ2ZWYyMmEwODNiNjEyODU3Mjc2NDhlNDgzZDQ0NDdm&rlid=d6ef22a083b61285727648e483d4447f"
             }
           ]
         },
@@ -1438,8 +1438,8 @@
               "brief": "Should I pay off student loans or invest",
               "search_query": "should I pay off student loans or invest",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.nerdwallet.com/student-loans/learn/save-invest-pay-off-student-loans"
             }
           ]
         },
@@ -1459,8 +1459,8 @@
               "brief": "Student loan payoff calculator extra payments",
               "search_query": "student loan payoff calculator extra payments",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.studentloanplanner.com/student-loan-payoff-calculator/"
             }
           ]
         },
@@ -1482,8 +1482,8 @@
               "brief": "When to refinance student loans",
               "search_query": "when to refinance student loans",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://lendedu.com/blog/when-to-refinance-student-loans/"
             }
           ]
         }
@@ -1516,8 +1516,8 @@
               "brief": "Types of insurance everyone needs explained",
               "search_query": "types of insurance everyone needs explained",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.schwab.com/learn/story/how-much-insurance-do-you-need"
             }
           ]
         },
@@ -1560,8 +1560,8 @@
               "brief": "Income protection insurance explained",
               "search_query": "income protection insurance explained",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e85hJulHtKgFIUtlXvqtgG1TVUCUx9hFQHynE46xGb9ZBVNmqA0DfzIX681PhNRjKQhlyioYf7kWCz0UVFtEwjDYPCqM0Hcz8ItZ8YT1T5dP2J1i0lWSIHFsDrZekwXRujYv_1elLREy98CY_xZFmgubkC8ENFTzeTyZjEZboFaJdpTUzs2sOQ37beZYkw_8j-aWt7aQ&u=aHR0cHMlM2ElMmYlMmZpbnN1cmV5b3VyaW5jb21lLmllJTNmbXNjbGtpZCUzZDJmNzk0OThkYjhmNzFlZTA5MjVlMjNjOWI4OWFhMDA4&rlid=2f79498db8f71ee0925e23c9b89aa008"
             }
           ]
         },
@@ -1604,8 +1604,8 @@
               "brief": "How to manage insurance renewals",
               "search_query": "how to manage insurance renewals",
               "est_minutes": 4,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://theinsuranceuniverse.com/insurance-policy-renewal-process/"
             }
           ]
         }
@@ -1660,8 +1660,8 @@
               "brief": "Cryptocurrency risk volatility explained",
               "search_query": "cryptocurrency risk volatility explained",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8XYxJrB1D5tJ-lEnpp2UkuTVUCUzzkpV4BDby75qkiBQW7kGx9SUpmDwCNl9q5D5xGfFszmx6tTPwxeYacBAMlogVy6nvaz_32t-c8GFBP1aspNzHazrXCMJfxzDOihAaqKVnlEOA5uXNtF8ZfVqN0XejUihtxCrRKHELX_87p0vp6WHPWTpXKIscflVn_fDoG7UIEg&u=aHR0cHMlM2ElMmYlMmZtZWQuZXRvcm8uY29tJTJmYXcuYXNweCUzZlRhcmdldFVSTCUzZGh0dHBzJTNhJTJmJTJmd3d3LmV0b3JvLmNvbSUyZm1hcmtldHMlMmZldGglMjZ1dG1fc291cmNlJTNkNTQ1NDYlMjZ1dG1fY2FtcGFpZ24lM2RDQU1QNjE0MTg0ODIxJTdjQUcxMTU5OTg2NzMxMDEzMTg5JTdjRGV2aWNlYyU3Y0tXVHJhZGUlMjUyMGV0aGVyZXVtJTdjTVRiJTdjVGFyZ2V0JTdjVGFyZ2V0aWRrd2QtNzI0OTk5NTY5NTAxNzAlM2Fsb2MtOTIlN2NDcmVhdGl2ZSUyNnV0bV9zZXJpYWwlM2RDQU1QNjE0MTg0ODIxJTdjQUcxMTU5OTg2NzMxMDEzMTg5JTdjRGV2aWNlYyU3Y0tXVHJhZGUlMjUyMGV0aGVyZXVtJTdjTVRiJTdjVGFyZ2V0JTdjVGFyZ2V0aWRrd2QtNzI0OTk5NTY5NTAxNzAlM2Fsb2MtOTIlN2NDcmVhdGl2ZSUyNlRhc2slM2RDbGljayUyNm1zY2xraWQlM2RiOTA3MTQ0NjdkNDExYzI0MzkzOTdlMDI3ZDM4Njc1Yw&rlid=b90714467d411c2439397e027d38675c"
             }
           ]
         },
@@ -1681,8 +1681,8 @@
               "brief": "How much of portfolio in crypto",
               "search_query": "how much of portfolio in crypto",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8uDhSUdCAZXRgVP_ljUh0tjVUCUywfLqW-jpnHfkRr4Ha051iwIRIOmHOLLTdROPPF0Fous9xY0VYywYALK8iouVuRohSaQABiIia1Vel8LMiaGba8K-93Nrl-KI35ROzAoxSsl9twwzZTwcVtgapuybZVEG9g9r1Ymn4BgWpS5oIlkCbEN0XFWe1b9kFJD5YgZuFUw&u=aHR0cHMlM2ElMmYlMmZtZWQuZXRvcm8uY29tJTJmYXcuYXNweCUzZlRhcmdldFVSTCUzZGh0dHBzJTNhJTJmJTJmZ28uZXRvcm8uY29tJTJmZW4lMmZjcnlwdG8lMjZ1dG1fc291cmNlJTNkNTQ1NDYlMjZ1dG1fY2FtcGFpZ24lM2RDQU1QNjE0MTg0ODIxJTdjQUcxMTU0NDg5MTczMTcxNzc2JTdjRGV2aWNlYyU3Y0tXYnV5JTI1MjBjcnlwdG8lN2NNVGIlN2NUYXJnZXQlN2NUYXJnZXRpZGt3ZC03MjE1NjM1ODM5MDM2MyUzYWxvYy05MiU3Y0NyZWF0aXZlJTI2dXRtX3NlcmlhbCUzZENBTVA2MTQxODQ4MjElN2NBRzExNTQ0ODkxNzMxNzE3NzYlN2NEZXZpY2VjJTdjS1didXklMjUyMGNyeXB0byU3Y01UYiU3Y1RhcmdldCU3Y1RhcmdldGlka3dkLTcyMTU2MzU4MzkwMzYzJTNhbG9jLTkyJTdjQ3JlYXRpdmUlMjZUYXNrJTNkQ2xpY2slMjZtc2Nsa2lkJTNkNTg5YzJlYzkwNjgwMTAxYmViNzQ0NDhkMDZmYjcyZDk&rlid=589c2ec90680101beb74448d06fb72d9"
             }
           ]
         },
@@ -1783,8 +1783,8 @@
               "brief": "How to calculate rental yield explained",
               "search_query": "how to calculate rental yield explained",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.wallstreetmojo.com/rental-yield/"
             }
           ]
         },
@@ -1826,8 +1826,8 @@
               "brief": "Buy to let mortgage calculator",
               "search_query": "buy to let mortgage calculator",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://loancalculatoronline.org/ie/mortgage-calculator-ireland"
             }
           ]
         },
@@ -1849,8 +1849,8 @@
               "brief": "How to analyse a buy to let property",
               "search_query": "how to analyse a buy to let property",
               "est_minutes": 9,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8gwikE2G8z_EE3-wzQenDKzVUCUw7a5hfjqcIsiTTpiVn375M3_N40uiGDUYZPxKJv9uOAMgo-kfOaCN4gaEHzMR-GNiNpu-oQzVvLoHLCop1dCiycWyQxkTPgNNjkn5U8EGiHh1137mgHWitGEXY8-sqe_7cgRsqUd9k7lQyHAfFn32F0-XMx4mfDBA3nheMad0xzA&u=aHR0cHMlM2ElMmYlMmZ3d3cud2VidXlob21lczM2NS5jb20lMmYlM2ZwcGNwX3BsYXRmb3JtJTNkYmluZyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX2NhbXBhaWduJTNkQ29tcGFuaWVzVGhhdEJ1eUhvdXNlcyUyNnV0bV9hZ2lkJTNkMTM0NTgwMzIzMzE2ODQxNCUyNnV0bV90ZXJtJTNkY29tcGFuaWVzJTI1MjB0aGF0JTI1MjBidXklMjUyMGhvdXNlcyUyNmNyZWF0aXZlJTNkJTI2ZGV2aWNlJTNkYyUyNnBsYWNlbWVudCUzZCUyNm1zY2xraWQlM2RmMWViMDJkNGUwMzUxODM3NmVhMDY4OTBlMGIwMTkwMyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY29udGVudCUzZENvbXBhbmllcyUyNTIwVGhhdCUyNTIwQnV5JTI1MjBIb3VzZXMlMjUyMEJyb2Fk&rlid=f1eb02d4e03518376ea06890e0b01903"
             }
           ]
         }
@@ -1904,8 +1904,8 @@
               "brief": "Savings rate explained why it matters",
               "search_query": "savings rate explained why it matters",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8MKKLZJN0VtTFSXP3dIkLRDVUCUznt4GTJnLAvosnGPSgQCPYoPg7glrDwOYEIezqAWDEk4X57u3coWBwiz63UCfYdjTp2ttBOsSNhD0f140arh9QaQST1pnFDq25ZwWcgABBp1MMmiQp_inFZSbHeXkWo2Drz5jFnEuIAgSyVXpLfif5B1TjV2Ps6WTzQvvEiFeX6g&u=aHR0cHMlM2ElMmYlMmZiYW5raW5nLnJhdGV6aXAuY29tJTJmc2F2aW5ncy1hY2NvdW50cyUzZnBwY2lkJTNkNzk4JTI2Y2lkJTNkYjAxZmUwNDQyZjFiMTc0YjJkOWI4YTAwMmY5MjA3NGMlMjZjYW1wYWlnbmlkJTNkNjc1MTA1MjUwJTI2Y2FtcGFpZ24lM2RTZWFyY2glMjUyMCUyNTdDJTI1MjBQYXJ0bmVyJTI1MjBOZXR3b3JrJTI1MjAlMjU3QyUyNTIwU2F2aW5ncyUyNTIwJTI1MjYlMjUyME1NQSUyNTIwJTI1N0MlMjUyMEJhbmtyYXRlJTI2YWRncm91cGlkJTNkMTIyNTk1NjQ1NzAzNjc1MyUyNmFkZ3JvdXAlMjYlM2RTYXZpbmdzJTI1MjAlMjUyNiUyNTIwTU1BJTI1MjBSYXRlcyUyNTIwJTI1N0MlMjUyMEJyYW5kcyUyNTIwJTI1N0MlMjUyMEV4YWN0JTI2dGFyZ2V0aWQlM2Rrd2QtNzY2MjI1Mjk0MzA5MTYlMjZtYXRjaHR5cGUlM2RwJTI2YmlkbWF0Y2h0eXBlJTNkYnAlMjZuZXR3b3JrJTNkbyUyNmRldmljZSUzZGMlMjZrZXl3b3JkJTNkYmFuayUyNTIwc2F2aW5ncyUyNm1zY2xraWQlM2RiMDFmZTA0NDJmMWIxNzRiMmQ5YjhhMDAyZjkyMDc0YyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZFNlYXJjaCUyNTIwJTI1N0MlMjUyMFBhcnRuZXIlMjUyME5ldHdvcmslMjUyMCUyNTdDJTI1MjBTYXZpbmdzJTI1MjAlMjUyNiUyNTIwTU1BJTI1MjAlMjU3QyUyNTIwQmFua3JhdGUlMjZ1dG1fdGVybSUzZGJhbmslMjUyMHNhdmluZ3MlMjZ1dG1fY29udGVudCUzZFNhdmluZ3MlMjUyMCUyNTI2JTI1MjBNTUElMjUyMFJhdGVzJTI1MjAlMjU3QyUyNTIwQnJhbmRzJTI1MjAlMjU3QyUyNTIwRXhhY3Q&rlid=b01fe0442f1b174b2d9b8a002f92074c"
             }
           ]
         },
@@ -1926,8 +1926,8 @@
               "brief": "Lifestyle inflation how to avoid it",
               "search_query": "lifestyle inflation how to avoid it",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.clevergirlfinance.com/lifestyle-inflation/"
             }
           ]
         },
@@ -1969,8 +1969,8 @@
               "brief": "Automate investing savings rate",
               "search_query": "automate investing savings rate",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e89auUelhs8L46ii0lp2uG-jVUCUzkbtAgsDHoz6oKq6AzG2y59mnkkTaJsxjpvy6F36k3u7uOinBUVCpMVjIhjxbhTdWEMnJ5CMly-XPkzInprBsJEMAp6r7q7_O0oZ-oFL_Y6G5dFTxz1XsjRZJb4C742nUURkUrmysBwai8nJUZztautDxN1IUmLhGqa4rBbpmXfA&u=aHR0cHMlM2ElMmYlMmZob25lc3QuaWUlMmZzYXZpbmdzJTJmY29tcGFyZS1zYXZpbmdzLWFjY291bnRzJTJmJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkSG9uZXN0LmllJTI1MjAtJTI1MjBTYXZpbmdzJTI2dXRtX3Rlcm0lM2RzYXZpbmdzJTI1MjBpbnRlcmVzdCUyNTIwcmF0ZSUyNnV0bV9jb250ZW50JTNkODQwNDQzNjYyMDI3MDYlMjZtc2Nsa2lkJTNkZWJhYzEzZWY1ZWVhMTdjODQxNjM3OWFiNWU2NzU2N2Q&rlid=ebac13ef5eea17c8416379ab5e67567d"
             }
           ]
         }
@@ -2024,8 +2024,8 @@
               "brief": "Types of income streams explained",
               "search_query": "types of income streams explained",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.dowjanes.com/blog/types-of-income-streams"
             }
           ]
         },
@@ -2046,8 +2046,8 @@
               "brief": "How to start a second income stream",
               "search_query": "how to start a second income stream",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e80wz9w6dcOt6n1Biz5jroyTVUCUyEJQHM__QFbWaAnVeQKBQhEJABp0iIp2uXGzOtB8s_HkNScUyiqzLQz3Rwxt_UaJkuXOqJHUZe_LZhv6ZZZGl1oUeTJZWcznbUuVlqe0fVaoC8SQk8WYCZ8sFOvReY7VexijkVxjtsVG9z14e6TnmQ-WUe6V2Y_FQbjIrutBVfbg&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZmJ1c2luZXNzJTJmb25saW5lLXN0b3JlJTNmdXRtX21lZGl1bSUzZGNwYyUyNnV0bV9zb3VyY2UlM2R5YWJpbmclMjZqayUzZHNlY29uZCUyNTIwaW5jb21lJTI1MjBpZGVhcyUyNmJpbmdhZGdyb3VwaWQlM2QxMjQwMjUwMTk0NTY5ODIyJTI2YmluZ2FkaWQlM2Q3NzUxNTc3MDkyMzYwMiUyNmJpbmdrZXl3b3JkaWQlM2Q3NzUxNTk5MjI0MTU0NSUyNmJpbmduZXR3b3JrJTNkbyUyNkJPSUQlM2Rub25lJTI2bXNjbGtpZCUzZGVmYTQ5NzQxYWJkOTE5MzE3MGUxZmQwNWFiNGJiMjM5JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkUGFpZCUyNTIwU2VhcmNoJTI1MjAtJTI1MjBCaW5nJTI1MjAtJTI1MjBJcmVsYW5kJTI1MjAtJTI1MjBCdXNpbmVzcyUyNTIwLSUyNTIwRW5nbGlzaCUyNnV0bV90ZXJtJTNkc2Vjb25kJTI1MjBpbmNvbWUlMjUyMGlkZWFzJTI2dXRtX2NvbnRlbnQlM2RCdXNpbmVzcyUyNTIwLSUyNTIwSG93JTI1MjBUbyUyNTIwTWFrZSUyNTIwTW9uZXk&rlid=efa49741abd9193170e1fd05ab4bb239"
             }
           ]
         },
@@ -2089,8 +2089,8 @@
               "brief": "Multiple income stream tracker spreadsheet",
               "search_query": "multiple income stream tracker spreadsheet",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.notion.com/templates/multiple-income-streams-tracker"
             }
           ]
         }
@@ -2145,8 +2145,8 @@
               "brief": "Compound interest calculator",
               "search_query": "compound interest calculator",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
             }
           ]
         },
@@ -2166,8 +2166,8 @@
               "brief": "Rule of 72 explained examples",
               "search_query": "rule of 72 explained examples",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://napkinfinance.com/napkin/rule-of-72/"
             }
           ]
         },
@@ -2288,8 +2288,8 @@
               "brief": "How to stop impulse buying unsubscribe",
               "search_query": "how to stop impulse buying unsubscribe",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://mooremomentum.com/blog/how-to-stop-impulse-buying-strategies-to-curb-impulsive-buying/"
             }
           ]
         },
@@ -2332,8 +2332,8 @@
               "brief": "How to stop impulse spending replacement habits",
               "search_query": "how to stop impulse spending replacement habits",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.wealthysinglemommy.com/stop-impulse-buying-habits/"
             }
           ]
         }
@@ -2366,8 +2366,8 @@
               "brief": "Why everyone needs a will explained",
               "search_query": "why everyone needs a will explained",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.freewill.com/learn/10-reasons-to-have-a-will"
             }
           ]
         },
@@ -2411,8 +2411,8 @@
               "brief": "Write a will online service",
               "search_query": "write a will online service",
               "est_minutes": 10,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8eOUjVidfvKCWfHNOit7VAjVUCUy4Pkv8Jta993vFQRYm7k8tb9dntScXey4_yUYMkwgPQjqHd8EtAu6AXkQCc95C5CUelIcqA80yItK5HyoqU_ALubIo24MKdXTfOf27sIlwc2rnoEzWRSV1jJYQ-pvVzm0cSAFSUbQCN-U9irVTWKHK1wcHq3fIzVFOwLqA1R_oTA&u=aHR0cHMlM2ElMmYlMmZ3d3cud29uZGVyLmxlZ2FsJTJmaWUlMmZtb2RlbGUlMmZsYXN0LXdpbGwtYW5kLXRlc3RhbWVudCUzZm1zY2xraWQlM2QxMGNhMjA3MzMzMmYxMWVlOWEwYTRhMzczMzlkYzhiZg&rlid=10ca2073332f11ee9a0a4a37339dc8bf"
             }
           ]
         },
@@ -2433,8 +2433,8 @@
               "brief": "How to nominate beneficiaries financial accounts",
               "search_query": "how to nominate beneficiaries financial accounts",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://wealthvieu.com/add-beneficiaries-to-your-financial-accounts/"
             }
           ]
         },
@@ -2455,8 +2455,8 @@
               "brief": "Financial document organiser for family",
               "search_query": "financial document organiser for family",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://owlplanners.com/pages/family-and-career"
             }
           ]
         }
@@ -2511,8 +2511,8 @@
               "brief": "Budget categories list envelope system",
               "search_query": "budget categories list envelope system",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://storage.googleapis.com/diyalhmzflsrce/envelope-budget-system-printables.html"
             }
           ]
         },
@@ -2631,8 +2631,8 @@
               "brief": "Digital product ideas to sell online",
               "search_query": "digital product ideas to sell online",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e89on-CB79rBya8Lztr5jehTVUCUw-yXesex4tCM4cZC2Xu7Gafjfg0leCCFsyKmQZqtIunO01Z4xFSl_D-xeAXhpmjjJxAmhsb91WBc4zHwL6ZJmy0bUh7WmFemz5iKm4-Dvg0sxChGWKasXCtpcEBKLFKW7oJW2Ffe5II5acq_VynJ-Or8-y8621ncHcdLkBoly7Kg&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZnNlbGwlM2Z1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX3NvdXJjZSUzZHlhYmluZyUyNmprJTNkc2VsbCUyNTIwZGlnaXRhbCUyNTIwcHJvZHVjdHMlMjUyMG9ubGluZSUyNmJpbmdhZGdyb3VwaWQlM2QxMjM1ODUxMzE5OTE2MzQ2JTI2YmluZ2FkaWQlM2Q3NzI0MDg1NDk4NjMwNyUyNmJpbmdrZXl3b3JkaWQlM2Q3NzI0MDkxMzg5MTQ0MiUyNmJpbmduZXR3b3JrJTNkbyUyNkJPSUQlM2Rub25lJTI2bXNjbGtpZCUzZGY3MjhiOTg3MjA5ZTE4MmM0MGVmZDNjMzIwNWYxZjc5JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkUGFpZCUyNTIwU2VhcmNoJTI1MjAtJTI1MjBCaW5nJTI1MjAtJTI1MjBJcmVsYW5kJTI1MjAtJTI1MjBTZWxsJTI1MjAtJTI1MjBFbmdsaXNoJTI2dXRtX3Rlcm0lM2RzZWxsJTI1MjBkaWdpdGFsJTI1MjBwcm9kdWN0cyUyNTIwb25saW5lJTI2dXRtX2NvbnRlbnQlM2RTZWxsJTI1MjAtJTI1MjBTZWxsJTI1MjBEaWdpdGFsJTI1MjBQcm9kdWN0cw&rlid=f728b987209e182c40efd3c3205f1f79"
             }
           ]
         },
@@ -2653,8 +2653,8 @@
               "brief": "How to create digital products beginners",
               "search_query": "how to create digital products beginners",
               "est_minutes": 10,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8NMaRzH3suVXJGX8IaHhDSzVUCUyTPmO8KEfRdtIrEQb3OoCw6VCAKI5Jtx08zmwYKpUhJUty24sUETp7g-iCrTnHguUmcmROdytaZJjw3RClxfIuVPxE4O4WtguFVoEVmVsIfXdjuqC_HT91wUk50NXw3ObXxxzZ3MC1Efsu5H2oFTBD8iIuEbLsop22DycdOKgTqw&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZmVjb21tZXJjZS1idXNpbmVzcyUzZnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fc291cmNlJTNkeWFiaW5nJTI2amslM2RzdGFydCUyNTIwZWNvbW1lcmNlJTI1MjBidXNpbmVzcyUyNmJpbmdhZGdyb3VwaWQlM2QxMjI5MjU0MjUwOTMxNzAwJTI2YmluZ2FkaWQlM2Q3NjgyODU3NjE5MTY0MSUyNmJpbmdrZXl3b3JkaWQlM2Q3NjgyODU5NTU1MzM5NiUyNmJpbmduZXR3b3JrJTNkbyUyNkJPSUQlM2Rub25lJTI2bXNjbGtpZCUzZGJjYWJmMjVlNTdkNTE4ZWQyMmNkOTgxYTU3MTZlM2I1JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkUGFpZCUyNTIwU2VhcmNoJTI1MjAtJTI1MjBCaW5nJTI1MjAtJTI1MjBJcmVsYW5kJTI1MjAtJTI1MjBFY29tbWVyY2UlMjUyMC0lMjUyMEVuZ2xpc2glMjZ1dG1fdGVybSUzZHN0YXJ0JTI1MjBlY29tbWVyY2UlMjUyMGJ1c2luZXNzJTI2dXRtX2NvbnRlbnQlM2RFY29tbWVyY2UlMjUyMC0lMjUyMFN0YXJ0JTI1MjBFY29tbWVyY2UlMjUyMEJ1c2luZXNz&rlid=bcabf25e57d518ed22cd981a5716e3b5"
             }
           ]
         },
@@ -2697,8 +2697,8 @@
               "brief": "How to market digital products",
               "search_query": "how to market digital products",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8jmXf-HahUEh0UFn5sKWB4DVUCUyno_XgP5n7nGzjQkvjVcxqDVtUVWfsWttwVu-r9cpoEn1eRe14YdP4hIfM_FMtLOnb7Vwvh9NmTRWnwAp--oJ266S6KudgplUrExzDapo9AvcymOBPkWGSTpDJ00_Sez163jACQnWVAhrRY1AhLcY1z4OUF57y-d-B9XhXtQNcsw&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZnNlbGwlM2Z1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX3NvdXJjZSUzZHlhYmluZyUyNmprJTNkc2VsbCUyNTIwZGlnaXRhbCUyNTIwcHJvZHVjdHMlMjZiaW5nYWRncm91cGlkJTNkMTIzNTg1MTMxOTkxNjM0NiUyNmJpbmdhZGlkJTNkNzcyNDA4NTQ5ODYzMDclMjZiaW5na2V5d29yZGlkJTNkNzcyNDA5MTM4OTE0NDElMjZiaW5nbmV0d29yayUzZG8lMjZCT0lEJTNkbm9uZSUyNm1zY2xraWQlM2QwMjRkYzAyZWRiMWMxY2FhOWY4MmFhNmFkYmRhNmZlNyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZFBhaWQlMjUyMFNlYXJjaCUyNTIwLSUyNTIwQmluZyUyNTIwLSUyNTIwSXJlbGFuZCUyNTIwLSUyNTIwU2VsbCUyNTIwLSUyNTIwRW5nbGlzaCUyNnV0bV90ZXJtJTNkc2VsbCUyNTIwZGlnaXRhbCUyNTIwcHJvZHVjdHMlMjZ1dG1fY29udGVudCUzZFNlbGwlMjUyMC0lMjUyMFNlbGwlMjUyMERpZ2l0YWwlMjUyMFByb2R1Y3Rz&rlid=024dc02edb1c1caa9f82aa6adbda6fe7"
             }
           ]
         }
@@ -2731,8 +2731,8 @@
               "brief": "Foreign exchange explained how banks profit",
               "search_query": "foreign exchange explained how banks profit",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://aborysenko.com/how-banks-profit-from-foreign-exchange/"
             }
           ]
         },
@@ -2749,12 +2749,12 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "Best way to exchange currency travel",
               "search_query": "best way to exchange currency travel",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.youtube.com/watch?v=9U24WMqhGs0"
             }
           ]
         },
@@ -2775,8 +2775,8 @@
               "brief": "Best travel debit credit cards no foreign fee",
               "search_query": "best travel debit credit cards no foreign fee",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8sSGiLnDuzzwqGbKOfPxrFDVUCUxcba5fkVdS8yN96JwShAr0WlHXfG6RxZ1PfLtwxP-jLyHgwftva9z17rNQ1opF4KDEeWKp9q31QlX00OO-uEOSwkqZLnX7vhu5vLEIBxbgJ49kXdld_eifwmyEBP5OcJcWFc9YskzVMywVZpi_O2IsMT8HJvsqRcwNY78s-0VEDw&u=aHR0cHMlM2ElMmYlMmZ3aXNlLmNvbSUyZmdiJTJmY2FyZCUyZiUzZnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNm1hdGNodHlwZSUzZHAlMjZkZXZpY2UlM2RjJTI2dXNlcmxvY2F0aW9uJTNkMTUwMzg1JTI2a2V5d29yZCUzZGJlc3QlMjUyMGludGVybmF0aW9uYWwlMjUyMGRlYml0JTI1MjBjYXJkJTI2Y2FtcGFpZ25pZCUzZDQ4NjE1MTE4MCUyNmFkZ3JvdXBpZCUzZDEyMjQ4NTcwMzEzNDU3NzYlMjZ1dG1fY2FtcGFpZ24lM2Q0ODYxNTExODBfX18xMjI0ODU3MDMxMzQ1Nzc2JTI2bXNjbGtpZCUzZGZkZjg4OGQxMzcxMTE4N2M3MmUzZTI5NTM3ZGEzZjA4&rlid=fdf888d13711187c72e3e29537da3f08"
             }
           ]
         },
@@ -2820,8 +2820,8 @@
               "brief": "How to time foreign exchange transfer",
               "search_query": "how to time foreign exchange transfer",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://freepricecompare.com/money/guides/timing-international-money-transfers/"
             }
           ]
         }
@@ -2875,8 +2875,8 @@
               "brief": "Meal prep beginner guide save money",
               "search_query": "meal prep beginner guide save money",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://purandsimplerecipes.com/meal-prep-guide/"
             }
           ]
         },
@@ -2897,8 +2897,8 @@
               "brief": "Free entertainment ideas save money",
               "search_query": "free entertainment ideas save money",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.pinterest.com/pin/free-entertainment-ideas-to-bust-boredom--734438651761858225/"
             }
           ]
         },
@@ -2918,8 +2918,8 @@
               "brief": "Buy secondhand first frugal living",
               "search_query": "buy secondhand first frugal living",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://linenandwildflowers.com/beginners-guide-for-thrifting-on-a-budget-for-frugal-living/"
             }
           ]
         },
@@ -2940,8 +2940,8 @@
               "brief": "Savings rate calculator frugal living",
               "search_query": "savings rate calculator frugal living",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8_7b85C0Dm7NmrOSvbPRyfjVUCUyeuSTHUIL3gKaP2Qq4_rxgqFhqh17Q9Xb9a3PuOo2gtwKOC-KyYyk6O3ToEqKu3eYPd3H9rCylHwevHQBK5Z9G5bgmIslt0Tsj1NlwYJxs7V9kOb-N2pLTHH_z3S1c1iscPvJ7ECUYG7ucTEa2UH25S5aW90OZC-uonHgM3Jnoxw&u=aHR0cHMlM2ElMmYlMmZob25lc3QuaWUlMmZzYXZpbmdzJTJmY29tcGFyZS1zYXZpbmdzLWFjY291bnRzJTJmJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkSG9uZXN0LmllJTI1MjAtJTI1MjBTYXZpbmdzJTI2dXRtX3Rlcm0lM2RzYXZpbmdzJTI1MjByYXRlcyUyNnV0bV9jb250ZW50JTNkODQwNDQzNjYyMDI3MDYlMjZtc2Nsa2lkJTNkMWY3MjcxMDNjNGRjMWUxNWE3ZGMxYjQ3YzQwYjIwMTQ&rlid=1f727103c4dc1e15a7dc1b47c40b2014"
             }
           ]
         }
@@ -3139,7 +3139,7 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "Best items to flip for profit",
               "search_query": "best items to flip for profit beginners",
               "est_minutes": 8,
@@ -3189,8 +3189,8 @@
               "brief": "How to price items to sell fast",
               "search_query": "how to price items to resell research",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8fBSibFuwPzXmDzRjJtbGyTVUCUzidShKfx-HPdHRb_FC5VRDW1Uf0g2p2m5GMGpu1YIyaWWSB5XXoeUfUJlPEjqxM6E3R7f3PXsOppZHSfbM2qEe84u59Iu2VJAhm4iso9IXPR1Pwz-4w6wzHdOvYu6w5QaHaNjCMCBtVpRqNdfV8fgnZu-RY7BZ0hybkmzZj_3cfg&u=aHR0cHMlM2ElMmYlMmZhZC5kb3VibGVjbGljay5uZXQlMmZzZWFyY2hhZHMlMmZsaW5rJTJmY2xpY2slM2ZsaWQlM2Q0MzcwMDA4MjQ1MTAzMzYzMyUyNmRzX3Nfa3dnaWQlM2Q1ODcwMDAwODkzODY2ODExNiUyNmRzX2FfY2lkJTNkNzQ3NTg3MTM1MSUyNmRzX2FfY2FpZCUzZDIyODU5MzU1MzQ5JTI2ZHNfYV9hZ2lkJTNkMTkxODA3NzgyOTg4JTI2ZHNfYV9saWQlM2Rrd2QtMTY4NzI3NjQ0OCUyNiUyNmRzX2VfYWRpZCUzZDgxNTAxNDQ2MDE1MTE4JTI2ZHNfZV90YXJnZXRfaWQlM2Rrd2QtODE1MDE2NzEzOTIyODMlM2Fsb2MtOTIlMjYlMjZkc19lX25ldHdvcmslM2RvJTI2ZHNfdXJsX3YlM2QyJTI2ZHNfZGVzdF91cmwlM2RodHRwcyUzYSUyZiUyZnd3dy5zYWxlc2ZvcmNlLmNvbSUyZnVrJTJmc2FsZXMlMmZyZXNvdXJjZXMlMmZzdGF0ZS1vZi1zYWxlcy03JTJmJTNmZCUzZDcwMWVkMDAwMDBwQVpFbkFBTyUyNm5jJTNkNzAxZWQwMDAwMHBERE9BQUE0JTI2dXRtX2NvbnRlbnQlM2Q3MDFlZDAwMDAwcEFaRW5BQU8lMjZnY2xpZCUzZDEwNjk3MDM1MWMzMDExNmJiMzVmMWE3MTFjZDRkNTdlJTI2Z2Nsc3JjJTNkM3AuZHMlMjYlMjZtc2Nsa2lkJTNkMTA2OTcwMzUxYzMwMTE2YmIzNWYxYTcxMWNkNGQ1N2U&rlid=106970351c30116bb35f1a711cd4d57e"
             }
           ]
         }
@@ -3246,8 +3246,8 @@
               "brief": "How to validate a business idea cheaply",
               "search_query": "how to validate side hustle idea",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8FWj0PIOJl7IU5FqarTOkfTVUCUzv2vIz5x4QnwVmnpeBakh1tX7XbnQEwNPs8Cy-u1HRTHBQImME_UYw6FDBTrmVgGn_fBoHTne41B4OsGDoHiJy3Bk4jVqb1jaZAE8_NMEFyJ0kHRB4y4Qupstk2Hw0QS8zIMsFvbP4EmlwxP4cIy-ye60Yxj3Iytlt26jnWRvfWg&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZmJ1c2luZXNzJTJmb25saW5lLXN0b3JlJTNmdXRtX21lZGl1bSUzZGNwYyUyNnV0bV9zb3VyY2UlM2R5YWJpbmclMjZqayUzZHdheXMlMjUyMHRvJTI1MjBtYWtlJTI1MjBleHRyYSUyNTIwY2FzaCUyNmJpbmdhZGdyb3VwaWQlM2QxMjQwMjUwMTk0NTY5ODIyJTI2YmluZ2FkaWQlM2Q3NzUxNTc3MDkyMzYwMSUyNmJpbmdrZXl3b3JkaWQlM2Q3NzUxNTk5MjIzODY4MSUyNmJpbmduZXR3b3JrJTNkbyUyNkJPSUQlM2Rub25lJTI2bXNjbGtpZCUzZDBiZjUzZmEzOWRlMjFjZWZiYzY5NTVlNzlkMGE4NzFmJTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkUGFpZCUyNTIwU2VhcmNoJTI1MjAtJTI1MjBCaW5nJTI1MjAtJTI1MjBJcmVsYW5kJTI1MjAtJTI1MjBCdXNpbmVzcyUyNTIwLSUyNTIwRW5nbGlzaCUyNnV0bV90ZXJtJTNkd2F5cyUyNTIwdG8lMjUyMG1ha2UlMjUyMGV4dHJhJTI1MjBjYXNoJTI2dXRtX2NvbnRlbnQlM2RCdXNpbmVzcyUyNTIwLSUyNTIwSG93JTI1MjBUbyUyNTIwTWFrZSUyNTIwTW9uZXk&rlid=0bf53fa39de21cefbc6955e79d0a871f"
             }
           ]
         },
@@ -3408,7 +3408,7 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "How to set up a POD store",
               "search_query": "how to set up print on demand store step by step",
               "est_minutes": 8,
@@ -3485,7 +3485,7 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "How to build a photography portfolio",
               "search_query": "how to build photography portfolio beginner",
               "est_minutes": 7,
@@ -3778,8 +3778,8 @@
               "brief": "Youtube SEO for beginners how to rank videos",
               "search_query": "youtube SEO for beginners how to rank videos",
               "est_minutes": 9,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://backlinko.com/how-to-rank-youtube-videos"
             }
           ]
         },
@@ -3795,12 +3795,12 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "How to monetise youtube channel before monetisation",
               "search_query": "how to monetise youtube channel before monetisation",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.youtube.com/watch?v=z3Ua4UTOk8c"
             }
           ]
         }
@@ -3833,8 +3833,8 @@
               "brief": "Best freelance skills in demand",
               "search_query": "best freelance skills in demand",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8ZeN_ar2YI9MnW7sd3SNfzzVUCUwJEjOgChkI4j00Z-52lRwViR_LjKPPl4qZd6T9WmJeu8KTqU8sO9oENrHm81tTTyVHaIdjIcBgZtRxVITmLpqm6RbScDRsk0ryPk1WtOjRxi33L94zXI0vSY0iXRqWwK0u1igieV-6O99a_VpfgosrY4yyMQeNnGUg3RfinWI-0Q&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZmJ1c2luZXNzJTJmb25saW5lLXN0b3JlJTNmdXRtX21lZGl1bSUzZGNwYyUyNnV0bV9zb3VyY2UlM2R5YWJpbmclMjZqayUzZGZyZWVsYW5jZSUyNTIwd29yayUyNmJpbmdhZGdyb3VwaWQlM2QxMjI1OTU2NTQ0MDU5MjQ5JTI2YmluZ2FkaWQlM2Q3NjYyMjQxNzcwMDg0MCUyNmJpbmdrZXl3b3JkaWQlM2Q3NjYyMjYzNzkwNjI0NSUyNmJpbmduZXR3b3JrJTNkbyUyNkJPSUQlM2Rub25lJTI2bXNjbGtpZCUzZDQxM2RmNWI0ZWQzODFiYjdkMDg2OWZmMGVkYzVmMjQ5JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkUGFpZCUyNTIwU2VhcmNoJTI1MjAtJTI1MjBCaW5nJTI1MjAtJTI1MjBJcmVsYW5kJTI1MjAtJTI1MjBCdXNpbmVzcyUyNTIwLSUyNTIwRW5nbGlzaCUyNnV0bV90ZXJtJTNkZnJlZWxhbmNlJTI1MjB3b3JrJTI2dXRtX2NvbnRlbnQlM2RCdXNpbmVzcyUyNTIwLSUyNTIwRnJlZWxhbmNl&rlid=413df5b4ed381bb7d0869ff0edc5f249"
             }
           ]
         },
@@ -3879,8 +3879,8 @@
               "brief": "How to write upwork proposal that gets hired",
               "search_query": "how to write upwork proposal that gets hired",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8bsvpaATkNeCh-OxWvsQaOTVUCUydJJNt42DovjJKuG5b-U4z-tFyN9XRNfH21YdDH7wXpYtVX1XpHSAOBfHHFYz2Mk_yuUJtmEBC5EwU7qldv18g4J80lTjODWx9TnV-_9Jy7AjchqJFosxmc_95HT7bAalWtUQ2HLRcUWza8sT16DT7V_9NNVT_Ezx6z0fpr3O-hA&u=aHR0cHMlM2ElMmYlMmZ3d3cuZ3JhbW1hcmx5LmNvbSUyZmElMmZwcm9mZXNzaW9uYWxzJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkNjI3MzYyNDA1JTI2dXRtX2NvbnRlbnQlM2Q4MTI5NTI2NzgyNDY3NSUyNnV0bV90ZXJtJTNkYnVzaW5lc3MlMjUyMHByb3Bvc2FsJTI1MjBzYW1wbGUlMjUyMGxldHRlciUyNmtleXdvcmRpZCUzZDgxMjk1NTE0MDY0MTQxJTI2dGFyZ2V0aWQlM2Rrd2QtODEyOTU1MTQwNjQxNDElM2Fsb2MtOTIlMjZhZGdyb3VwJTNkMTMwMDcyMzM5OTc2MDI0NSUyNmRldmljZSUzZGMlMjZtYXRjaHR5cGUlM2RwJTI2bmV0d29yayUzZG8lMjZleHRlbnNpb24lM2QlMjZjbGlja2lkJTNkZmIxMTQzOGJiOWMzMTAyZjcyZDYyOWNmYjkzYzc4ZDUlMjZnY2xpZCUzZGZiMTE0MzhiYjljMzEwMmY3MmQ2MjljZmI5M2M3OGQ1JTI2bXNjbGtpZCUzZGZiMTE0MzhiYjljMzEwMmY3MmQ2MjljZmI5M2M3OGQ1&rlid=fb11438bb9c3102f72d629cfb93c78d5"
             }
           ]
         },
@@ -3901,8 +3901,8 @@
               "brief": "How to get first freelance client review",
               "search_query": "how to get first freelance client review",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8YV5o1TiTT17K2QNbNoX8OTVUCUzQLVsWfqKcdJCv1QkjrYwcMSI0-RwyPHSKxUtjgk76sqXqbwFa-M488po0Pzuac6QEMNNUtFD7DUUED-IcOjG36odQ1vzEiLlh_Z_crUReu_BOjQAKBjQsLFVDQKKrVCzOS00j7soXLB8rbrivpd4IeigDuVMVRklrFeTOtYSnHw&u=aHR0cHMlM2ElMmYlMmZ3d3cucGlwZWRyaXZlLmNvbSUyZmVuJTJmZ2V0dGluZ3N0YXJ0ZWQtY3JtJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkTUstSUVfTEctRU5fT0ItQ09OVl9ZUi1BT19RUi1BT19DTi1HZW5lcmljX0NILVNFQV9QTS1NQURTX0NULU5CX1NHLVBST1NQX0pOLU5vbmVfR04tUXVlcnlUeXBlJTNhRmVhdHVyZSUyY0ZUJTNhTGVhZC1HZW5lcmF0aW9uJTI2dXRtX2NvbnRlbnQlM2RMZWFkJTJiR2VuZXJhdGlvbiUyYmZvciUyYkZyZWVsYW5jZXJzJTJiJTdjJTJiUkwlM2FGcmVlbGFuY2VycyUyY1NGJTNhTGVhZC1HZW5lcmF0aW9uJTJjTVQlM2FQaHJhc2UlMjZ1dG1fdGVybSUzZGxlYWQlMjUyMGdlbmVyYXRpb24lMjUyMGZvciUyNTIwZnJlZWxhbmNlciUyNmNpZCUzZDU3MTAzOTMxOSUyNmFpZCUzZDExODQxNzYxNzcwMjk0ODMlMjZ0aWQlM2Rrd2QtNzQwMTE1MDE5NDExMjMlM2Fsb2MtOTIlMjZuZXR3b3JrJTNkbyUyNm1zY2xraWQlM2RjYjQ4YThmZjI0YmYxZTI5NTZhZGMyYmIyNWJhMjU3Yw&rlid=cb48a8ff24bf1e2956adc2bb25ba257c"
             }
           ]
         },
@@ -3923,8 +3923,8 @@
               "brief": "How to raise freelance rates clients",
               "search_query": "how to raise freelance rates clients",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8N5IaR5Jw4mDRanLHHcJ8djVUCUzDCzYS6j3nRFOd_xlh0XsbwI52m7EFUEr60wF62k7HnhXjPnI4cB0d_6xJPImxqwUMTnzkr9K6gBbANudqTCRlDiPOTAdJpcf_DC8UN4zoGXI0GH1-1acsi1_25E9CUo3fTSaSUiUeeLanz6jXCA5ptgp0L8UPO8_mYty1Enb4Ow&u=aHR0cHMlM2ElMmYlMmZ3d3cucGlwZWRyaXZlLmNvbSUyZmVuJTJmZ2V0dGluZ3N0YXJ0ZWQtY3JtJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkTUstSUVfTEctRU5fT0ItQ09OVl9ZUi1BT19RUi1BT19DTi1HZW5lcmljX0NILVNFQV9QTS1NQURTX0NULU5CX1NHLVBST1NQX0pOLU5vbmVfR04tUXVlcnlUeXBlJTNhRmVhdHVyZSUyY0ZUJTNhTGVhZC1HZW5lcmF0aW9uJTI2dXRtX2NvbnRlbnQlM2RMZWFkJTJiR2VuJTJiJTdjJTJiU0YlM2FMZWFkLUdlbiUyY01UJTNhUGhyYXNlJTI2dXRtX3Rlcm0lM2RsZWFkJTI1MjBnZW4lMjZjaWQlM2Q1NzEwMzkzMTklMjZhaWQlM2QxMTg0MTc2MTc3MDI5MTMxJTI2dGlkJTNka3dkLTc0MDExNTAxOTQxMDk0JTNhbG9jLTkyJTI2bmV0d29yayUzZG8lMjZtc2Nsa2lkJTNkYTVkYzljOWNmODJkMWExZTNiZTZmNmQ4ZjkyYWY1OGQ&rlid=a5dc9c9cf82d1a1e3be6f6d8f92af58d"
             }
           ]
         }
@@ -3979,8 +3979,8 @@
               "brief": "How to create online course curriculum",
               "search_query": "how to create online course curriculum",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8fQK2HJHpA9fubMZFVI4g9zVUCUyrzFNs6a3CM463StDkRN7ZVqIGr4se8s_zn_OBhUmp0q5j_tJSBbmtR4Ko00kieJozCWAgfnlr2B48W-Y0xP4hjkc550EWS9PbfcPguaIprV6KR1wheFcr_KoNQFwhTLcenKab40e8e-eh0FNobGCFOIzVKTPgKGUbo4ZYf13t6g&u=aHR0cHMlM2ElMmYlMmZ3d3cud2l4LmNvbSUyZmxwLWVuJTJmd2Vic2l0ZS1idWlsZGVyJTNmdXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkNTA2MDY2NTQ3JTVlMTI3NTQzNTE3MjQzNTQ4NiU1ZXNlYXJjaCUyNTIwLSUyNTIwYmluZyUyNTIwcmVzdCUyNmV4cGVyaW1lbnRfaWQlM2RvbmxpbmUlMjUyMGNvdXJzZSUyNTIwY3JlYXRpb24lNWViJTVlJTVlJTI2bXNjbGtpZCUzZGVmMDk4ODFjMzI3NDEzZWU3YmFkZTI1ODMzN2U5YzJk&rlid=ef09881c327413ee7bade258337e9c2d"
             }
           ]
         },
@@ -4268,8 +4268,8 @@
               "brief": "Professional cleaning tips standards",
               "search_query": "professional cleaning tips standards",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8AfcovZnFeY3Cm4o3IYZbsDVUCUwHGobHPleBGqA54_0Jey7DUMqGYcIRfR-ZteIPidRs7kpgCl55RRBCzGVo-Bat-Yn-_hyFcMfEuVVLL-9vVQPr46_8czuvbfRjMgJ4mDOExuUylX4dtxxtzuv-Uy0y7upx9jr_hkUOTqiv3bJVD9EsTJ1q0ZLFctFL6n1QvlPdPQ&u=aHR0cHMlM2ElMmYlMmZwZW5pbnN1bGFpcmVsYW5kLmNvbSUyZnNlcnZpY2VzJTJmaGVhbHRoLWFuZC1zYWZldHklMmYlM2Z1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RwcGMlMjZ1dG1fY2FtcGFpZ24lM2RIUyUyNnV0bV9pZCUzZEhTJTI2Y3VzdG9tZXJfaWQlM2QzNDItMTk4LTY5MjglMjZtc2Nsa2lkJTNkZTkyMWY5ZGI0M2JhMWFlMjUxZmY5MzlmNDI5YzlhMjAlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RIU19TZWFyY2hfU2VwJTI1MjAyNSUyNnV0bV90ZXJtJTNkaGVhbHRoJTI1MjBhbmQlMjUyMHNhZmV0eSUyNTIwd29ya3BsYWNlJTI2dXRtX2NvbnRlbnQlM2RIJTI1MjZTJTI1MjBHZW5lcmFs&rlid=e921f9db43ba1ae251ff939f429c9a20"
             }
           ]
         },
@@ -4290,8 +4290,8 @@
               "brief": "How to build recurring cleaning client base",
               "search_query": "how to build recurring cleaning client base",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://sweepops.co/blog/how-to-manage-recurring-clients-cleaning-business/"
             }
           ]
         }
@@ -4325,8 +4325,8 @@
               "brief": "How to start dog walking business",
               "search_query": "how to start dog walking business",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8eyl66944XbXmUxrVe-2EXzVUCUz_-kRZkX7K3FHiFigM64hT-t-_DficPvZEvhSQZzNN7NtaCBAfdrngiYEqrwZWCp5_cJklmAZTdGqK8JiQvAb1XVgTMQabN3cAL4ZxVmkJ08ZIpqsUd6RY9hr0s1YzWiEi0cp9kXlTG8z6JJTkGaH23ePn7mgFYhcncqOUmLwwfQ&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZmJ1c2luZXNzJTJmb25saW5lLXN0b3JlJTNmdXRtX21lZGl1bSUzZGNwYyUyNnV0bV9zb3VyY2UlM2R5YWJpbmclMjZqayUzZGJ1c2luZXNzJTI1MjBzZXQlMjUyMHVwJTI2YmluZ2FkZ3JvdXBpZCUzZDEyMzAzNTM3NjI3NDI5MzMlMjZiaW5nYWRpZCUzZDc2ODk3MjU3NDEwNTcyJTI2YmluZ2tleXdvcmRpZCUzZDc2ODk3NTE2Njk1MzkwJTI2YmluZ25ldHdvcmslM2RvJTI2Qk9JRCUzZG5vbmUlMjZtc2Nsa2lkJTNkYmJiMzU5MjExYzc0MTYzZDI2OTEzMzY1MWQ1OTFiNGUlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RQYWlkJTI1MjBTZWFyY2glMjUyMC0lMjUyMEJpbmclMjUyMC0lMjUyMElyZWxhbmQlMjUyMC0lMjUyMEJ1c2luZXNzJTI1MjAtJTI1MjBFbmdsaXNoJTI2dXRtX3Rlcm0lM2RidXNpbmVzcyUyNTIwc2V0JTI1MjB1cCUyNnV0bV9jb250ZW50JTNkQnVzaW5lc3MlMjUyMC0lMjUyMEhvdyUyNTIwVG8lMjUyMFN0YXJ0JTI1MjBhJTI1MjBCdXNpbmVzcw&rlid=bbb359211c74163d269133651d591b4e"
             }
           ]
         },
@@ -4342,12 +4342,12 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "How to set up rover dog walking profile",
               "search_query": "how to set up rover dog walking profile",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.youtube.com/watch?v=4hUoKDnB3sM"
             }
           ]
         },
@@ -4368,8 +4368,8 @@
               "brief": "How to price dog walking pet sitting",
               "search_query": "how to price dog walking pet sitting",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.petsit.com/how-to-set-your-pet-sitting-rates"
             }
           ]
         },
@@ -4390,8 +4390,8 @@
               "brief": "How to get first dog walking clients",
               "search_query": "how to get first dog walking clients",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8cp433RcQWtB0dzEWXpnjhTVUCUy7sxYui5AJrL38I-MPmMGsOfEWIX6Y6WIcF9x-a6k8prBgWFj8ZicEAq9XheIQ4yImrWQRlvQelD_v65KbQiCNjaJOnasx8Tdc6o-CKymT_sFFkLmX5wvnFKip-sud3aifAhBCTxz5qWN4eGMk-AIsADuI2KvSk5cheDvRJEi5TQ&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZmJ1c2luZXNzJTJmb25saW5lLXN0b3JlJTNmdXRtX21lZGl1bSUzZGNwYyUyNnV0bV9zb3VyY2UlM2R5YWJpbmclMjZqayUzZHdoYXQlMjUyMGJ1c2luZXNzJTI1MjB0byUyNTIwc3RhcnQlMjZiaW5nYWRncm91cGlkJTNkMTIzNDc1MTgwODc3MTI1NyUyNmJpbmdhZGlkJTNkNzcxNzIxNzM1ODA0NjUlMjZiaW5na2V5d29yZGlkJTNkNzcxNzIxOTM4NTMxOTUlMjZiaW5nbmV0d29yayUzZG8lMjZCT0lEJTNkbm9uZSUyNm1zY2xraWQlM2RlYjIwOThjZjE3NGMxYmNhNjJlNWYyOGIxNjdmMzRkMyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZFBhaWQlMjUyMFNlYXJjaCUyNTIwLSUyNTIwQmluZyUyNTIwLSUyNTIwSXJlbGFuZCUyNTIwLSUyNTIwQnVzaW5lc3MlMjUyMC0lMjUyMEVuZ2xpc2glMjZ1dG1fdGVybSUzZHdoYXQlMjUyMGJ1c2luZXNzJTI1MjB0byUyNTIwc3RhcnQlMjZ1dG1fY29udGVudCUzZEJ1c2luZXNzJTI1MjAtJTI1MjBTdGFydCUyNTIwT25saW5lJTI1MjBCdXNpbmVzcw&rlid=eb2098cf174c1bca62e5f28b167f34d3"
             }
           ]
         },
@@ -4411,8 +4411,8 @@
               "brief": "How to grow pet sitting business referrals",
               "search_query": "how to grow pet sitting business referrals",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8S3BnEvmvTfRhJeV0RwPfMjVUCUzsQ-gliohzLJmwroOYi1WPSzj0h3tzswp4oJ28X0M5-cAjTJeyW2Fx_4ny9K5StR0CuNQaOCXEeRuUtRcX0Q_mbBRryCEFVRYwgXh8k5OpaPoxyEHraYOWc5VcNc6dQFfs4TUYFy8CLAJP1o9t80fn1ei8CJWP5rwbVtW7KMvgDw&u=aHR0cHMlM2ElMmYlMmZhZHMucmVkZGl0LmNvbSUyZnJlZ2lzdGVyJTNmcHJvbW9fY29kZSUzZFBQQzUwMCUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZFJQX1NFTV9NaWNyb3NvZnRfTm9uQnJhbmRfTU9GVV9BY2NvdW50Q3JlYXRlZF9OQU1FUl9VU19FTl9DX1BocmFzZV81MjM2MDQ0MDglMjZ1dG1fY29udGVudCUzZDEzMjkzMTIyNjgwMjY4NjNfY184MzA4MjI2MjI5NjM1NyUyNnV0bV90ZXJtJTNkaG93JTI1MjB0byUyNTIwYWR2ZXJ0aXNlJTI1MjB5b3VyJTI1MjBidXNpbmVzcyUyNm1zY2xraWQlM2RjMjU2YTk4MzU1NmUxNDEwNDZiYWMzYzc1NDViOTExNA&rlid=c256a983556e141046bac3c7545b9114"
             }
           ]
         }
@@ -4467,8 +4467,8 @@
               "brief": "How to build social media management portfolio",
               "search_query": "how to build social media management portfolio",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8NIEfzzb-FaQjC4EqRutvLDVUCUxkVkDEwidTQ0963E6a_SjtBKBZbW8-c8kPv_3DiJi6UkAFmC1FAF9c_jEGb79rAh20Z9MOgSUNeKIvTsDO24BLnwXCfp_xKGQsFEQ9Fvu0vuByyRX2z2oS5JxX0LTh0fkrosIP18SNvd_RORHg3CTSDYCGRhl1D1BjBzmpzP1PrA&u=aHR0cHMlM2ElMmYlMmZpbmZvLnBsYW52aWV3LmNvbSUyZmFkYXB0aXZlLXBwbS1zb2x1dGlvbnMtX2J1eWVyc19ndWlkZV9wcm1fZW5fcmVnLmh0bWwlM2Z1dG1fbWVkaXVtJTNkcHNlbSUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX2NhbXBhaWduJTNkaW5fbWl0cHBtX2ItcHJvai1wb3J0Zm9saW8tbWdtdF9kaWdtY191a194X2VuJTI2dXRtX2NvbnRlbnQlM2QlMjZ1dG1fdGVybSUzZCUyNTJCcG9ydGZvbGlvJTI1MjAlMjUyQm1hbmFnZW1lbnQlMjZtc2Nsa2lkJTNkMTFiMjUwMjE1N2E0MWE4MzhmMWIzYTY1NTY5YzRkZDI&rlid=11b2502157a41a838f1b3a65569c4dd2"
             }
           ]
         },
@@ -4567,8 +4567,8 @@
               "brief": "How to choose profitable blog niche",
               "search_query": "how to choose profitable blog niche",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8d-7DkO-Gh7GShvYiIP0JwzVUCUwtLiQrQPRUYHOuN_jMxcxUSBBhOsGSPnvHPWNcHkFXR7BGDEkCk7mO_pmc3rFhi1ZL1O-TiOKbUXyB5ke9CcDfUr5OyGoOUviQktYoNR_SMbgp-YMc7bAAy7grCT7z1lgSgK15hqpQbfZV5ARkb8jc-Jfi33THg0kafYuS6ESwbA&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZndlYnNpdGUtYnVpbGRlciUzZnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fc291cmNlJTNkeWFiaW5nJTI2amslM2Rtb25ldGl6ZSUyNTIwYSUyNTIwYmxvZyUyNmJpbmdhZGdyb3VwaWQlM2QxMjQwMjQ5MzY2MjU2NTEwJTI2YmluZ2FkaWQlM2Q3NzUxNTc3MDkyMzU2NyUyNmJpbmdrZXl3b3JkaWQlM2Q3NzUxNTc5MTU5MDU2MiUyNmJpbmduZXR3b3JrJTNkbyUyNkJPSUQlM2Rub25lJTI2bXNjbGtpZCUzZDBhYTI3M2RkOTQ0YjE0MzI5NTVlMTk5OTk1MGE0YjM5JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkUGFpZCUyNTIwU2VhcmNoJTI1MjAtJTI1MjBCaW5nJTI1MjAtJTI1MjBJcmVsYW5kJTI1MjAtJTI1MjBXZWJzaXRlJTI1MjAtJTI1MjBFbmdsaXNoJTI2dXRtX3Rlcm0lM2Rtb25ldGl6ZSUyNTIwYSUyNTIwYmxvZyUyNnV0bV9jb250ZW50JTNkV2Vic2l0ZSUyNTIwLSUyNTIwTW9uZXRpemUlMjUyMEJsb2c&rlid=0aa273dd944b1432955e1999950a4b39"
             }
           ]
         },
@@ -4611,8 +4611,8 @@
               "brief": "How to write SEO blog posts beginners",
               "search_query": "how to write SEO blog posts beginners",
               "est_minutes": 9,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8IFAKiy0RUh31lk9jGyouljVUCUxWULdmMeayXS4xN1NNCvmkTThZQtZKIjiPjzet_IWxAKVS5rvOjED8pArERJGG_KYep460QvTJbboXvk40P29c_Lp5eatwH5s12ZYtspDgPNgOInlgBFnLMLUKyzuY-laPbTxF-in_W-FO92aIJib9iA17QjcClwCb_nJ4iUNswg&u=aHR0cHMlM2ElMmYlMmZ3d3cudGhlYmxvZ3N0YXJ0ZXIuY29tJTNmbXNjbGtpZCUzZDdjMjBhZWUwNjFkNzFlNzhjNzVmYzRhNDYwOTNjMDdi&rlid=7c20aee061d71e78c75fc4a46093c07b"
             }
           ]
         },
@@ -4633,8 +4633,8 @@
               "brief": "How to build backlinks beginner blog",
               "search_query": "how to build backlinks beginner blog",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e89Won62eHmZY42-wQcOHuxDVUCUyeb3YE9yhWItKg7XAKK97voIxmc7hXJnE7dRR6PQsvaQxPm_-uLuCr4PhWWKlo-u3SrK3TShwg83rNKJWPU5w5lLKjwaFGFDrdAvrSAj1bWS0zdmcPajvRinAaW6JgeaK98zqp88b4yk_fwadYY7FU_8ciU0nGp2sxJRlhClGaRg&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZndlYnNpdGUtYnVpbGRlciUzZnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fc291cmNlJTNkeWFiaW5nJTI2amslM2Rob3clMjUyMHRvJTI1MjBtYWtlJTI1MjBhJTI1MjBibG9nJTI1MjB3ZWJzaXRlJTI2YmluZ2FkZ3JvdXBpZCUzZDEyNDAyNDkzNjYyNTY1MTAlMjZiaW5nYWRpZCUzZDc3NTE1NzMyNTg4NDM3JTI2YmluZ2tleXdvcmRpZCUzZDc3NTE1NzkxNTkwNTY5JTI2YmluZ25ldHdvcmslM2RvJTI2Qk9JRCUzZG5vbmUlMjZtc2Nsa2lkJTNkOWU1NmJjYmUzMTE2MTVmNTE4MDRkNmZhMzA1MDk0ZjglMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RQYWlkJTI1MjBTZWFyY2glMjUyMC0lMjUyMEJpbmclMjUyMC0lMjUyMElyZWxhbmQlMjUyMC0lMjUyMFdlYnNpdGUlMjUyMC0lMjUyMEVuZ2xpc2glMjZ1dG1fdGVybSUzZGhvdyUyNTIwdG8lMjUyMG1ha2UlMjUyMGElMjUyMGJsb2clMjUyMHdlYnNpdGUlMjZ1dG1fY29udGVudCUzZFdlYnNpdGUlMjUyMC0lMjUyME1vbmV0aXplJTI1MjBCbG9n&rlid=9e56bcbe311615f51804d6fa305094f8"
             }
           ]
         },
@@ -4654,8 +4654,8 @@
               "brief": "How to monetise a blog beginners",
               "search_query": "how to monetise a blog beginners",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8dD_lXo2HaZgU10IU0flalzVUCUzcRYgNj0QYT2rlrfceGc8MpmiQaTk_WK9aZu1RULlwaDIWcLt2hSWy7sA4rnhZJ6tdobkQha053n_MY_r4q7Py63RU2u3Ml43nYNUdETXaglw4MbbTsQ1altAizKLM1Ds3S_kJdXH55nx6veO2rCOPcOWInXzhxra9f_hF7mFAKg&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2hvcGlmeS5jb20lMmZpZSUyZnBwYyUyZndlYnNpdGUtYnVpbGRlciUzZnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fc291cmNlJTNkeWFiaW5nJTI2amslM2RiZXN0JTI1MjB3YXklMjUyMHRvJTI1MjBtb25ldGl6ZSUyNTIwYSUyNTIwYmxvZyUyNmJpbmdhZGdyb3VwaWQlM2QxMjQwMjQ5MzY2MjU2NTEwJTI2YmluZ2FkaWQlM2Q3NzUxNTczMjU4ODQzNyUyNmJpbmdrZXl3b3JkaWQlM2Q3NzUxNTc5MDY3NjA4NiUyNmJpbmduZXR3b3JrJTNkbyUyNkJPSUQlM2Rub25lJTI2bXNjbGtpZCUzZGM5MjdjMDYwYzlmNzFiNDI2ODQyYWEyNGM4YmY1NjM1JTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkUGFpZCUyNTIwU2VhcmNoJTI1MjAtJTI1MjBCaW5nJTI1MjAtJTI1MjBJcmVsYW5kJTI1MjAtJTI1MjBXZWJzaXRlJTI1MjAtJTI1MjBFbmdsaXNoJTI2dXRtX3Rlcm0lM2RiZXN0JTI1MjB3YXklMjUyMHRvJTI1MjBtb25ldGl6ZSUyNTIwYSUyNTIwYmxvZyUyNnV0bV9jb250ZW50JTNkV2Vic2l0ZSUyNTIwLSUyNTIwTW9uZXRpemUlMjUyMEJsb2c&rlid=c927c060c9f71b426842aa24c8bf5635"
             }
           ]
         }
@@ -4710,8 +4710,8 @@
               "brief": "Best online tutoring platforms comparison",
               "search_query": "best online tutoring platforms comparison",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8fe6j0gavjHZ4X0Yd08SMtzVUCUzrm6_BV3VGqreY0EnkR2x3Rv2XKqH24Iu4yTlSXuWFoasNzldaJbYpvCJwZgbmc30qLcUSv-Rs4TVzKIs0_fggOzXInhDc0cnYZD_uL-Esl-v7rhvGI3iUMU2Yrd8Qa9fX6q1EXgqT9LPKNUOtFlcJrUwPD99r_SHga9xDQVJLVw&u=aHR0cCUzYSUyZiUyZnd3dy50aGVwcm9mcy5jby51ayUzZnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX2NoYW5uZWwlM2RwYWlkJTI1MjBzZWFyY2glMjZ1dG1fbWVkaXVtJTNkJTI2dXRtX2FkZ3JvdXAlM2QxMTY4NzgyNjk3Nzk5MDA1JTI2dXRtX2lkJTNkNDQ2MzU2MDIzJTI2dXRtX2NvbnRlbnQlM2QlMjZrZXl3b3JkJTNkSGVscCUyNTIwVHV0b3JzJTI2Z2NsaWQlM2QlMjZwcm9fdHlwZSUzZEIyQyUyNm9wcF90eXBlJTNkTVFMJTI2cGVyX3R5cGUlM2RETSUyNnVzZV9jYXNlJTNkVHV0b3JzLUVVJTI2c3ViamVjdF90eXBlJTNkU29sdXRpb24lMjZzdWJqZWN0JTNkSGVscCUyNnNlZ21lbnQlM2RDdXJyZW50LUNvbGxlZ2UtU3R1ZGVudHMlMjZtc2Nsa2lkJTNkZTZjYmFiYTJkMGY5MTQ5NjQ1MTdjMWU2ZDFiNGI5MGYlMjZ1dG1fY2FtcGFpZ24lM2RCMkMlMjUyMC0lMjUyME1RTCUyNTIwLSUyNTIwRE0lMjUyMC0lMjUyME9ubGluZSUyNTIwVHV0b3IlMjUyMC0lMjUyMFRvcC1MZXZlbCUyNTIwLSUyNTIwRVVSJTI2dXRtX3Rlcm0lM2RIZWxwJTI1MjBUdXRvcnM&rlid=e6cbaba2d0f914964517c1e6d1b4b90f"
             }
           ]
         },
@@ -4733,8 +4733,8 @@
               "brief": "How to price online tutoring",
               "search_query": "how to price online tutoring",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8c-mWLvoppKiuD8mEsDKpoTVUCUxPasQaixGsofMQEr3DBG9eLl_fV-BJ4GfpqGYmqhIPJc1swVeg0lC7WMa5S8PNvymdPFAAqBqzxgZKG-SUgkC-y1xZNeCBl4o7gTNyoLy9-ulAI1YWPjJzvBQO2rCacYBInec6vvo_ATOFNRyaa0ny3zl5n-LA4vVeJ00j6ai9rg&u=aHR0cHMlM2ElMmYlMmZ3d3cudmFyc2l0eXR1dG9ycy5jb20lMmZlbiUyZnR1dG9yaW5nLW5hdGlvbmFsJTNmYWRfdGVzdCUzZE1vZGlmaWVyX1R1dG9yc19Jbl9HZW8lMjZnZW9pZCUzZDc4NjgwJTI2dnRzdWJqZWN0JTNkJTI2dnRtJTNkQ29tcGFueSUyNnZ0dCUzZFR1dG9yJTI2bmV0d29yayUzZG8lMjZtYXRjaHR5cGUlM2RwJTI2a2V5d29yZCUzZHR1dG9yJTI1MjBzZXJ2aWNlJTI2Y3JlYXRpdmUlM2QlMjZkZXZpY2UlM2RjJTI2ZGV2aWNlbW9kZWwlM2QlMjZwbGFjZW1lbnQlM2QlMjZwb3NpdGlvbiUzZCUyNmNhcGFpZ25pZCUzZDY5ODI1OTk1MCUyNmFkZ3JvdXBpZCUzZDEyNTg5NDIxNjQ1NjA5MTElMjZsb2NfcGh5c2ljYWxfbXMlM2Q3ODY4MCUyNmxvY19pbnRlcmVzdF9tcyUzZCUyNmtleXdvcmRJZCUzZGt3ZC03ODY4NDI2NzUyODQxNiUzYWxvYy0xOTAlMjZ6aXAlM2QlMjZhY2NvdW50aWQlM2QxNTIwMjk2NDMlMjZtc2Nsa2lkJTNkNTcwZWQyMjQ3YzU5MTY2Y2QwNWViODYwN2QwODc5OTQlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2ROYXRpb25hbCUyNTIwJTI1N0MlMjUyME5vJTI1MjBTdWJqZWN0JTI1MjAlMjU3QyUyNTIwMC0xMCUyNTI1JTI1MjAlMjU3QyUyNTIwVHV0b3IlMjZ1dG1fdGVybSUzZHR1dG9yJTI1MjBzZXJ2aWNlJTI2dXRtX2NvbnRlbnQlM2RNYWluJTI1MjAlMjU3QyUyNTIwVHV0b3I&rlid=570ed2247c59166cd05eb8607d087994"
             }
           ]
         },
@@ -4755,8 +4755,8 @@
               "brief": "How to structure a tutoring session",
               "search_query": "how to structure a tutoring session",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://tutorcruncher.com/blog/how-to-structure-a-tutoring-session"
             }
           ]
         },
@@ -4832,8 +4832,8 @@
               "brief": "How to build video editing portfolio",
               "search_query": "how to build video editing portfolio",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8C7puP76ELypJJ3A6EwvWUTVUCUwt-HfJBqdPhbCaghcWjExHVAHKuKl2MEl3e_SUOIe-v_W7votk4gJiUDPUX9IbkEqELnvsyqV3ARFjxy0LrlLv7KlcrWjQA13FGOQpigh59Y7Hpi9TXh1CqSu0FfAC22_Slk0uheZd0cmVNKL8rkuNstIrCSniZ1C75wnuPZgJeg&u=aHR0cHMlM2ElMmYlMmZhZC5kb3VibGVjbGljay5uZXQlMmZzZWFyY2hhZHMlMmZsaW5rJTJmY2xpY2slM2ZsaWQlM2Q0MzcwMDA4Mzc5NTIyNzgwNCUyNmRzX3Nfa3dnaWQlM2Q1ODcwMDAwOTA2NzQxMDA1MCUyNmRzX2FfY2lkJTNkNzU2ODAzNzE1JTI2ZHNfYV9jYWlkJTNkMjM4MjcyMDM1NzYlMjZkc19hX2FnaWQlM2QxOTUwNDYwOTQwNTQlMjZkc19hX2xpZCUzZGt3ZC0zMjU2MjYyNDkwOTYlMjYlMjZkc19lX2FkaWQlM2Q3NDIxNzQwMTAxMjA3OCUyNmRzX2VfdGFyZ2V0X2lkJTNka3dkLTc0MjE3NzQ4MzYwNjk5JTNhbG9jLTE5MCUyNiUyNmRzX2VfbmV0d29yayUzZG8lMjZkc191cmxfdiUzZDIlMjZkc19kZXN0X3VybCUzZGh0dHBzJTI1M0ElMjUyRiUyNTJGd3d3LnNxdWFyZXNwYWNlLmNvbSUyNTJGc29sdXRpb25zJTI1MkZwZXJzb25hbCUyNTJGcG9ydGZvbGlvcyUyNTNGY2hhbm5lbCUyNTNEcG5iJTI1MjZzdWJjaGFubmVsJTI1M0RiaW5nJTI1MjZjYW1wYWlnbiUyNTNEcG5iLWJpbmctdXMtZW4tY29yZV92ZXJ0aWNhbHNfcGVyc29uYWwtbWl4JTI1MjZzdWJjYW1wYWlnbiUyNTNEKHBvcnRmb2xpb19tYWtlLW9ubGluZS1wb3J0Zm9saW9fcGhyKSUyNTI2Z2NsaWQlMjUzRGJiZjQ3Y2JmZGQwMDE0NzMxNDU4MTZmYmRjNWU5ZDRjJTI1MjZnY2xzcmMlMjUzRDNwLmRzJTI1MjYlMjZjaGFubmVsJTNkcG5iJTI2c3ViY2hhbm5lbCUzZGJpbmclMjZjYW1wYWlnbiUzZDQ1ODU0MTM3NiUyNnN1YmNhbXBhaWduJTNkMTE4NzQ3NDc4MjI1MjY4Nl9rd2QtNzQyMTc3NDgzNjA2OTklM2Fsb2MtMTkwX3AlMjZzb3VyY2UlM2QlMjZnY2xpZCUzZGJiZjQ3Y2JmZGQwMDE0NzMxNDU4MTZmYmRjNWU5ZDRjJTI2Z2Nsc3JjJTNkM3AuZHMlMjZtc2Nsa2lkJTNkYmJmNDdjYmZkZDAwMTQ3MzE0NTgxNmZiZGM1ZTlkNGMlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RjcGMlMjZ1dG1fY2FtcGFpZ24lM2RwbmItYmluZy11cy1lbi1jb3JlX3ZlcnRpY2Fsc19wZXJzb25hbC1taXglMjZ1dG1fdGVybSUzZG1ha2UlMjUyMG9ubGluZSUyNTIwcG9ydGZvbGlvJTI2dXRtX2NvbnRlbnQlM2Rwb3J0Zm9saW8&rlid=bbf47cbfdd001473145816fbdc5e9d4c"
             }
           ]
         },
@@ -4854,8 +4854,8 @@
               "brief": "How to get video editing clients",
               "search_query": "how to get video editing clients",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8_oWuXoHRdUu-m1RLxsnWCDVUCUzSw7_PbObIdN1kpMMeD6cV9ukqEtIl2Rg6t_AghfuHk3LC8lfcBn1Y8K_SQ-RgCJkRCKK7S6uta8Mm9Y4E4UMeyOGFr14F4cDfv-b0TAgicfZND0o7nVIChnpplc-xKR3V6Udtq3DlQWPcaeoWtiVTRnJoBByPau8MRC2_P9FVJQ&u=aHR0cHMlM2ElMmYlMmZidXNpbmVzcy55ZWxwLmNvbSUyZmNhbXBhaWduJTJmbGVhZC1nZW5lcmF0aW9uJTJmJTNmdXRtX3NvdXJjZSUzZHR5cGUlM2FjbGFpbV9hZF9iaW5nJTI2dXRtX21lZGl1bSUzZHNlYXJjaCUyNnV0bV9jYW1wYWlnbiUzZEJpbmdfTm9uLUJyYW5kX0xlYWQtR2VuZXJhdGlvbiUyNnV0bV9jb250ZW50JTNkUlNBLTJfSnVuZS0yMDI0JTI2dXRtX3Rlcm0lM2Rob3clMjUyMHRvJTI1MjBvYnRhaW4lMjUyMGNsaWVudHMlMjZtYXRjaHR5cGUlM2RwJTI2c2l0ZWxpbmslM2QlMjZhZGdyb3VwJTNkTGVhZCUyNTIwR2VuJTI1MjAtJTI1MjBCdXNpbmVzcyUyNm1zY2xraWQlM2Q5OGIyZmJlYTMwMjAxOTk1MTA4NDkxYWUzMTQwN2VmNA&rlid=98b2fbea30201995108491ae31407ef4"
             }
           ]
         },
@@ -4876,8 +4876,8 @@
               "brief": "Video editing pricing packages freelance",
               "search_query": "video editing pricing packages freelance",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8d7VP5vxRYZKlvUd4ZUWczjVUCUwsFt2_RS-tPz4aBzPZK5Tb29Ab2bHCdvtMnl3PAXDSMHqE8TrRAAyl7JQrBNgvcFyZHmfB2mgb06nU3sAbNX8LsAlgzZqT7l-ifWPG2kkBQFpTE98GKvpYW34N685fOdAWb8HM8IDfUskxtmECnItX5IcIBFrTKrRGQw0VXWOxLA&u=aHR0cHMlM2ElMmYlMmZ3d3cuYmFyay5jb20lMmZlbiUyZnVzJTJmaW4lMmZ2aWRlby1wcm9kdWN0aW9uLXNlcnZpY2VzJTJmJTNmY2FtcGFpZ24lM2RiaW5nLTU5MDQyMzc1NC0xMjYxMTQxNTg3OTI0NTYxLXZpZGVvLXByb2R1Y3Rpb24tZ2VuZXJhbC1jJTI2cG9wdXAlM2R0cnVlJTI2dHJrX2FkX2lkJTNkNzg4MjE0NTkzNDgzNjMlMjZ0cmtfa3dfaWQlM2Rrd2QtNzg4MjE4NjY2ODgzMDglM2Fsb2MtMTkwJTI2dHJrX21zbG9jX3BocyUzZDc4NjgwJTI2dHJrX21zbG9jX2ludCUzZCUyNnRya19zcmMlM2RiJTI2dHJrX21zY2xpZCUzZDgyODJiNjQ2NGM2ZDE1MzEzYzg3ZGMwMjRkMGZmMjhiJTI2bXNjbGtpZCUzZDgyODJiNjQ2NGM2ZDE1MzEzYzg3ZGMwMjRkMGZmMjhiJTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2dXRtX2NhbXBhaWduJTNkRXZlbnRzJTI1MjAlMjUyNiUyNTIwQ3JlYXRpdmUlMjUyMCUyNTdDJTI1MjBWaWRlbyUyNTIwUHJvZHVjdGlvbiUyYyUyNTIwRWRpdGluZyUyNTIwJTI1MjYlMjUyMFZpZGVvZ3JhcGh5JTI1MjBTZXJ2aWNlcyUyNTIwJTI1N0MlMjUyMENhbXBhaWduJTI1MjBMZXZlbCUyNTIwQmlkZGluZyUyNnV0bV90ZXJtJTNkdmlkZW8lMjUyMHByb2R1Y3Rpb24lMjZ1dG1fY29udGVudCUzZHZpZGVvLXByb2R1Y3Rpb24tZ2VuZXJhbA&rlid=8282b6464c6d15313c87dc024d0ff28b"
             }
           ]
         },
@@ -5462,8 +5462,8 @@
               "brief": "How to price window cleaning",
               "search_query": "how to price window cleaning",
               "est_minutes": 5,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8_TqtTOO1FzccOjDDJMQ7-DVUCUykFF2hI9JRAOl0DVn8fO6W4HxpnaBbVzLcGuWXC_RBjAQ4yTqXjpLz27uHATWbYUKFIOM9wKRs9mss77zCEP29wP_zwE_jzNG9eGm-q-vHUSzg7hhpEnmTUVw3L2JMKz0r5ZoRlDpOVwoU_JQoLBcuMbctvcOX2P2G70UBYhPyog&u=aHR0cHMlM2ElMmYlMmZ3d3cuZXN0aW1hdGVzMTIzLmNvbSUyZnNlcnZpY2VzLmFzcHglM2ZpZCUzZDE5NTMlMjZhY3BwYyUzZDElMjZhY2klM2QyOTE2MTgxNTQlMjZhZ2klM2QxMjYxMTQwMjAxMjAwNTQ1JTI2bXNjbGtpZCUzZDk0NTUyMmZjM2YwYjE4ZDkwY2QzNDhiODNlOWJkMmIw&rlid=945522fc3f0b18d90cd348b83e9bd2b0"
             }
           ]
         },
@@ -5484,8 +5484,8 @@
               "brief": "How to build window cleaning round",
               "search_query": "how to build window cleaning round",
               "est_minutes": 7,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8LpAvQ0AqppwRFIqjUNyRUTVUCUzkXiO5d0Fzy8svmMGjK_j-25fFMIgnTMEwKQ0NQB2dRsXisGyih1z8j41PJFIHspjYdH_828tqn37mOldw6WOhOaNvuVjCPUoByZ98i2sjfcV2fNEbLqREf25Rw9uiOFpGuxqS2wzWJu5ypiLIApc-AEDEydnWbox1Aj007JVpKA&u=aHR0cHMlM2ElMmYlMmZ3d3cuYW1hem9uLmNvbSUyZnMlMmYlM2ZpZSUzZFVURjglMjZrZXl3b3JkcyUzZHJvdW5kJTJid2luZG93JTJid2FzaCUyYmJydXNoJTI2aW5kZXglM2RhcHMlMjZ0YWclM2RtaDBiLTIwJTI2cmVmJTNkcGRfc2xfMWJsZXF0b241MF9iJTI2YWRncnBpZCUzZDEzMzA0MDk2MzI3NzE5NTIlMjZodmFkaWQlM2Q4MzE1MDgxNzA1NzM2NCUyNmh2bmV0dyUzZG8lMjZodnFtdCUzZGIlMjZodmJtdCUzZGJiJTI2aHZkZXYlM2RjJTI2aHZsb2NpbnQlM2QlMjZodmxvY3BoeSUzZDc4NjgwJTI2aHZ0YXJnaWQlM2Rrd2QtODMxNTA5NDI1MTM1NzMlM2Fsb2MtMTkwJTI2aHlkYWRjciUzZDc0NzBfMTMxODI4NTElMjZtY2lkJTNkNjdiY2FkM2UyNDUzM2RkOGI3MmQ5NTY5ZmJiNDEwMjIlMjZodm9jaWppZCUzZDk4NDQ5NjU0Mzc4ODQ0NDkwMzgtLSUyNmh2ZXhwbG4lM2QwJTI2Z2IlM2Qy&rlid=8e56471eebaf134a06292d5aea3dff3e"
             }
           ]
         },
@@ -5506,8 +5506,8 @@
               "brief": "How to grow window cleaning business",
               "search_query": "how to grow window cleaning business",
               "est_minutes": 6,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://marketingltb.com/blog/business/how-do-i-start-a-window-cleaning-business/"
             }
           ]
         }
@@ -5562,8 +5562,8 @@
               "brief": "Amazon product research for beginners",
               "search_query": "amazon product research for beginners",
               "est_minutes": 10,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8zG0okMA3m2k5KqCN2FIqlzVUCUyGS19gokjnircWuL76ZdAtIGcY8BLQWCRd7BdnsqiZ0b-PdYOlNAiycYyuXB4dL8D4KdT8J2ZagGd4GtX6_J9sXqCpYzYs32_2GYr3TIR9PhDDIkcMFe2dxuxvJ3ProXVGBNEpE1cMmQq5hWTXe78LYL5Z208g68TlVVdjPuMnzQ&u=aHR0cHMlM2ElMmYlMmZhZHZlcnRpc2luZy5hbWF6b24uY29tJTJmbHAlMmZncm93LXlvdXItYnVzaW5lc3Mtd2l0aC1hbWF6b24tYWRzJTNmdGFnJTNkbWgwYi0yMCUyNnJlZiUzZHBkX3NsXzY3OHZuZnNwNHRfcF9wc19tc25fYl91c19lbl9kX2NvcmVfcF83Nzg1OTM3MTg3MzY3MSUyNmtfZ3JvdyUyNTIwYW1hem9uJTI1MjByZXN1bHRzJTI2Z3JvdXBfMTI0NTc0NzMyMzc0MTUyMyUyNm1zY2xraWQlM2Q1ZGUxMTc0ZjdmMDQxNDQ4ZmEwNzdkMGI3ZTkyNjQ4ZA&rlid=5de1174f7f041448fa077d0b7e92648d"
             }
           ]
         },
@@ -5607,8 +5607,8 @@
               "brief": "How to write amazon product listing",
               "search_query": "how to write amazon product listing",
               "est_minutes": 9,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8l4_rwTEzqBuH5ptowWmY6zVUCUzN6tllwLj2IZIWR6ApUYmrmLWV3yoeBSNQhd2fMwOtedQ9kx2XGaBZBN7PrtBOkTKs-RnWu0pdd-OocIt9uD9dtdw_g07fFOeJ4CDQpnZ_p11Ecww5YDdnLjRVaMSg7h1_oM5DLgnr00j54jG5XUOfvgbO72oQUbx4hu162qoyjg&u=aHR0cHMlM2ElMmYlMmZhZHZlcnRpc2luZy5hbWF6b24uY29tJTJmbHAlMmZncm93LXlvdXItYnVzaW5lc3Mtd2l0aC1hbWF6b24tYWRzJTNmdGFnJTNkbWgwYi0yMCUyNnJlZiUzZHBkX3NsXzR3N2FraHZuanlfZV9wc19tc25fYl91c19lbl9kX2NvcmVfZV83Nzc5MDY1MDY3Mjk2NSUyNmtfYW1hem9uJTI1MjBsaXN0aW5nJTI1MjBvcHRpbWl6YXRpb24lMjZncm91cF8xMjQ0NjQ3ODA1MjczNjk4JTI2bXNjbGtpZCUzZDhmMDRhYTIzOTU5MzFkMmIzNzI3YzA2Nzk0MGFjMGZi&rlid=8f04aa2395931d2b3727c067940ac0fb"
             }
           ]
         },
@@ -5629,8 +5629,8 @@
               "brief": "How to launch amazon fba product get reviews",
               "search_query": "how to launch amazon fba product get reviews",
               "est_minutes": 9,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8_ElPWaStdPJrztOlMpvC3DVUCUwherRXSoVVsHR3f4fU_ZMfHxJdJCkGnwOpl9IFGe2x9YzjZDrFFW67ERyyxr3c5TnfD-var0tD82FhfMI98sbx7SemvCvXQagNvKMHLqUzD4cXzbDH9byG_c1Y31h-HBEYRo2MX2RYJyOhAfR8FzL22WQf1tgn1e6YI7aVaqhCMQ&u=aHR0cHMlM2ElMmYlMmZ3d3cuc2VsbGVybG9naWMuY29tJTJmZW4lMmZhbWF6b24tcmV2aWV3LWF1dG9tYXRpb24lMmYlM2ZQYXJ0bmVySWQlM2RTTG9naWMlMjZDaGFubmVsSWQlM2RRSG9OODBWZHBHJTI2dXRtX3NvdXJjZSUzZGJpbmclMjZ1dG1fbWVkaXVtJTNkY3BjJTI2bXNjbGtpZCUzZDJjZTVjNjY1MzFiZTFjZTBhZTg1YWMyMTMwMjUyMzcy&rlid=2ce5c66531be1ce0ae85ac2130252372"
             }
           ]
         }
@@ -5664,8 +5664,8 @@
               "brief": "How to start mobile car wash business",
               "search_query": "how to start mobile car wash business",
               "est_minutes": 8,
-              "verified": false,
-              "url": null
+              "verified": true,
+              "url": "https://www.bing.com/aclick?ld=e8XOHgHdIdUgCcSEnLdxy1_TVUCUyYxTw5rp2rTgnuzzkdmpO91uR0h0oJzL1c7Kk1PpygCiRwMtg0sDrSHd26dBMghUbEUL1oqtzTGfbZWRcma5cJqF5cvtKjZm719QCuEYUFXL_tC9NdYT7lt4AXQiW1tlwySeGARlhhCIofyUrDCG3o9IZgelbuCRD2gHNJNMwy4w&u=aHR0cHMlM2ElMmYlMmZhZC5kb3VibGVjbGljay5uZXQlMmZzZWFyY2hhZHMlMmZsaW5rJTJmY2xpY2slM2ZsaWQlM2Q0MzcwMDA4Mjc1ODMwNDA4MiUyNmRzX3Nfa3dnaWQlM2Q1ODcwMDAwODk2NTA4NjQ1OCUyNmRzX2FfY2lkJTNkMTQwNDMyNTE0OCUyNmRzX2FfY2FpZCUzZDIzMTI3MTk1NzY4JTI2ZHNfYV9hZ2lkJTNkMTkwNjUyMjU2NjQ3JTI2ZHNfYV9saWQlM2Rrd2QtMTc1MTg0NDc2JTI2JTI2ZHNfZV9hZGlkJTNkODE2Mzg4NzYwNTgzNDElMjZkc19lX3RhcmdldF9pZCUzZGt3ZC04MTYzOTExODgzMTMyNyUzYWxvYy0xOTAlMjYlMjZkc19lX25ldHdvcmslM2RvJTI2ZHNfdXJsX3YlM2QyJTI2ZHNfZGVzdF91cmwlM2RodHRwcyUzYSUyZiUyZnd3dy5zYWxlc2ZvcmNlLmNvbSUyZmNhbXBhaWduJTJmc21iLWN1c3RvbS1idXNpbmVzcy1zb2x1dGlvbnMlMmYlM2ZkJTNkNzAxZWQwMDAwMDNrNVpQQUFZJTI2bmMlM2Q3MDFlZDAwMDAwM2tGYnlBQUUlMjZ1dG1fc291cmNlJTNkYmluZyUyNnV0bV9tZWRpdW0lM2RzZW0lMjZ1dG1fY2FtcGFpZ24lM2RhbWVyX3VzX2Nyb3NzLWNsb3VkX2Nyb3NzLWluZHVzdHJ5JTI2dXRtX2NvbnRlbnQlM2Rlc21iX25vbi1icmFuZCUyYnBocmFzZV83MDFlZDAwMDAwM2s1WlBBQVlfZW5nbGlzaF9zbWItY3VzdG9tLWJ1c2luZXNzLXNvbHV0aW9ucyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZHBhaWRfc2VhcmNoJTI2dXRtX2NhbXBhaWduJTNkNjI3NTcxMzA1JTI2dXRtX2FkZ3JvdXAlM2QxMzA2MjIxMDQ2Njk4MDU4JTI2dXRtX3Rlcm0lM2Rtb2JpbGUlMjUyMGJ1c2luZXNzJTI1MjBzb2x1dGlvbnMlMjZ1dG1fbWF0Y2h0eXBlJTNkcCUyNmdjbGlkJTNkMjExYWI5NTExMDEwMTMxZGI2MGRkMzE1MTE4ZDdjZTMlMjZnY2xzcmMlM2QzcC5kcyUyNiUyNm1zY2xraWQlM2QyMTFhYjk1MTEwMTAxMzFkYjYwZGQzMTUxMThkN2NlMyUyNnV0bV9zb3VyY2UlM2RiaW5nJTI2dXRtX21lZGl1bSUzZGNwYyUyNnV0bV9jYW1wYWlnbiUzZFNFTV9CaW5nX0FNRVJfVVNDQV9VU19FTl9DT05DX0VTTUJfU2VsZiUyNTIwU2VydmUlMjUyMEdlbmVyYWxfTkIlMjZ1dG1fdGVybSUzZG1vYmlsZSUyNTIwYnVzaW5lc3MlMjUyMHNvbHV0aW9ucyUyNnV0bV9jb250ZW50JTNkQnVzaW5lc3MlMjUyMFNvbHV0aW9uc19Q&rlid=211ab9511010131db60dd315118d7ce3"
             }
           ]
         },
@@ -8373,7 +8373,7 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "How to build a morning routine that sticks",
               "search_query": "how to build a morning routine that sticks",
               "est_minutes": 6,
@@ -8560,7 +8560,7 @@
           },
           "content": [
             {
-              "type": "article",
+              "type": "video",
               "brief": "Tips for delivering your first talk",
               "search_query": "tips for first public speaking",
               "est_minutes": 6,

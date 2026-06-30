@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -79,6 +80,12 @@ export default function Loading() {
           <StarRow size={14} />
           <Text style={styles.socialProofText}>40,000+ people already on their path</Text>
         </View>
+
+        <Image
+          source={require('../../../assets/images/apps.png')}
+          style={styles.appsImage}
+          contentFit="contain"
+        />
       </View>
     </SafeAreaView>
   );
@@ -98,6 +105,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   barFill: { height: '100%', borderRadius: 100, backgroundColor: colors.brandGreen },
+  appsImage: { width: 180, height: 110, marginTop: 24 },
   socialProof: {
     flexDirection: 'row',
     alignItems: 'center',

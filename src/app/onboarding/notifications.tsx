@@ -8,13 +8,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, spacing } from '@/constants/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/lib/supabase';
 
 export default function NotificationsScreen() {
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleEnable = async () => {
     try {
-      await Notifications.requestPermissionsAsync();
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status === 'granted' && user) {
+        const tokenData = await Notifications.getExpoPushTokenAsync();
+        if (tokenData?.data) {
+          await supabase
+            .from('profiles')
+            .update({ expo_push_token: tokenData.data })
+            .eq('id', user.id);
+        }
+      }
+    } catch (err) {
+      console.error('Error saving push token in onboarding:', err);
     } finally {
       router.push('/onboarding/paywall');
     }

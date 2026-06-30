@@ -255,6 +255,13 @@ export function usePlans() {
     return userPlans.some((p) => p.goal_id === dbGoalId && p.status === 'active');
   };
 
+  const isCompleted = (goalId: string) => {
+    const goals = useAppStore.getState().goals;
+    const goal = goals.find((g) => g.id === goalId);
+    const dbGoalId = goal?.databaseId || goalId;
+    return userPlans.some((p) => p.goal_id === dbGoalId && p.status === 'completed');
+  };
+
   return {
     createPlan,
     savePlan,
@@ -262,6 +269,7 @@ export function usePlans() {
     deletePlan,
     isSaved,
     isActive,
+    isCompleted,
     userPlans,
     savedGoals,
     isLoading,

@@ -25,12 +25,14 @@ import { DifficultyDivider } from '@/components/discover/DifficultyDivider';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
 import { useAppStore } from '@/store/appStore';
 import { usePlans } from '@/hooks/usePlans';
+import { useEntitlementStatus } from '@/lib/purchases';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 export default function StreamDetail() {
   const router = useRouter();
   const { stream } = useLocalSearchParams<{ stream: string }>();
+  const { hasPro } = useEntitlementStatus();
   
   const goals = useAppStore((s) => s.goals);
   const {
@@ -39,11 +41,28 @@ export default function StreamDetail() {
     unsavePlan,
     isSaved,
     isActive,
+    isCompleted,
     userPlans,
   } = usePlans();
 
   const [confirmGoalId, setConfirmGoalId] = useState<string | null>(null);
   const [toastText, setToastText] = useState<string | null>(null);
+
+  const getGoalStatus = (goalId: string) => {
+    if (isCompleted(goalId)) return 'completed';
+    if (isActive(goalId)) return 'active';
+    return 'not_started';
+  };
+
+  const getProgressPercent = (goalId: string) => {
+    const goalsList = useAppStore.getState().goals;
+    const goal = goalsList.find((g) => g.id === goalId);
+    const dbGoalId = goal?.databaseId || goalId;
+    const plan = userPlans.find((p) => p.goal_id === dbGoalId);
+    if (!plan) return undefined;
+    const completed = plan.user_step_progress?.filter((p) => p.completed).length ?? 0;
+    return (completed / 5) * 100;
+  };
 
   // Reanimated values for Bottom Sheet
   const sheetTranslateY = useSharedValue(SCREEN_HEIGHT);
@@ -221,7 +240,9 @@ export default function StreamDetail() {
                     key={goal.id}
                     goal={goal}
                     saved={isSaved(goal.id)}
-                    active={isActive(goal.id)}
+                    status={getGoalStatus(goal.id)}
+                    progressPercent={getProgressPercent(goal.id)}
+                    hasPro={hasPro}
                     onToggleSaved={handleToggleSaved}
                     onOpen={handleOpenGoal}
                     onLocked={openPaywall}
@@ -241,7 +262,9 @@ export default function StreamDetail() {
                     key={goal.id}
                     goal={goal}
                     saved={isSaved(goal.id)}
-                    active={isActive(goal.id)}
+                    status={getGoalStatus(goal.id)}
+                    progressPercent={getProgressPercent(goal.id)}
+                    hasPro={hasPro}
                     onToggleSaved={handleToggleSaved}
                     onOpen={handleOpenGoal}
                     onLocked={openPaywall}
@@ -261,7 +284,9 @@ export default function StreamDetail() {
                     key={goal.id}
                     goal={goal}
                     saved={isSaved(goal.id)}
-                    active={isActive(goal.id)}
+                    status={getGoalStatus(goal.id)}
+                    progressPercent={getProgressPercent(goal.id)}
+                    hasPro={hasPro}
                     onToggleSaved={handleToggleSaved}
                     onOpen={handleOpenGoal}
                     onLocked={openPaywall}
@@ -294,7 +319,7 @@ export default function StreamDetail() {
                 <Text style={styles.sheetTitle}>Start this plan?</Text>
                 {confirmGoal && (
                   <Text style={styles.sheetSubtitle}>
-                    Generate your custom 5-step timeline for "{confirmGoal.title}". Let's get Stacked!
+                    Generate your custom 5-step timeline for &quot;{confirmGoal.title}&quot;. Let&apos;s get Stacked!
                   </Text>
                 )}
                 <View style={styles.sheetButtons}>
