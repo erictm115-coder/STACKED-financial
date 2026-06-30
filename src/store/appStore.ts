@@ -67,8 +67,9 @@ export const useAppStore = create<AppStore>((set, get) => ({
             const content = contentRows
               .filter((c) => c.step_id === s.id)
               .map((c) => ({
-                type: c.content_type as 'video' | 'article' | 'tool',
+                type: c.content_type as 'video' | 'article' | 'tool' | 'guide',
                 title: c.title || c.brief || '',
+                brief: c.brief || '',
                 url: c.url || '',
                 estMinutes: c.est_minutes || 0
               }));

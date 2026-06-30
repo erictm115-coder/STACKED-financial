@@ -17,8 +17,10 @@ export type ScoreDimension =
   | 'investmentReadiness';
 
 export type StepContent = {
-  type: 'video' | 'article' | 'tool';
+  type: 'video' | 'article' | 'tool' | 'guide';
   title: string;
+  /** Explanatory body text — populated for in-app guide fallbacks. */
+  brief?: string;
   url: string;
   estMinutes: number;
 };

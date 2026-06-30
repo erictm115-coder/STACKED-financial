@@ -145,32 +145,56 @@ export default function PlanDetail() {
                         </View>
                       )}
 
-                      {/* Curated Lessons / Resources */}
-                      {step.content && step.content.length > 0 && (
+                      {/* Lessons & Resources — three states:
+                          1) external content (has url)  → tappable resource row
+                          2) in-app guide (no url)        → dashed guide card, no button
+                          3) nothing at all                → calm informational note */}
+                      {step.content && step.content.length > 0 ? (
                         <View style={styles.sectionBlock}>
                           <Text style={styles.sectionTitle}>Lessons & Resources</Text>
                           <View style={styles.contentList}>
-                            {step.content.map((item, idx) => (
-                              <Pressable
-                                key={idx}
-                                style={styles.contentRow}
-                                onPress={() => item.url && openLink(item.url)}
-                              >
-                                <View style={styles.contentIconWrap}>
-                                  {getContentIcon(item.type)}
-                                </View>
-                                <View style={styles.contentTextWrap}>
-                                  <Text style={styles.contentTitle} numberOfLines={2}>
-                                    {item.title}
-                                  </Text>
-                                  <Text style={styles.contentMeta}>
-                                    {item.type.toUpperCase()} • {item.estMinutes} MIN
-                                  </Text>
-                                </View>
-                              </Pressable>
-                            ))}
+                            {step.content.map((item, idx) => {
+                              const isGuide = item.type === 'guide' || !item.url;
+
+                              if (isGuide) {
+                                return (
+                                  <View key={idx} style={styles.guideCard}>
+                                    <View style={styles.guideHeader}>
+                                      <BookOpen size={16} color={colors.brandGreen} />
+                                      <Text style={styles.guideLabel}>QUICK GUIDE</Text>
+                                    </View>
+                                    <Text style={styles.guideBody}>{item.brief || item.title}</Text>
+                                  </View>
+                                );
+                              }
+
+                              return (
+                                <Pressable
+                                  key={idx}
+                                  style={styles.contentRow}
+                                  onPress={() => item.url && openLink(item.url)}
+                                >
+                                  <View style={styles.contentIconWrap}>
+                                    {getContentIcon(item.type)}
+                                  </View>
+                                  <View style={styles.contentTextWrap}>
+                                    <Text style={styles.contentTitle} numberOfLines={2}>
+                                      {item.title}
+                                    </Text>
+                                    <Text style={styles.contentMeta}>
+                                      {item.type.toUpperCase()} • {item.estMinutes} MIN
+                                    </Text>
+                                  </View>
+                                </Pressable>
+                              );
+                            })}
                           </View>
                         </View>
+                      ) : (
+                        <Text style={styles.noResourcesNote}>
+                          No additional resources for this step yet — but you can still
+                          complete the action items above.
+                        </Text>
                       )}
                     </View>
                   )}
@@ -282,6 +306,39 @@ const styles = StyleSheet.create({
   contentMeta: { fontFamily: fonts.bold, fontSize: 11, color: colors.ash },
 
   placeholder: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.ash, lineHeight: 21 },
+
+  // State 2 — in-app guide card (dashed border signals "not an external link")
+  guideCard: {
+    backgroundColor: '#1a1a1a',
+    borderWidth: 1,
+    borderColor: '#3c3c3c',
+    borderStyle: 'dashed',
+    borderRadius: radius.input,
+    padding: spacing.md,
+    gap: spacing.xs,
+  },
+  guideHeader: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  guideLabel: {
+    fontFamily: fonts.bold,
+    fontSize: 12,
+    color: '#777777',
+    letterSpacing: 0.5,
+  },
+  guideBody: {
+    fontFamily: fonts.semiBold,
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 21,
+  },
+
+  // State 3 — calm informational note
+  noResourcesNote: {
+    fontFamily: fonts.semiBold,
+    fontSize: 13,
+    color: '#555555',
+    lineHeight: 19,
+  },
+
   notFound: {
     fontFamily: fonts.bold,
     fontSize: 16,
