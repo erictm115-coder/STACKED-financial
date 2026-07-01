@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -8,7 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { PlanCard } from '@/components/plans/PlanCard';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
-import { usePlans, type UserPlan } from '@/hooks/usePlans';
+import { usePlans } from '@/hooks/usePlans';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
 
@@ -187,7 +187,6 @@ export default function Plans() {
 }
 
 // Custom memoized wrapper for logic
-import { useMemo } from 'react';
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.background, paddingHorizontal: spacing.xl },

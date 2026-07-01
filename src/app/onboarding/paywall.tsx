@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Pressable, ActivityIndicator, Alert, BackHandler } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ActivityIndicator, Alert, BackHandler, Linking } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { PurchasesPackage } from 'react-native-purchases';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,7 +14,6 @@ import {
   getSubscriptionOfferings,
   purchaseSubscriptionPackage,
   restoreSubscriptionPurchases,
-  isPurchasesSupported,
 } from '@/lib/purchases';
 
 
@@ -246,11 +245,25 @@ export default function Paywall() {
           <Text style={styles.footerText}>Restore</Text>
         </Pressable>
         <Text style={styles.footerDot}>·</Text>
-        <Pressable onPress={() => Alert.alert('Terms of Service', 'Standard Apple/Google terms apply.')}>
+        <Pressable onPress={async () => {
+          try {
+            await Linking.openURL('https://erictm115-coder.github.io/Stacked---Privacy-Policy/terms.html');
+          } catch (error) {
+            console.error('[paywall] Open Terms link failed:', error);
+            Alert.alert('Error', 'Unable to open Terms of Service link.');
+          }
+        }}>
           <Text style={styles.footerText}>Terms</Text>
         </Pressable>
         <Text style={styles.footerDot}>·</Text>
-        <Pressable onPress={() => Alert.alert('Privacy Policy', 'Your data is safe and encrypted.')}>
+        <Pressable onPress={async () => {
+          try {
+            await Linking.openURL('https://erictm115-coder.github.io/STACKED-financial/');
+          } catch (error) {
+            console.error('[paywall] Open Privacy link failed:', error);
+            Alert.alert('Error', 'Unable to open Privacy Policy link.');
+          }
+        }}>
           <Text style={styles.footerText}>Privacy</Text>
         </Pressable>
       </View>

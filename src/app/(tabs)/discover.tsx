@@ -226,8 +226,10 @@ export default function Discover() {
   const handleToggleSaved = (goalId: string) => {
     if (isSaved(goalId)) {
       unsavePlan(goalId);
+      showToast('Removed from saved plans');
     } else {
       savePlan(goalId);
+      showToast('Saved to your plans!');
     }
   };
 
@@ -343,24 +345,6 @@ export default function Discover() {
       intermediate: group.filter((g) => g.difficulty === 'intermediate'),
       advanced: group.filter((g) => g.difficulty === 'advanced'),
     };
-
-    const streamMeta = {
-      money_foundations: {
-        icon: '💰',
-        title: 'Money Foundations',
-        subtitle: 'Build the core financial skills everyone needs',
-      },
-      income_builders: {
-        icon: '🚀',
-        title: 'Income Builders',
-        subtitle: 'Hobbies and skills that put real money in your pocket',
-      },
-      wealthy_habits: {
-        icon: '🎯',
-        title: 'Wealthy Habits',
-        subtitle: 'The daily practices of people who build lasting wealth',
-      },
-    }[streamKey];
 
     return (
       <View style={styles.section}>

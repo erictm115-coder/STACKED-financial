@@ -5,11 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Settings, Flame, Gem } from 'lucide-react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { StacksCard } from '@/components/profile/StacksCard';
 import { SettingsSheet } from '@/components/profile/SettingsSheet';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
-import { useOnboarding } from '@/hooks/useOnboarding';
 import { useOnboardingStore } from '@/store/onboardingStore';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
@@ -20,7 +18,6 @@ interface Gamification {
 }
 
 export default function Profile() {
-  const { resetOnboarding } = useOnboarding();
   const { user } = useAuth();
   const overall = useOnboardingStore((s) => s.scores?.overall ?? 58);
 
@@ -185,12 +182,6 @@ export default function Profile() {
         <StacksCard stackCount={gamification.stack_count} />
 
         <View style={styles.spacer} />
-
-        {/* ── DEV ONLY ── */}
-        <View style={styles.devBox}>
-          <Text style={styles.devLabel}>DEV</Text>
-          <PrimaryButton label="Reset onboarding" onPress={resetOnboarding} />
-        </View>
       </ScrollView>
 
       {/* ── Settings Bottom Sheet ── */}
@@ -307,11 +298,4 @@ const styles = StyleSheet.create({
   },
 
   spacer: { height: spacing.xl },
-  devBox: { gap: spacing.sm },
-  devLabel: {
-    fontFamily: fonts.bold,
-    fontSize: 13,
-    color: colors.textMuted,
-    letterSpacing: 1,
-  },
 });

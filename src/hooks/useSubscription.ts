@@ -21,12 +21,6 @@ export function useSubscription(): UseSubscription {
   const [status, setStatus] = useState<SubStatus>('loading');
 
   const check = useCallback(async (): Promise<void> => {
-    // DEV BYPASS — remove before App Store submission.
-    if (__DEV__) {
-      setStatus('active');
-      return;
-    }
-
     // Android is a no-op until Android subscriptions are configured.
     if (Platform.OS !== 'ios') {
       setStatus('active');
@@ -55,7 +49,7 @@ export function useSubscription(): UseSubscription {
 
     // Real-time entitlement changes while the app is open (purchase completes,
     // subscription expires mid-session, etc.).
-    if (__DEV__ || Platform.OS !== 'ios' || !isPurchasesSupported()) {
+    if (Platform.OS !== 'ios' || !isPurchasesSupported()) {
       return;
     }
 

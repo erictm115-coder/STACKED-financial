@@ -5,6 +5,8 @@ import { useRouter } from 'expo-router';
 import { ArrowLeft, Bell, Flame, Target, Trophy, Clock } from 'lucide-react-native';
 import * as ExpoNotifications from 'expo-notifications';
 import { colors, fonts, spacing } from '@/constants/theme';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/lib/supabase';
 
 // Register handler to display push notifications in the foreground
 ExpoNotifications.setNotificationHandler({
@@ -15,9 +17,6 @@ ExpoNotifications.setNotificationHandler({
     shouldShowList: true,
   }),
 });
-
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/lib/supabase';
 
 export default function Notifications() {
   const router = useRouter();

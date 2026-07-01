@@ -11,7 +11,7 @@ import { DollarSign, Rocket, Target, LucideIcon } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Haptics from 'expo-haptics';
 
-import { colors, fonts } from '@/constants/theme';
+import { fonts } from '@/constants/theme';
 
 export type Stream = 'money_foundations' | 'income_builders' | 'wealthy_habits';
 

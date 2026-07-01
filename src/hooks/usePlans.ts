@@ -128,7 +128,7 @@ export function usePlans() {
     }
     
     // 1. Check if plan already exists
-    const { data: existing, error: existErr } = await supabase
+    const { data: existing } = await supabase
       .from('user_plans')
       .select('id')
       .eq('user_id', user.id)

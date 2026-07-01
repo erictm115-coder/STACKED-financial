@@ -12,14 +12,13 @@ import {
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
-
-const AnimatedImage = Animated.createAnimatedComponent(Image);
-
 import { PrimaryButton } from '@/components/ui/PrimaryButton';
 import { ScreenEntrance } from '@/components/ui/ScreenEntrance';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
 import { supabase } from '@/lib/supabase';
 import { useOnboardingStore } from '@/store/onboardingStore';
+
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

@@ -31,7 +31,6 @@ export default function Loading() {
   const router = useRouter();
   const progress = useSharedValue(0);
   const pulse = useSharedValue(1);
-  const messageOpacity = useSharedValue(1);
   const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {

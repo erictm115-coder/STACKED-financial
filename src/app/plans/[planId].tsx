@@ -19,8 +19,6 @@ import {
   Play,
   BookOpen,
   Wrench,
-  Square,
-  CheckSquare,
   Lock,
   Check,
   Award,
@@ -39,10 +37,8 @@ import * as Haptics from 'expo-haptics';
 
 import { GoalIcon } from '@/components/main/GoalIcon';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
-import { useAppStore } from '@/store/appStore';
-import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
-import { useStepProgress, type StepProgress } from '@/hooks/useStepProgress';
+import { useStepProgress } from '@/hooks/useStepProgress';
 
 // Self-contained Custom Confetti Component
 const CONFETTI_COLORS = ['#58cc02', '#a5ed6e', '#1cb0f6', '#ffffff'];
@@ -206,7 +202,6 @@ function PulseBorder({ children, active }: { children: React.ReactNode; active: 
 export default function PlanDetail() {
   const router = useRouter();
   const { planId } = useLocalSearchParams<{ planId: string }>();
-  const { user } = useAuth();
 
   const [planData, setPlanData] = useState<any>(null);
   const [dbSteps, setDbSteps] = useState<any[]>([]);

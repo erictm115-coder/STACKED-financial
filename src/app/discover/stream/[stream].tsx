@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -168,8 +168,10 @@ export default function StreamDetail() {
   const handleToggleSaved = (goalId: string) => {
     if (isSaved(goalId)) {
       unsavePlan(goalId);
+      showToast('Removed from saved plans');
     } else {
       savePlan(goalId);
+      showToast('Saved to your plans!');
     }
   };
 
