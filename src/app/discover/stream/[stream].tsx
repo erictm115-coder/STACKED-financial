@@ -111,12 +111,23 @@ export default function StreamDetail() {
   }, [goals, stream]);
 
   const diffGroups = useMemo(() => {
-    return {
-      beginner: filteredGoals.filter((g) => g.difficulty === 'beginner'),
-      intermediate: filteredGoals.filter((g) => g.difficulty === 'intermediate'),
-      advanced: filteredGoals.filter((g) => g.difficulty === 'advanced'),
+    // Within each difficulty band, surface completed goals first, then
+    // started-but-not-finished (active), then untouched. Sort is stable so the
+    // sortWeight ordering is preserved inside each status band.
+    const statusRank = (goalId: string) => {
+      const status = getGoalStatus(goalId);
+      return status === 'completed' ? 0 : status === 'active' ? 1 : 2;
     };
-  }, [filteredGoals]);
+    const sortByStatus = (arr: typeof filteredGoals) =>
+      [...arr].sort((a, b) => statusRank(a.id) - statusRank(b.id));
+
+    return {
+      beginner: sortByStatus(filteredGoals.filter((g) => g.difficulty === 'beginner')),
+      intermediate: sortByStatus(filteredGoals.filter((g) => g.difficulty === 'intermediate')),
+      advanced: sortByStatus(filteredGoals.filter((g) => g.difficulty === 'advanced')),
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredGoals, userPlans]);
 
   // Bottom Sheet Actions
   const openConfirmSheet = (goalId: string) => {

@@ -49,16 +49,6 @@ export function RecommendedStrip({ goals, onOpenGoal }: Props) {
           {item.title}
         </Text>
         <View style={styles.bottomRow}>
-          <View
-            style={[
-              styles.diffPill,
-              { backgroundColor: diffStyles.bg, borderColor: diffStyles.border },
-            ]}
-          >
-            <Text style={[styles.diffText, { color: diffStyles.text }]}>
-              {item.difficulty.substring(0, 3).toUpperCase()}
-            </Text>
-          </View>
           {item.estDuration && <Text style={styles.duration}>{item.estDuration}</Text>}
         </View>
       </Pressable>
@@ -98,7 +88,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontFamily: fonts.bold,
-    fontSize: 14,
+    fontSize: 17,
     color: colors.textPrimary,
   },
   listContent: {
@@ -107,7 +97,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: 280,
-    height: 130,
+    height: 148,
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.brandGreenOutline,
@@ -122,16 +112,16 @@ const styles = StyleSheet.create({
   },
   streamTag: {
     fontFamily: fonts.semiBold,
-    fontSize: 10,
+    fontSize: 12,
     color: colors.ash,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
   title: {
     fontFamily: fonts.bold,
-    fontSize: 13,
+    fontSize: 16,
     color: colors.textPrimary,
-    lineHeight: 18,
+    lineHeight: 21,
     marginVertical: 4,
   },
   bottomRow: {
@@ -139,19 +129,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing.sm,
   },
-  diffPill: {
-    borderWidth: 1,
-    borderRadius: 100,
-    paddingHorizontal: 6,
-    paddingVertical: 1,
-  },
-  diffText: {
-    fontFamily: fonts.bold,
-    fontSize: 8,
-  },
   duration: {
     fontFamily: fonts.semiBold,
-    fontSize: 10,
+    fontSize: 13,
     color: colors.ash,
   },
 });

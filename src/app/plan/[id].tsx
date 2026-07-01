@@ -8,12 +8,15 @@ import { GoalIcon } from '@/components/main/GoalIcon';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
 import { goalMetaLabel } from '@/data/goals';
 import { useAppStore } from '@/store/appStore';
+import { usePlans } from '@/hooks/usePlans';
 
 export default function PlanDetail() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const getGoalById = useAppStore((s) => s.getGoalById);
   const goal = getGoalById(id);
+  const { createPlan } = usePlans();
+  const [isStarting, setIsStarting] = useState(false);
 
   // Track which step is expanded (null means none)
   const [expandedStep, setExpandedStep] = useState<number | null>(1);
@@ -36,8 +39,27 @@ export default function PlanDetail() {
     setExpandedStep(expandedStep === stepNumber ? null : stepNumber);
   };
 
+  const handleStartPlan = async () => {
+    if (isStarting) return;
+    setIsStarting(true);
+    const { planId, error } = await createPlan(id);
+    setIsStarting(false);
+    if (error || !planId) {
+      Alert.alert('Something went wrong', "We couldn't start this plan. Please try again.");
+      return;
+    }
+    router.replace(`/plans/${planId}` as any);
+  };
+
   const toggleActionItem = (stepNumber: number, actionIndex: number) => {
-    Alert.alert('Plan Not Started', 'Swipe right to start this plan first.');
+    Alert.alert(
+      'Start this plan first',
+      "You need to start this plan before you can check off action items. We'll generate your custom 5-step timeline and track your progress. Ready to begin?",
+      [
+        { text: 'Not now', style: 'cancel' },
+        { text: 'Start Plan', style: 'default', onPress: handleStartPlan },
+      ]
+    );
   };
 
   const openLink = async (url: string) => {

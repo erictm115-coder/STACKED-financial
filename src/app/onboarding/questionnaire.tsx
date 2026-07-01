@@ -123,7 +123,7 @@ const STEPS: StepConfig[] = [
     options: [
       'I feel stuck financially',
       'Stop living by a paycheck',
-      'I want to find my financial purpose',
+      'Find my financial purpose',
       'I want to stop wasting money',
       'Other',
     ],

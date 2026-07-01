@@ -80,14 +80,17 @@ export default function Profile() {
     }, [fetchGamification, fetchScoreDelta])
   );
 
-  // Realtime subscription so stack count updates without refresh
+  // Realtime subscription so stack count updates without refresh.
+  // The channel name is made unique per subscription so a fresh effect run
+  // (StrictMode double-mount, remount on focus, etc.) never reuses an
+  // already-subscribed channel — which is what triggers the
+  // "cannot add postgres_changes callbacks after subscribe" error.
   useEffect(() => {
-    let mounted = true;
     if (!user) return;
-    if (!mounted) return;
 
-    const channel = supabase
-      .channel('profile-gamification')
+    const channel = supabase.channel(`profile-gamification-${user.id}-${Date.now()}`);
+
+    channel
       .on(
         'postgres_changes',
         {
@@ -107,8 +110,6 @@ export default function Profile() {
       .subscribe();
 
     return () => {
-      mounted = false;
-      channel.unsubscribe();
       supabase.removeChannel(channel);
     };
   }, [user]);

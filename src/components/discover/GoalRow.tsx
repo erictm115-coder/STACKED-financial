@@ -134,19 +134,11 @@ export const GoalRow = React.memo(function GoalRow({
           <Text style={getTitleStyle()} numberOfLines={1}>
             {goal.title}
           </Text>
-          <View style={styles.metaRow}>
-            <View
-              style={[
-                styles.diffPill,
-                { backgroundColor: diffStyles.bg, borderColor: diffStyles.border },
-              ]}
-            >
-              <Text style={[styles.diffText, { color: diffStyles.text }]}>
-                {goal.difficulty}
-              </Text>
+          {goal.estDuration && (
+            <View style={styles.metaRow}>
+              <Text style={styles.duration}>{goal.estDuration}</Text>
             </View>
-            {goal.estDuration && <Text style={styles.duration}>{goal.estDuration}</Text>}
-          </View>
+          )}
         </View>
 
         <View style={styles.trailing}>
@@ -218,17 +210,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
-  },
-  diffPill: {
-    borderWidth: 1,
-    borderRadius: 100,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-  },
-  diffText: {
-    fontFamily: fonts.bold,
-    fontSize: 10,
-    textTransform: 'capitalize',
   },
   duration: {
     fontFamily: fonts.semiBold,

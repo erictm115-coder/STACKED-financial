@@ -103,24 +103,43 @@ export default function Discover() {
     });
   }, []);
 
+  // Cross-fade: fade the feed out, and only swap its content once it's fully
+  // invisible (in the fade-out completion callback). The fade *in* is NOT
+  // started here — it's driven by the effect below, which runs after React has
+  // committed the new content. That ordering is what prevents the empty gap /
+  // "cards pop in late" effect: without it the fade-in begins on the UI thread
+  // before the JS state swap has rendered, so the feed fades in while empty.
   const handleStreamChange = (stream: Stream) => {
+    if (stream === activeStream) return;
     setActiveStream(stream);
-    feedOpacity.value = 0;
-    setTimeout(() => {
-      setDeferredStream(stream);
-      feedOpacity.value = withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) });
-    }, 50);
     AsyncStorage.setItem('lastActiveStream', stream);
+    feedOpacity.value = withTiming(
+      0,
+      { duration: 130, easing: Easing.in(Easing.ease) },
+      (finished) => {
+        if (finished) runOnJS(setDeferredStream)(stream);
+      }
+    );
   };
 
   const handleTabChange = (newTab: Tab) => {
+    if (newTab === tab) return;
     setTab(newTab);
-    feedOpacity.value = 0;
-    setTimeout(() => {
-      setDeferredTab(newTab);
-      feedOpacity.value = withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) });
-    }, 50);
+    feedOpacity.value = withTiming(
+      0,
+      { duration: 130, easing: Easing.in(Easing.ease) },
+      (finished) => {
+        if (finished) runOnJS(setDeferredTab)(newTab);
+      }
+    );
   };
+
+  // Fade the feed back in once the swapped content is actually rendered.
+  // Running in an effect guarantees the new stream/tab has been committed
+  // before opacity animates up, so the content is never revealed mid-load.
+  useEffect(() => {
+    feedOpacity.value = withTiming(1, { duration: 220, easing: Easing.out(Easing.ease) });
+  }, [deferredStream, deferredTab, feedOpacity]);
 
   const animatedFeedStyle = useAnimatedStyle(() => {
     return {
@@ -345,11 +364,21 @@ export default function Discover() {
       return <Text style={styles.empty}>No goals in this stream yet.</Text>;
     }
 
+    // Order goals by progress within a section: completed first, then
+    // started-but-not-finished (active), then untouched. Array sort is stable,
+    // so the existing sortWeight order is preserved within each status band.
+    const statusRank = (goalId: string) => {
+      const status = getGoalStatus(goalId);
+      return status === 'completed' ? 0 : status === 'active' ? 1 : 2;
+    };
+    const sortByStatus = (arr: Goal[]) =>
+      [...arr].sort((a, b) => statusRank(a.id) - statusRank(b.id));
+
     // Group goals by difficulty
     const diffGroups = {
-      beginner: group.filter((g) => g.difficulty === 'beginner'),
-      intermediate: group.filter((g) => g.difficulty === 'intermediate'),
-      advanced: group.filter((g) => g.difficulty === 'advanced'),
+      beginner: sortByStatus(group.filter((g) => g.difficulty === 'beginner')),
+      intermediate: sortByStatus(group.filter((g) => g.difficulty === 'intermediate')),
+      advanced: sortByStatus(group.filter((g) => g.difficulty === 'advanced')),
     };
 
     return (
@@ -629,12 +658,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 12,
-    borderRadius: radius.pill,
+    borderRadius: radius.input,
     borderWidth: 1.5,
     borderColor: colors.graphite,
   },
   pillActive: { borderColor: colors.brandGreen, backgroundColor: '#0a2200' },
-  pillText: { fontFamily: fonts.bold, fontSize: 13, color: colors.ash },
+  pillText: { fontFamily: fonts.bold, fontSize: 16, color: colors.ash },
   pillTextActive: { color: colors.brandGreen },
 
   hintRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: spacing.md },
