@@ -40,6 +40,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     'expo-notifications',
+    'expo-asset',
   ],
   experiments: {
     typedRoutes: true,
