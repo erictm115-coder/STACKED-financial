@@ -200,8 +200,6 @@ export function usePlans() {
        * and user_step_progress, but there were no DELETE policies defined for them.
        * Added missing DELETE policies in the database schema to fix it.
        */
-      console.log('[deletePlan] Mutating user_plans: Deleting plan ID:', planId, 'for user:', user.id);
-      
       // Find plan first to retrieve its goal_id before deleting
       const plan = userPlans.find((p) => p.id === planId);
 
@@ -211,8 +209,6 @@ export function usePlans() {
         .eq('id', planId)
         .eq('user_id', user.id);
       if (error) throw error;
-
-      console.log('[deletePlan] Mutation successful: Plan ID:', planId, 'deleted.');
 
       // Actively filter out the deleted plan from local UI state immediately
       setUserPlans((prev) => prev.filter((p) => p.id !== planId));
