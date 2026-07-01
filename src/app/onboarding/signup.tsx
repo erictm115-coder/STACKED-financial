@@ -79,6 +79,7 @@ export default function Signup() {
               source={require('../../../assets/images/hero.png')}
               style={[styles.heroImage, heroImageAnimatedStyle]}
               contentFit="contain"
+              transition={0}
             />
             <Text style={styles.title}>Let&apos;s get started</Text>
             <Text style={styles.subtitle}>

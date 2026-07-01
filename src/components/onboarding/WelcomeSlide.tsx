@@ -128,6 +128,7 @@ export function WelcomeSlide({ index, activeIndex }: Props) {
             source={require('@/assets/images/welcome-illustration.webp')}
             style={styles.art}
             contentFit="contain"
+            transition={0}
           />
           <Text style={styles.headline}>Welcome to Stacked</Text>
           <Text style={styles.sub}>Starting today, let&apos;s build wealth on your terms.</Text>

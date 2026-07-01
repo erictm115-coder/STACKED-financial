@@ -68,12 +68,14 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
               source={require('../../../assets/images/appicon.png')}
               style={styles.appIconImage}
               contentFit="contain"
+              transition={0}
             />
           ) : slide.key === 's5' ? (
             <Image
               source={require('../../../assets/images/love.png')}
               style={styles.loveImage}
               contentFit="contain"
+              transition={0}
             />
           ) : slide.key === 's4' ? (
             // Empty placeholder to keep the headline/text height perfectly aligned
@@ -103,6 +105,7 @@ export function OnboardingSlide({ slide, index, activeIndex, onAdvance }: Props)
                 source={require('../../../assets/images/map.png')}
                 style={styles.mapImage}
                 contentFit="contain"
+                transition={0}
               />
             )}
           </Animated.View>

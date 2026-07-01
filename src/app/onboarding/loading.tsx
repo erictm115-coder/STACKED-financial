@@ -84,6 +84,7 @@ export default function Loading() {
           source={require('../../../assets/images/apps.png')}
           style={styles.appsImage}
           contentFit="contain"
+          transition={0}
         />
       </View>
     </SafeAreaView>
