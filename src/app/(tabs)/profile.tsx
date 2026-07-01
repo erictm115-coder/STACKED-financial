@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Settings, Flame, Gem } from 'lucide-react-native';
@@ -31,7 +31,7 @@ export default function Profile() {
   });
   const [scoreDelta, setScoreDelta] = useState(0);
 
-  const fetchGamification = async () => {
+  const fetchGamification = useCallback(async () => {
     if (!user) return;
     const { data, error } = await supabase
       .from('user_gamification')
@@ -50,9 +50,9 @@ export default function Profile() {
         day_streak: data.day_streak ?? 0,
       });
     }
-  };
+  }, [user]);
 
-  const fetchScoreDelta = async () => {
+  const fetchScoreDelta = useCallback(async () => {
     if (!user) return;
     // Pull weekly delta from stacked_scores (overall column acts as running total)
     const { data, error } = await supabase
@@ -67,19 +67,24 @@ export default function Profile() {
     }
 
     if (data?.overall) setScoreDelta(data.overall);
-  };
+  }, [user]);
 
   // ── Fetch live gamification data on focus ─────────────────────────────────────
   useFocusEffect(
     useCallback(() => {
-      fetchGamification();
-      fetchScoreDelta();
-    }, [user])
+      const task = InteractionManager.runAfterInteractions(() => {
+        fetchGamification();
+        fetchScoreDelta();
+      });
+      return () => task.cancel();
+    }, [fetchGamification, fetchScoreDelta])
   );
 
   // Realtime subscription so stack count updates without refresh
   useEffect(() => {
+    let mounted = true;
     if (!user) return;
+    if (!mounted) return;
 
     const channel = supabase
       .channel('profile-gamification')
@@ -102,6 +107,8 @@ export default function Profile() {
       .subscribe();
 
     return () => {
+      mounted = false;
+      channel.unsubscribe();
       supabase.removeChannel(channel);
     };
   }, [user]);

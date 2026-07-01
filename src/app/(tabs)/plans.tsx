@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, InteractionManager, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Layers, Flame, ArrowUpDown, ChevronDown, ChevronUp } from 'lucide-react-native';
@@ -15,7 +15,7 @@ import { supabase } from '@/lib/supabase';
 export default function Plans() {
   const router = useRouter();
   const { user } = useAuth();
-  const { userPlans, isLoading, error, refresh } = usePlans();
+  const { userPlans, isLoading, error, refresh, deletePlan } = usePlans();
   
   const [streak, setStreak] = useState(0);
   const [completedExpanded, setCompletedExpanded] = useState(false);
@@ -31,12 +31,15 @@ export default function Plans() {
       .then(({ data }) => {
         if (data?.day_streak) setStreak(data.day_streak);
       });
-  }, [user, userPlans]);
+  }, [user, userPlans.length]);
 
   // Refresh on focus
   useFocusEffect(
     useCallback(() => {
-      refresh();
+      const task = InteractionManager.runAfterInteractions(() => {
+        refresh();
+      });
+      return () => task.cancel();
     }, [refresh])
   );
 
@@ -115,7 +118,7 @@ export default function Plans() {
               </View>
               <View style={styles.list}>
                 {categorizedPlans.inProgress.map((plan) => (
-                  <PlanCard key={plan.id} plan={plan} />
+                  <PlanCard key={plan.id} plan={plan} onDelete={deletePlan} />
                 ))}
               </View>
             </View>
@@ -131,7 +134,7 @@ export default function Plans() {
               </View>
               <View style={styles.list}>
                 {categorizedPlans.notStarted.map((plan) => (
-                  <PlanCard key={plan.id} plan={plan} />
+                  <PlanCard key={plan.id} plan={plan} onDelete={deletePlan} />
                 ))}
               </View>
             </View>
@@ -158,7 +161,7 @@ export default function Plans() {
               {completedExpanded && (
                 <View style={styles.list}>
                   {categorizedPlans.completed.map((plan) => (
-                    <PlanCard key={plan.id} plan={plan} />
+                    <PlanCard key={plan.id} plan={plan} onDelete={deletePlan} />
                   ))}
                 </View>
               )}

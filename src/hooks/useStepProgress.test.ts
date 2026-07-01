@@ -108,15 +108,23 @@ describe('useStepProgress', () => {
   }
 
   beforeEach(() => {
+    jest.useFakeTimers();
     jest.clearAllMocks();
     (useAuth as jest.Mock).mockReturnValue({
       user: { id: 'test-user-uuid' },
     });
   });
 
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it('fetches and maps initial progress on mount', async () => {
     await act(async () => {
       TestRenderer.create(React.createElement(TestComponent));
+    });
+    await act(async () => {
+      await Promise.resolve();
     });
 
     expect(mockFrom).toHaveBeenCalledWith('user_step_progress');
@@ -138,10 +146,21 @@ describe('useStepProgress', () => {
     await act(async () => {
       TestRenderer.create(React.createElement(TestComponent));
     });
+    await act(async () => {
+      await Promise.resolve();
+    });
 
     // Toggle item 1 on step-1 (step-1 has 2 items: 0 is already checked, toggle 1)
     await act(async () => {
       await hookResult.toggleActionItem('step-1', 1);
+    });
+
+    // Advance the debounced timeout
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    await act(async () => {
+      await Promise.resolve();
     });
 
     // Verify optimistic UI + completed status (both item 0 and 1 are now checked -> completed)
@@ -169,9 +188,20 @@ describe('useStepProgress', () => {
     await act(async () => {
       TestRenderer.create(React.createElement(TestComponent));
     });
+    await act(async () => {
+      await Promise.resolve();
+    });
 
     await act(async () => {
       await hookResult.toggleActionItem('step-2', 0);
+    });
+
+    // Advance the debounced timeout
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    await act(async () => {
+      await Promise.resolve();
     });
 
     // Verify insert is called for step-2
@@ -197,11 +227,22 @@ describe('useStepProgress', () => {
     await act(async () => {
       TestRenderer.create(React.createElement(TestComponent));
     });
+    await act(async () => {
+      await Promise.resolve();
+    });
 
     const mockAnimation = jest.fn();
 
     await act(async () => {
       await hookResult.toggleActionItem('step-1', 1, mockAnimation);
+    });
+
+    // Advance the debounced timeout
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    await act(async () => {
+      await Promise.resolve();
     });
 
     // Verify both RPC database triggers are fired

@@ -119,7 +119,7 @@ export function usePlans() {
     return data?.id || null;
   };
 
-  const createPlan = async (goalId: string) => {
+  const createPlan = useCallback(async (goalId: string) => {
     if (!user) return { planId: null, error: 'Not authenticated' };
 
     const dbGoalId = await getDbGoalId(goalId);
@@ -155,9 +155,9 @@ export function usePlans() {
     await fetchPlansAndSaves();
 
     return { planId: newPlan.id, error: null };
-  };
+  }, [user, fetchPlansAndSaves]);
 
-  const savePlan = async (goalId: string) => {
+  const savePlan = useCallback(async (goalId: string) => {
     if (!user) return;
     const dbGoalId = await getDbGoalId(goalId);
     if (!dbGoalId) return;
@@ -171,9 +171,9 @@ export function usePlans() {
     } catch (err) {
       console.error('Error saving goal:', err);
     }
-  };
+  }, [user]);
 
-  const unsavePlan = async (goalId: string) => {
+  const unsavePlan = useCallback(async (goalId: string) => {
     if (!user) return;
     const dbGoalId = await getDbGoalId(goalId);
     if (!dbGoalId) return;
@@ -189,9 +189,9 @@ export function usePlans() {
     } catch (err) {
       console.error('Error unsaving goal:', err);
     }
-  };
+  }, [user]);
 
-  const deletePlan = async (planId: string) => {
+  const deletePlan = useCallback(async (planId: string) => {
     if (!user) return;
     try {
       /*
@@ -234,29 +234,29 @@ export function usePlans() {
     } catch (err) {
       console.error('Error deleting plan:', err);
     }
-  };
+  }, [user, userPlans, fetchPlansAndSaves]);
 
-  const isSaved = (goalId: string) => {
+  const isSaved = useCallback((goalId: string) => {
     // Check by slug first (which is goalId), or by database UUID
     const goals = useAppStore.getState().goals;
     const goal = goals.find((g) => g.id === goalId);
     const dbGoalId = goal?.databaseId || goalId;
     return savedGoals.includes(dbGoalId);
-  };
+  }, [savedGoals]);
 
-  const isActive = (goalId: string) => {
+  const isActive = useCallback((goalId: string) => {
     const goals = useAppStore.getState().goals;
     const goal = goals.find((g) => g.id === goalId);
     const dbGoalId = goal?.databaseId || goalId;
     return userPlans.some((p) => p.goal_id === dbGoalId && p.status === 'active');
-  };
+  }, [userPlans]);
 
-  const isCompleted = (goalId: string) => {
+  const isCompleted = useCallback((goalId: string) => {
     const goals = useAppStore.getState().goals;
     const goal = goals.find((g) => g.id === goalId);
     const dbGoalId = goal?.databaseId || goalId;
     return userPlans.some((p) => p.goal_id === dbGoalId && p.status === 'completed');
-  };
+  }, [userPlans]);
 
   return {
     createPlan,

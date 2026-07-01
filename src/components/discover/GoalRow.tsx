@@ -21,7 +21,7 @@ interface Props {
   onRequestStartPlan: (goalId: string) => void; // bottom sheet confirmation trigger
 }
 
-export function GoalRow({
+export const GoalRow = React.memo(function GoalRow({
   goal,
   saved,
   status,
@@ -173,7 +173,7 @@ export function GoalRow({
       </Pressable>
     </Swipeable>
   );
-}
+});
 
 const styles = StyleSheet.create({
   row: {

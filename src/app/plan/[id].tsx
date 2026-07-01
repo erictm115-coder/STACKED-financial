@@ -1,7 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, ChevronDown, ChevronUp, Play, BookOpen, Wrench, Square, CheckSquare } from 'lucide-react-native';
 import { useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { GoalIcon } from '@/components/main/GoalIcon';
@@ -19,7 +19,7 @@ export default function PlanDetail() {
   const [expandedStep, setExpandedStep] = useState<number | null>(1);
   
   // Track checked action items (key format: 'stepNumber-actionIndex')
-  const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({});
+  const [checkedItems] = useState<Record<string, boolean>>({});
 
   if (!goal) {
     return (
@@ -37,11 +37,7 @@ export default function PlanDetail() {
   };
 
   const toggleActionItem = (stepNumber: number, actionIndex: number) => {
-    const key = `${stepNumber}-${actionIndex}`;
-    setCheckedItems((prev) => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
+    Alert.alert('Plan Not Started', 'Swipe right to start this plan first.');
   };
 
   const openLink = async (url: string) => {

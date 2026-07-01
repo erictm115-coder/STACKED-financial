@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import {
   ActivityIndicator,
+  InteractionManager,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -130,8 +131,11 @@ export default function Discover() {
   // Refetch data on screen focus
   useFocusEffect(
     useCallback(() => {
-      fetchCatalog();
-      refresh();
+      const task = InteractionManager.runAfterInteractions(() => {
+        fetchCatalog();
+        refresh();
+      });
+      return () => task.cancel();
     }, [fetchCatalog, refresh])
   );
 
@@ -188,7 +192,7 @@ export default function Discover() {
   };
 
   // Toast Action
-  const showToast = (message: string) => {
+  const showToast = useCallback((message: string) => {
     setToastText(message);
     toastTranslateY.value = withTiming(20, { duration: 350, easing: Easing.out(Easing.back(1.5)) });
     toastOpacity.value = withTiming(1, { duration: 350 });
@@ -200,7 +204,7 @@ export default function Discover() {
         runOnJS(setToastText)(null);
       });
     }, 2000);
-  };
+  }, [toastOpacity, toastTranslateY]);
 
   const handleStartPlan = async () => {
     if (!confirmGoalId) return;
@@ -223,7 +227,7 @@ export default function Discover() {
     }, 300);
   };
 
-  const handleToggleSaved = (goalId: string) => {
+  const handleToggleSaved = useCallback((goalId: string) => {
     if (isSaved(goalId)) {
       unsavePlan(goalId);
       showToast('Removed from saved plans');
@@ -231,9 +235,9 @@ export default function Discover() {
       savePlan(goalId);
       showToast('Saved to your plans!');
     }
-  };
+  }, [isSaved, unsavePlan, savePlan, showToast]);
 
-  const handleOpenGoal = (goalId: string) => {
+  const handleOpenGoal = useCallback((goalId: string) => {
     // If active, route directly to plans details. Else route to static preview/teaser page
     const activePlan = userPlans.find((p) => p.goals?.slug === goalId && p.status === 'active');
     if (activePlan) {
@@ -241,9 +245,11 @@ export default function Discover() {
     } else {
       router.push({ pathname: '/plan/[id]', params: { id: goalId } } as any);
     }
-  };
+  }, [userPlans, router]);
 
   const openPaywall = () => router.push('/onboarding/paywall');
+
+  const savedCount = useMemo(() => goals.filter((g) => isSaved(g.id)).length, [goals, isSaved]);
 
   const confirmGoal = useMemo(() => {
     if (!confirmGoalId) return null;
@@ -251,21 +257,21 @@ export default function Discover() {
   }, [confirmGoalId, goals]);
 
   // Goal visual status helper
-  const getGoalStatus = (goalId: string) => {
+  const getGoalStatus = useCallback((goalId: string) => {
     if (isCompleted(goalId)) return 'completed';
     if (isActive(goalId)) return 'active';
     return 'not_started';
-  };
+  }, [isCompleted, isActive]);
 
   // Goal progress percent helper
-  const getProgressPercent = (goalId: string) => {
+  const getProgressPercent = useCallback((goalId: string) => {
     const goal = goals.find((g) => g.id === goalId);
     const dbGoalId = goal?.databaseId || goalId;
     const plan = userPlans.find((p) => p.goal_id === dbGoalId);
     if (!plan) return undefined;
     const completed = plan.user_step_progress?.filter((p) => p.completed).length ?? 0;
     return (completed / 5) * 100;
-  };
+  }, [goals, userPlans]);
 
   // Section / group goals
   const streams = useMemo(() => {
@@ -489,7 +495,7 @@ export default function Discover() {
             onPress={() => handleTabChange('saved')}
           >
             <Text style={[styles.pillText, tab === 'saved' && styles.pillTextActive]}>
-              Saved ({goals.filter((g) => isSaved(g.id)).length})
+              Saved ({savedCount})
             </Text>
           </Pressable>
         </View>

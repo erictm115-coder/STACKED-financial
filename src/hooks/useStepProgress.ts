@@ -66,133 +66,7 @@ export function useStepProgress(
     fetchProgress();
   }, [fetchProgress]);
 
-  const toggleActionItem = async (
-    stepId: string,
-    itemIndex: number,
-    onStepCompleteAnimation?: (scoreImpact: Record<string, number>) => void,
-    onError?: (message: string) => void
-  ) => {
-    if (!user) return;
-
-    // Race guard: ignore taps while a mutation for this step is in flight.
-    if (inFlight.current.has(stepId)) return;
-    inFlight.current.add(stepId);
-    setBusy(stepId, true);
-
-    // Snapshot for rollback on failure.
-    const prev = progressMap[stepId] ? { ...progressMap[stepId] } : null;
-    const prevChecked = prev?.checked_items ?? [];
-    const prevCompleted = prev?.completed ?? false;
-
-    try {
-      let progress = prev;
-
-      // 1. Get or create the progress row for this step.
-      if (!progress) {
-        const { data, error } = await supabase
-          .from('user_step_progress')
-          .insert({
-            user_id: user.id,
-            step_id: stepId,
-            completed: false,
-            checked_items: [],
-            score_impact: null,
-          })
-          .select()
-          .single();
-
-        if (error) throw error;
-        progress = {
-          id: data.id,
-          step_id: data.step_id,
-          completed: data.completed,
-          checked_items: data.checked_items || [],
-          score_impact: data.score_impact,
-        };
-      }
-
-      // 2. Toggle the item in the checked_items array.
-      const currentChecked = progress.checked_items ?? [];
-      const newChecked = currentChecked.includes(itemIndex)
-        ? currentChecked.filter((i) => i !== itemIndex)
-        : [...currentChecked, itemIndex];
-
-      // 3. Determine completion.
-      const step = stepsMap[stepId];
-      if (!step) return;
-      const totalItems = step.action_items.length;
-      const allDone = totalItems > 0 && newChecked.length >= totalItems;
-      const justCompleted = allDone && !prevCompleted;
-
-      // Optimistic UI update.
-      setProgressMap((p) => ({
-        ...p,
-        [stepId]: { ...progress!, checked_items: newChecked, completed: allDone },
-      }));
-
-      // 4. Persist the checkbox state.
-      const { error: updateErr } = await supabase
-        .from('user_step_progress')
-        .update({
-          checked_items: newChecked,
-          completed: allDone,
-          completed_at: allDone ? new Date().toISOString() : null,
-          score_impact: allDone ? step.score_impact : null,
-        })
-        .eq('id', progress.id);
-
-      if (updateErr) throw updateErr;
-
-      // 5. If the step just completed, run the score + gamification chain.
-      //    handleStepComplete throws on failure so we can roll back below.
-      if (justCompleted) {
-        await handleStepComplete(stepId, step.score_impact, onStepCompleteAnimation);
-      }
-    } catch (err: any) {
-      console.error('[toggleActionItem] Failed:', {
-        message: err?.message,
-        details: err?.details,
-        hint: err?.hint,
-        code: err?.code,
-        stepId,
-        itemIndex,
-      });
-
-      // Roll back the optimistic state so a checkbox never appears ticked when
-      // the write actually failed. Revert the DB row, then re-sync from DB.
-      try {
-        const rowId = progressMap[stepId]?.id ?? prev?.id;
-        if (rowId) {
-          await supabase
-            .from('user_step_progress')
-            .update({
-              checked_items: prevChecked,
-              completed: prevCompleted,
-              completed_at: prevCompleted ? new Date().toISOString() : null,
-              score_impact: prevCompleted ? stepsMap[stepId]?.score_impact ?? null : null,
-            })
-            .eq('id', rowId);
-        }
-      } catch (revertErr) {
-        console.error('[toggleActionItem] Rollback also failed:', revertErr);
-      }
-      await fetchProgress();
-      onError?.('Could not save your progress — please try again');
-    } finally {
-      inFlight.current.delete(stepId);
-      setBusy(stepId, false);
-    }
-  };
-
-  /**
-   * Applies a completed step's score impact and, if it was the last step,
-   * completes the plan. Both mutations run server-side in SECURITY DEFINER
-   * functions (migration 006) that read the canonical score_impact from
-   * goal_steps, are idempotent, and clamp to <= 99 — the client can no longer
-   * write scores or stacks directly. Throws on failure so the caller can roll
-   * back the optimistic UI.
-   */
-  const handleStepComplete = async (
+  const handleStepComplete = useCallback(async (
     stepId: string,
     scoreImpact: Record<string, number>,
     onStepCompleteAnimation?: (scoreImpact: Record<string, number>) => void
@@ -229,17 +103,177 @@ export function useStepProgress(
       // Rethrow so toggleActionItem rolls back and surfaces a toast.
       throw err;
     }
-  };
+  }, [user, planId]);
+
+  const timeoutMap = useRef<Record<string, NodeJS.Timeout>>({});
+  const pendingCheckedMap = useRef<Record<string, number[]>>({});
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    const currentTimeouts = timeoutMap.current;
+    return () => {
+      Object.values(currentTimeouts).forEach(clearTimeout);
+    };
+  }, []);
+
+  const toggleActionItem = useCallback(async (
+    stepId: string,
+    itemIndex: number,
+    onStepCompleteAnimation?: (scoreImpact: Record<string, number>) => void,
+    onError?: (message: string) => void
+  ) => {
+    if (!user) return;
+
+    // 1. Get current step progress state (local state is the source of truth)
+    const currentProg = progressMap[stepId];
+    const currentChecked = pendingCheckedMap.current[stepId] ?? currentProg?.checked_items ?? [];
+
+    // 2. Compute new checked items and completion status
+    const newChecked = currentChecked.includes(itemIndex)
+      ? currentChecked.filter((i) => i !== itemIndex)
+      : [...currentChecked, itemIndex];
+
+    const step = stepsMap[stepId];
+    if (!step) return;
+    const totalItems = step.action_items.length;
+    const allDone = totalItems > 0 && newChecked.length >= totalItems;
+
+    // Update pending map
+    pendingCheckedMap.current[stepId] = newChecked;
+
+    // 3. Optimistic UI update — updates instantly!
+    setProgressMap((prev) => ({
+      ...prev,
+      [stepId]: {
+        ...(prev[stepId] || { id: '', step_id: stepId, completed: false, checked_items: [], score_impact: null }),
+        checked_items: newChecked,
+        completed: allDone,
+      },
+    }));
+
+    // 4. Debounce database persist
+    if (timeoutMap.current[stepId]) {
+      clearTimeout(timeoutMap.current[stepId]);
+    }
+
+    timeoutMap.current[stepId] = setTimeout(async () => {
+      // Clean up timeout ref
+      delete timeoutMap.current[stepId];
+
+      if (inFlight.current.has(stepId)) return; // Simple safety check
+      inFlight.current.add(stepId);
+      setBusy(stepId, true);
+
+      // Take a snapshot of the status when this write starts (for rollback)
+      const prevDB = currentProg ? { ...currentProg } : null;
+      const prevCheckedDB = prevDB?.checked_items ?? [];
+      const prevCompletedDB = prevDB?.completed ?? false;
+
+      try {
+        let progressRow = prevDB;
+
+        // If the row doesn't exist, we must insert it first
+        if (!progressRow) {
+          const { data, error } = await supabase
+            .from('user_step_progress')
+            .insert({
+              user_id: user.id,
+              step_id: stepId,
+              completed: false,
+              checked_items: [],
+              score_impact: null,
+            })
+            .select()
+            .single();
+
+          if (error) throw error;
+          progressRow = {
+            id: data.id,
+            step_id: data.step_id,
+            completed: data.completed,
+            checked_items: data.checked_items || [],
+            score_impact: data.score_impact,
+          };
+        }
+
+        // Persist the final debounced checked items
+        const finalChecked = pendingCheckedMap.current[stepId] ?? newChecked;
+        const finalAllDone = totalItems > 0 && finalChecked.length >= totalItems;
+        const finalJustCompleted = finalAllDone && !prevCompletedDB;
+
+        const { error: updateErr } = await supabase
+          .from('user_step_progress')
+          .update({
+            checked_items: finalChecked,
+            completed: finalAllDone,
+            completed_at: finalAllDone ? new Date().toISOString() : null,
+            score_impact: finalAllDone ? step.score_impact : null,
+          })
+          .eq('id', progressRow.id);
+
+        if (updateErr) throw updateErr;
+
+        // Update local database status (stored in progressMap id ref)
+        setProgressMap((prev) => ({
+          ...prev,
+          [stepId]: {
+            ...prev[stepId],
+            id: progressRow!.id,
+          },
+        }));
+
+        // If completed, trigger backend score calculation & gamification
+        if (finalJustCompleted) {
+          await handleStepComplete(stepId, step.score_impact, onStepCompleteAnimation);
+        }
+      } catch (err: any) {
+        console.error('[toggleActionItem] Failed to persist progress:', err);
+
+        // Roll back local/optimistic state on failure
+        setProgressMap((prev) => ({
+          ...prev,
+          [stepId]: {
+            ...(prev[stepId] || { id: '', step_id: stepId, completed: false, checked_items: [], score_impact: null }),
+            checked_items: prevCheckedDB,
+            completed: prevCompletedDB,
+          },
+        }));
+        pendingCheckedMap.current[stepId] = prevCheckedDB;
+
+        // Try to revert database row if it exists
+        const rowId = progressMap[stepId]?.id ?? prevDB?.id;
+        if (rowId) {
+          try {
+            await supabase
+              .from('user_step_progress')
+              .update({
+                checked_items: prevCheckedDB,
+                completed: prevCompletedDB,
+                completed_at: prevCompletedDB ? new Date().toISOString() : null,
+                score_impact: prevCompletedDB ? step.score_impact : null,
+              })
+              .eq('id', rowId);
+          } catch (revertErr) {
+            console.error('[toggleActionItem] Rollback failed:', revertErr);
+          }
+        }
+
+        await fetchProgress();
+        onError?.('Could not save your progress — please try again');
+      } finally {
+        inFlight.current.delete(stepId);
+        setBusy(stepId, false);
+      }
+    }, 400);
+  }, [user, progressMap, stepsMap, handleStepComplete, fetchProgress]);
 
   const completePlan = async () => {
     if (!user) return;
     try {
-      // Server-side: completes only if all steps are done, bumps stacks once.
       const { error } = await supabase.rpc('complete_user_plan', { p_plan_id: planId });
       if (error) throw error;
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error completing plan:', err);
-      throw err;
     }
   };
 

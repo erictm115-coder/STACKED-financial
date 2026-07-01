@@ -5,15 +5,15 @@ import { useRouter } from 'expo-router';
 import { Trash2 } from 'lucide-react-native';
 import { GoalIcon } from '@/components/main/GoalIcon';
 import { colors, fonts, radius, spacing } from '@/constants/theme';
-import { type UserPlan, usePlans } from '@/hooks/usePlans';
+import { type UserPlan } from '@/hooks/usePlans';
 
 interface Props {
   plan: UserPlan;
+  onDelete: (planId: string) => void;
 }
 
-export function PlanCard({ plan }: Props) {
+export const PlanCard = React.memo(function PlanCard({ plan, onDelete }: Props) {
   const router = useRouter();
-  const { deletePlan } = usePlans();
   
   const completedSteps = plan.user_step_progress.filter((p) => p.completed).length;
   const totalSteps = 5;
@@ -38,7 +38,7 @@ export function PlanCard({ plan }: Props) {
       'Are you sure you want to delete this plan? This will reset all your progress for this goal.',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', style: 'destructive', onPress: () => deletePlan(plan.id) }
+        { text: 'Delete', style: 'destructive', onPress: () => onDelete(plan.id) }
       ]
     );
   };
@@ -104,7 +104,7 @@ export function PlanCard({ plan }: Props) {
       </View>
     </Pressable>
   );
-}
+});
 
 const styles = StyleSheet.create({
   card: {

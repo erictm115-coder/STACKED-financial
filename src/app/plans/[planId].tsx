@@ -32,6 +32,7 @@ import Animated, {
   runOnJS,
   withRepeat,
   withSequence,
+  withSpring,
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 
@@ -163,16 +164,43 @@ function RisingBadge({ text, delay, onFinished }: { text: string; delay: number;
   );
 }
 
+function AnimatedCheckbox({ checked }: { checked: boolean }) {
+  const scale = useSharedValue(1);
+
+  useEffect(() => {
+    scale.value = withSequence(
+      withTiming(1.15, { duration: 100 }),
+      withSpring(1)
+    );
+  }, [checked]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <Animated.View style={animatedStyle}>
+      {checked ? (
+        <View style={styles.checkedSquare}>
+          <Check size={14} color="#ffffff" strokeWidth={3} />
+        </View>
+      ) : (
+        <View style={styles.uncheckedSquare} />
+      )}
+    </Animated.View>
+  );
+}
+
 // In-progress pulse style for indicator border
 function PulseBorder({ children, active }: { children: React.ReactNode; active: boolean }) {
-  const borderOpacity = useSharedValue(0.4);
+  const borderOpacity = useSharedValue(0.3);
 
   useEffect(() => {
     if (active) {
       borderOpacity.value = withRepeat(
         withSequence(
           withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) }),
-          withTiming(0.4, { duration: 800, easing: Easing.inOut(Easing.ease) })
+          withTiming(0.3, { duration: 800, easing: Easing.inOut(Easing.ease) })
         ),
         -1,
         true
@@ -183,10 +211,12 @@ function PulseBorder({ children, active }: { children: React.ReactNode; active: 
   }, [active]);
 
   const style = useAnimatedStyle(() => {
+    // Animate only the border color alpha — NOT the whole card's opacity
+    const r = 0, g = 206, b = 109; // colors.brandGreen RGB
+    const a = borderOpacity.value;
     return {
       borderLeftWidth: active ? 3 : 0,
-      borderLeftColor: colors.brandGreen,
-      opacity: borderOpacity.value,
+      borderLeftColor: `rgba(${r},${g},${b},${a})`,
     };
   });
 
@@ -561,17 +591,10 @@ export default function PlanDetail() {
                                   <Pressable
                                     key={itemIdx}
                                     style={[styles.checkRow, stepBusy && styles.checkRowBusy]}
-                                    disabled={stepBusy}
                                     onPress={() => handleToggleItem(step.id, itemIdx)}
                                   >
                                     <View style={styles.checkCell}>
-                                      {isItemChecked ? (
-                                        <View style={styles.checkedSquare}>
-                                          <Check size={14} color="#ffffff" strokeWidth={3} />
-                                        </View>
-                                      ) : (
-                                        <View style={styles.uncheckedSquare} />
-                                      )}
+                                      <AnimatedCheckbox checked={isItemChecked} />
                                     </View>
                                     <Text
                                       style={[
@@ -638,11 +661,11 @@ export default function PlanDetail() {
                             </View>
                           </View>
                         ) : (
-                          // State 3 — guard: should not happen once fallback guides exist
-                          <Text style={styles.noResourcesNote}>
-                            No additional resources for this step yet — but you can still
-                            complete the action items above.
-                          </Text>
+                          // State 3 — no content yet for this step
+                          <View style={styles.comingSoonCard}>
+                            <BookOpen size={16} color="#555555" />
+                            <Text style={styles.comingSoonText}>Tutorial coming soon</Text>
+                          </View>
                         )}
                       </View>
                     )}
@@ -896,7 +919,25 @@ const styles = StyleSheet.create({
 
   placeholder: { fontFamily: fonts.semiBold, fontSize: 14, color: colors.ash, lineHeight: 21 },
 
-  checkRowBusy: { opacity: 0.4 },
+  checkRowBusy: { opacity: 0.5 },
+
+  // State 3 — "Tutorial coming soon" placeholder card
+  comingSoonCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#1a1a1a',
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
+    borderRadius: radius.input,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.md,
+  },
+  comingSoonText: {
+    fontFamily: fonts.semiBold,
+    fontSize: 13,
+    color: '#555555',
+  },
 
   // State 2 — in-app guide card (dashed border signals "not an external link")
   guideCard: {
